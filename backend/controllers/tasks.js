@@ -1,7 +1,8 @@
 const RegisterDetails=require('../models/register')
 const {StatusCodes, BAD_REQUEST} =require('http-status-codes')
-const jwr=require('jsonwebtoken')
-
+const jwr=require('jsonwebtoken');
+const { use } = require('react');
+const {sendOTP}=require('../controllers/otpContoller')
 
 const homepage=(req,res)=>{
     res.send('Home Page');
@@ -18,6 +19,13 @@ const register= async(req,res)=>{
     res.status(StatusCodes.CREATED).json({user:{name:user.fullname},token})
 }
 
+//getUserDashboard
+
+const getuserDashboard=async(req,res)=>
+{
+   return res.status(StatusCodes.OK).json({message:"Success",userDetails:{userId:req.user.userId,email:req.user.email}})
+}
+
 const login= async(req,res)=>{
     const {username,password}= req.body
     if(!username || !password)
@@ -27,18 +35,26 @@ const login= async(req,res)=>{
     const user=await RegisterDetails.findOne({email:username}).exec()
     if(!user)
         {
-            res.status(StatusCodes.UNAUTHORIZED).json("Invalid Credentials");
+            return res.status(StatusCodes.UNAUTHORIZED).json({success:false,message:"Unable to find data, Invalid Email"});
         } 
     const isPasswordCorrect=await user.comparePassword(password)
     if(!isPasswordCorrect)
     {
-        res.status(StatusCodes.UNAUTHORIZED).json("Invalid Credentials");
+        return res.status(StatusCodes.UNAUTHORIZED).json({success:false,message:"Invalid Password"});
        
     }
     const token=user.createJWT()
-    res.status(StatusCodes.OK).json({user:{email:user.email},token})
+   return  res.status(StatusCodes.OK).json({user:{email:user.email},token})
 
 }
+
+//forgetPassword user
+//otp send to email
+
+
+
+
+
 
 const deleteUsers= async(req,res)=>
 {
@@ -52,4 +68,5 @@ const deleteUsers= async(req,res)=>
     }
 }
 
-module.exports={homepage,getAllUsers,register,login,deleteUsers}
+module.exports={homepage,getAllUsers,register,login,
+    deleteUsers,getuserDashboard}

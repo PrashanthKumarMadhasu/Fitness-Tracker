@@ -22,20 +22,21 @@ const RegisterSchema= mongoose.Schema({
     {
         type:String,
         required:[true, 'Please Enter Password'],
-        maxlength:20
+        maxlength:200
     }
 
 },{timestamps:true})
 
 RegisterSchema.pre('save', async function(next){
-    const saltRounds=await bcrypt.genSalt(10);
+    const saltRounds=10;
     this.password= await bcrypt.hash(this.password,saltRounds);
     next();
 })
 
 RegisterSchema.methods.comparePassword = async function(passkey) 
 {
-  const ismatch=await bcrypt.compare(passkey,this.password)   
+  const ismatch=await bcrypt.compare(passkey,this.password)
+  console.log(ismatch);
   return ismatch; 
 }
 

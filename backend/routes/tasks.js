@@ -2,11 +2,31 @@ const express =require('express')
 
 const router =express.Router()
 
-const {homepage,getAllUsers,register,login,deleteUsers}=require('../controllers/tasks');
+const {homepage,getAllUsers,register,login,deleteUsers,getuserDashboard}=require('../controllers/tasks');
+const {otpVerification,sendOTP}=require('../controllers/otpContoller')
+
+
+
+const authMiddleware=require('../middlewares/auth')
+//get API
 router.route('/').get(homepage);
 router.route('/getAllUsers').get(getAllUsers);
-router.route('/login').get(login);
+
+router.route('/getuserDashboard').get(authMiddleware, getuserDashboard)
+
+//post API
+router.route('/login').post(login);
 router.route('/register').post(register);
-router.route('/deleteUsers').delete(deleteUsers);
+
+router.route('/forgetpassword').post(sendOTP)
+router.route('/verifyOtp').post(otpVerification);
+
+//put API's
+
+
+
+//Delete Operation
+
+router.route('/deleteUsers').delete(authMiddleware, deleteUsers);
 
 module.exports=router
