@@ -5,21 +5,37 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* 
+html {
+  scroll-behavior: smooth;
+} */
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-  background: url("./Components/Assets/login_background.jpg") no-repeat;
-  background-size: cover;
-  background-position: center;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+ 
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+/* Track */
+/* ::-webkit-scrollbar-track {
+} */
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+  height: 50px;
+} 
