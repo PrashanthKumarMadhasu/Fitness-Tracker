@@ -1,7 +1,7 @@
 import { ThemeProvider, styled } from "styled-components";
 import { lightTheme } from "./Utils/Theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import Authentication from "./Pages/Authentication";
+import Authentication from "./Pages/Authentication";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./Components/Navbar";
@@ -27,7 +27,7 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <BrowserRouter>
-        {true ? (
+        {false ? (
           <Container>
             <Navbar  />
             <Routes>
@@ -37,7 +37,7 @@ function App() {
           </Container>
         ) : (
           <Container>
-            {/* <Authentication /> */}
+            <Authentication />
           </Container>
         )}
       </BrowserRouter>

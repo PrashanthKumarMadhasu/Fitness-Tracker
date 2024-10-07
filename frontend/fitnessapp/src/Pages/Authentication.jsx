@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-// import LogoImage from "../utils/Images/Logo.png";
+import LoginBack from "../Components/Assets/login_background.jpg";
 // import AuthImage from "../utils/Images/AuthImage.jpg";
 import LoginForm from "../Components/LoginForm/LoginForm";
 import RegisterForm from "../Components/RegisterForm/RegisterForm";
@@ -9,47 +9,22 @@ const Container = styled.div`
   flex: 1;
   height: 100%;
   display: flex;
-  background: ${({ theme }) => theme.bg};
+  background-image: url(${LoginBack});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  justify-content:center;
+  align-items:center;
   @media (max-width: 700px) {
     flex-direction: column;
   }
 `;
-const Left = styled.div`
-  flex: 1;
-  position: relative;
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-const Logo = styled.img`
-  position: absolute;
-  width: 70px;
-  top: 40px;
-  left: 60px;
-  z-index: 10;
-`;
-const Image = styled.img`
-  position: relative;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-`;
 
-const Right = styled.div`
-  flex: 1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 40px;
-  gap: 16px;
-  align-items: center;
-  justify-content: center;
-`;
 
 const Text = styled.div`
   font-size: 16px;
   text-align: center;
-  color: ${({ theme }) => theme.text_secondary};
+  color:#fff;
   margin-top: 16px;
   @media (max-width: 400px) {
     font-size: 14px;
@@ -60,37 +35,44 @@ const TextButton = styled.span`
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
+  &:hover {
+    color: #64e3ec; /* Add a semi-transparent overlay */
+    text-decoration:underline;
+  }
 `;
+const Wrapper = styled.div`
+  width: 420px;
+  background: transparent; 
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, .2);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  border-radius: 10px;
+  padding: 30px 40px; 
+`
 
 const Authentication = () => {
   const [login, setLogin] = useState(false);
   return (
-    <Container>
-      <Left>
-        {/* <Logo src={LogoImage} />
-        <Image src={AuthImage} /> */}
-      </Left>
-      <Right>
-        {!login ? (
-          <>
-            <LoginForm/>
-            {/* <SignIn />
-            <Text>
-              Don't have an account?{" "}
-              <TextButton onClick={() => setLogin(true)}>Register</TextButton>
-            </Text> */}
-          </>
-        ) : (
-          <>
-            <RegisterForm/>
-            {/* <SignUp />
-            <Text>
-              Already have an account?{" "}
-              <TextButton onClick={() => setLogin(false)}>Login</TextButton>
-            </Text> */}
-          </>
-        )}
-      </Right>
+    <Container style={{ backgroundImage: "../Components/Assets/login_background.jpg" }}>
+      {!login ? (
+        <Wrapper>
+          <LoginForm />
+          <Text>
+            Don't have an account?{" "}
+            <TextButton onClick={() => setLogin(true)}>Register</TextButton>
+          </Text>
+        </Wrapper>
+      ) : (
+        <Wrapper>
+          <RegisterForm />
+          <Text>
+            Already have an account?{" "}
+            <TextButton onClick={() => setLogin(false)}>Login</TextButton>
+          </Text>
+        </Wrapper>
+      )}
+
     </Container>
   );
 };

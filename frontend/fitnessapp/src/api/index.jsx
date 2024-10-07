@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://fitnesstrack-vtv1.onrender.com/api/",
+  baseURL: "http://127.0.0.1:3000/api/v1/users",
 });
 
-export const UserSignUp = async (data) => API.post("/user/signup", data);
-export const UserSignIn = async (data) => API.post("/user/signin", data);
+export const UserSignUp = async (data) => API.post("/register", data);
+export const UserSignIn = async (data) => API.post("/login", data);
 
 export const getDashboardDetails = async (token) =>
   API.get("/user/dashboard", {
