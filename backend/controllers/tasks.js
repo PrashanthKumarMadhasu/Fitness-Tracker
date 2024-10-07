@@ -1,7 +1,6 @@
 const RegisterDetails=require('../models/register')
 const {StatusCodes, BAD_REQUEST} =require('http-status-codes')
 const jwr=require('jsonwebtoken');
-const { use } = require('react');
 const {sendOTP}=require('../controllers/otpContoller')
 
 const homepage=(req,res)=>{
