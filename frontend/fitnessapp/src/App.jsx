@@ -42,9 +42,6 @@ function App() {
         )}
       </BrowserRouter>
     </ThemeProvider>
-    // <div>
-    //   <h1>shivaaaa</h1>
-    // </div>
   );
 }
 
