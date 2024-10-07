@@ -2,40 +2,64 @@ import React from 'react'
 import './LoginForm.css'
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { Link, useNavigate} from "react-router-dom"
+import { UserSignIn } from "../../api";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../redux/reducers/userSlice";
+import { useState} from 'react';
 
 
-export const LoginForm = () => {
+const LoginForm = () => {
 
-  // const navigate =useNavigate();
-  // const handleLogin = (e)=>{
-  //   e.preventDefault();
-  //   navigate('/dashboard');
-  // }; 
-  return (
-    <div className="wrapper">
-        <form action="" onSubmit={handleLogin}>
-            <h1>Login</h1>
-            <div className="input-box">
-                <input type="email" placeholder='Enter your email' required/>
-                <MdEmail className='icon'/>
-            </div>
-            <div className="input-box">
-                <input type="password" placeholder='Password' required/>
-                <FaLock className='icon'/>
-            </div>
-            <div className="remember-forgot">
-                <label><input type="checkbox" /> Remember me</label>
-                <a href="#">Forgot password?</a>
-            </div>
 
-            <button type='submit'>Login</button>
 
-            <div className="register-link">
-                <p>Don't have an account? <Link to="/register">Register</Link></p>
-            </div>
-        </form>
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    </div>
-  )
+    const handleLogin = async () => {
+        setLoading(true);
+        setButtonDisabled(true);
+
+        await UserSignIn({ email, password })
+            .then((res) => {
+                dispatch(loginSuccess(res.data));
+                alert("Login Success");
+                setLoading(false);
+                setButtonDisabled(false);
+                console.log(res)
+            })
+            .catch((err) => {
+                alert(err.response.data.message);
+                setLoading(false);
+                setButtonDisabled(false);
+            });
+    }
+
+    return (
+        <div className="wrapper">
+            <form action="" >
+                <h1>Login</h1>
+                <div className="input-box">
+                    <input type="email" placeholder='Enter your email' value={email} onChange={(e)=>setEmail(e.target.value)} required />
+                    <MdEmail className='icon' />
+                </div>
+                <div className="input-box">
+                    <input type="password" placeholder='Password' value={password} onChange={(e)=>setPassword(e.target.value)} required />
+                    <FaLock className='icon' />
+                </div>
+                <div className="remember-forgot">
+                    <label><input type="checkbox" /> Remember me</label>
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <button type='submit' onClick={handleLogin}>Login</button>
+
+            </form>
+
+        </div>
+    )
 }
+
+export default LoginForm;
