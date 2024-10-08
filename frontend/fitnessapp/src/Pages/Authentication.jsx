@@ -54,12 +54,11 @@ const Wrapper = styled.div`
 const Authentication = () => {
   const [login, setLogin] = useState(false);
   return (
-    <Container style={{ backgroundImage: "../Components/Assets/login_background.jpg" }}>
+    <Container>
       {!login ? (
         <Wrapper>
           <LoginForm />
-          <Text>
-            Don't have an account?{" "}
+          <Text>Dont have an account?{" "}
             <TextButton onClick={() => setLogin(true)}>Register</TextButton>
           </Text>
         </Wrapper>

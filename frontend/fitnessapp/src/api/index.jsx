@@ -4,8 +4,8 @@ const API = axios.create({
   baseURL: "http://127.0.0.1:3000/api/v1/users",
 });
 
-export const UserSignUp = async (data) => API.post("/register", data);
-export const UserSignIn = async (data) => API.post("/login", data);
+export const UserSignUp = async (data) => await API.post("/register", data);
+export const UserSignIn = async (data) => await API.post("/login", data);
 
 export const getDashboardDetails = async (token) =>
   API.get("/user/dashboard", {

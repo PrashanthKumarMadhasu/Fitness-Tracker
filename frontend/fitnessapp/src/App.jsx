@@ -2,7 +2,7 @@ import { ThemeProvider, styled } from "styled-components";
 import { lightTheme } from "./Utils/Theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Authentication from "./Pages/Authentication";
-import { useState } from "react";
+//import { useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./Components/Navbar";
 import Dashboard from "./Pages/Dashboard";
@@ -22,12 +22,12 @@ const Container = styled.div`
 
 function App() {
 
-  // const { currentUser } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
 
   return (
     <ThemeProvider theme={lightTheme}>
       <BrowserRouter>
-        {false ? (
+        {currentUser ? (
           <Container>
             <Navbar  />
             <Routes>

@@ -2,6 +2,7 @@ const express=require('express')
 const app=express()
 const connectDB=require('./database/connect')
 const tasks=require('./routes/tasks')
+const cors = require('cors');
 
 require('dotenv').config()
 
@@ -12,13 +13,25 @@ require('dotenv').config()
 
 
 //middleware
+//const cors = require('cors');
+// Enable CORS for all origins
+app.use(cors());
+app.use(express.json());
 
-app.use(express.json())
+// OR, Enable CORS for specific origin (your frontend)
 
+const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
 
-app.get('',async(req,res)=>{
-    res.send("Home Page")
-})
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // If you need to send cookies or authorization headers
+}));
 
 app.use('/api/v1/users',tasks)
 

@@ -10,20 +10,20 @@ import { useState} from 'react';
 
 const LoginForm = () => {
 
-
-
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault()
         setLoading(true);
         setButtonDisabled(true);
 
         await UserSignIn({ email, password })
             .then((res) => {
+                console.log('API Response:', res);
                 dispatch(loginSuccess(res.data));
                 alert("Login Success");
                 setLoading(false);
@@ -31,6 +31,7 @@ const LoginForm = () => {
                 console.log(res)
             })
             .catch((err) => {
+                console.error('API Error:', err.response);
                 alert(err.response.data.message);
                 setLoading(false);
                 setButtonDisabled(false);
@@ -42,11 +43,11 @@ const LoginForm = () => {
             <form action="" >
                 <h1>Login</h1>
                 <div className="input-box">
-                    <input type="email" placeholder='Enter your email' value={email} onChange={(e)=>setEmail(e.target.value)} required />
+                    <input type="email" placeholder='Enter your email' value={email} name="email" onChange={(e)=>setEmail(e.target.value)} />
                     <MdEmail className='icon' />
                 </div>
                 <div className="input-box">
-                    <input type="password" placeholder='Password' value={password} onChange={(e)=>setPassword(e.target.value)} required />
+                    <input type="password" placeholder='Password' value={password} name="password" onChange={(e)=>setPassword(e.target.value)} />
                     <FaLock className='icon' />
                 </div>
                 <div className="remember-forgot">
@@ -54,7 +55,7 @@ const LoginForm = () => {
                     <a href="#">Forgot password?</a>
                 </div>
 
-                <button type='submit' onClick={handleLogin}>Login</button>
+                <button type='submit' onClick={(e)=>handleLogin(e)}>Login</button>
 
             </form>
 

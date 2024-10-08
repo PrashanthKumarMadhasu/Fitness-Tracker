@@ -27,24 +27,24 @@ const getuserDashboard=async(req,res)=>
 }
 
 const login= async(req,res)=>{
-    const {username,password}= req.body
-    if(!username || !password)
+    const {email,password}= req.body
+    if(!email || !password)
     {
-        res.status(StatusCodes.BAD_REQUEST).json('Please provide email and password')
+       return res.status(StatusCodes.BAD_REQUEST).json('Please provide email and password')
     }
-    const user=await RegisterDetails.findOne({email:username}).exec()
+    const user=await RegisterDetails.findOne({email:email}).exec()
     if(!user)
         {
-            return res.status(StatusCodes.UNAUTHORIZED).json({success:false,message:"Unable to find data, Invalid Email"});
+          return  res.status(StatusCodes.UNAUTHORIZED).json({success:false,message:"Unable to find data, Invalid Email"});
         } 
     const isPasswordCorrect=await user.comparePassword(password)
     if(!isPasswordCorrect)
     {
-        return res.status(StatusCodes.UNAUTHORIZED).json({success:false,message:"Invalid Password"});
+       return res.status(StatusCodes.UNAUTHORIZED).json({success:false,message:"Invalid Password"});
        
     }
     const token=user.createJWT()
-   return  res.status(StatusCodes.OK).json({user:{email:user.email},token})
+  return res.status(StatusCodes.OK).json({token,user:{id:user._id,email:user.email}})
 
 }
 
