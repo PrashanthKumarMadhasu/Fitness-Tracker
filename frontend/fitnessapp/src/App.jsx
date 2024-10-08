@@ -32,7 +32,7 @@ function App() {
             <Navbar  />
             <Routes>
               <Route path="/" exact element={<Dashboard />} />
-              <Route path="/workouts" exact element={<Workouts />} />
+              <Route path="/workouts" exact element={<Workouts/>} />
             </Routes>
           </Container>
         ) : (
