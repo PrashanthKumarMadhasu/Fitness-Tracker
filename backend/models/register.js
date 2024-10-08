@@ -36,7 +36,7 @@ RegisterSchema.pre('save', async function(next){
 RegisterSchema.methods.comparePassword = async function(passkey) 
 {
   const ismatch=await bcrypt.compare(passkey,this.password)
-  console.log(ismatch);
+  //console.log(ismatch);
   return ismatch; 
 }
 
