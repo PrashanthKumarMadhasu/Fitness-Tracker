@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/reducers/userSlice";
 import { useState} from 'react';
 
-
 const LoginForm = () => {
 
     const dispatch = useDispatch();
@@ -43,7 +42,7 @@ const LoginForm = () => {
                 </div>
                 <div className="remember-forgot">
                     <label><input type="checkbox" /> Remember me</label>
-                    <a href="#">Forgot password?</a>
+                    <a href="/forgot-password" target='_blank' rel="noopener noreferrer">Forgot password?</a>
                 </div>
 
                 <button type='submit' onClick={handleLogin}>Login</button>
