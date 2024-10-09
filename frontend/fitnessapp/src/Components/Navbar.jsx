@@ -4,9 +4,9 @@ import LogoImg from "./Assets/gym.png";
 import { Link as LinkR, NavLink } from "react-router-dom";
 import { MenuRounded } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
-// import { useDispatch } from "react-redux";
-// import { logout } from "../redux/reducers/userSlice";
-import Avatarlogo from "./Assets/avatar.png"
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/reducers/userSlice";
+import Avatarlogo from "./Assets/avatar.png";
 
 
 const Nav = styled.div`
@@ -129,9 +129,9 @@ const MobileMenu = styled.ul`
   opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
   z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1000")};
 `;
-const currentUser = {name:"Shiva", img:Avatarlogo}
-const Navbar = () => {
-//   const dispatch = useDispatch();
+
+const Navbar = ({currentUser}) => {
+  const dispatch = useDispatch();
   const [isOpen, setisOpen] = useState(false);
   return (
     <Nav>
@@ -162,7 +162,7 @@ const Navbar = () => {
 
         <UserContainer>
           <Avatar src={currentUser?.img}>{currentUser?.name}</Avatar>
-          {/* <TextButton onClick={() => dispatch(logout())}>Logout</TextButton> */}
+          <TextButton onClick={() => dispatch(logout())}>Logout</TextButton>
         </UserContainer>
       </NavContainer>
     </Nav>

@@ -5,14 +5,20 @@ import { MdEmail } from "react-icons/md";
 import { UserSignIn } from "../../api";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/reducers/userSlice";
-import { useState} from 'react';
+import { useState } from 'react';
+import { FaEyeSlash } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa";
 
 const LoginForm = () => {
-
     const dispatch = useDispatch();
+    const [toggleEye, setToggleEye] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const handlePassword = (e) => {
+        e.preventDefault()
+        setToggleEye(!toggleEye);
+    };
     const handleLogin = async (e) => {
         e.preventDefault()
 
@@ -33,12 +39,12 @@ const LoginForm = () => {
             <form action="" >
                 <h1>Login</h1>
                 <div className="input-box">
-                    <input type="email" placeholder='Enter your email' value={email} name="email" onChange={(e)=>setEmail(e.target.value)} required/>
+                    <input type="email" placeholder='Enter your email' value={email} name="email" onChange={(e) => setEmail(e.target.value)} required />
                     <MdEmail className='icon' />
                 </div>
                 <div className="input-box">
-                    <input type="password" placeholder='Password' value={password} name="password" onChange={(e)=>setPassword(e.target.value)} required/>
-                    <FaLock className='icon' />
+                    <input type={toggleEye ? 'text' : 'password'} placeholder='Password' value={password} name="password" onChange={(e) => setPassword(e.target.value)} required />
+                    {!toggleEye ? <FaEyeSlash className='icon' onClick={handlePassword} /> : <FaRegEye className='icon' onClick={handlePassword} />}
                 </div>
                 <div className="remember-forgot">
                     <label><input type="checkbox" /> Remember me</label>

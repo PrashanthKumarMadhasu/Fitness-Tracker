@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
 import '../LoginForm/LoginForm.css'
 import { FaUser } from "react-icons/fa";
-import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { loginSuccess } from "../../redux/reducers/userSlice";
 import { useDispatch } from "react-redux";
 import { UserSignUp } from "../../api";
+import { FaEyeSlash, FaRegEye } from "react-icons/fa";
+
 
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
     const [fullname, setFullname] = useState("");
     const [password, setPassword] = useState("")
-    const [email, setEmail] = useState("")
+    const [email, setEmail] = useState("");
+    const [toggleEye, setToggleEye] = useState(false);
 
     const handleRegister = async (e) => {
         e.preventDefault()
@@ -25,6 +27,11 @@ const RegisterForm = () => {
                 alert(err.response.data.message);
             });
     }
+
+    const handlePassword = (e) => {
+        e.preventDefault()
+        setToggleEye(!toggleEye);
+    };
 
     return (
         <div className="wrapper">
@@ -39,8 +46,8 @@ const RegisterForm = () => {
                     <MdEmail className='icon' />
                 </div>
                 <div className="input-box">
-                    <input type="password" placeholder='Password' value={password} onChange={(e)=>{setPassword(e.target.value)}} required />
-                    <FaLock className='icon' />
+                    <input type={toggleEye ? 'text' : 'password'} placeholder='Password' value={password} onChange={(e)=>{setPassword(e.target.value)}} required />
+                    {!toggleEye ? <FaEyeSlash className='icon' onClick={handlePassword} /> : <FaRegEye className='icon' onClick={handlePassword} />}
                 </div>
 
                 <button type='submit' onClick={handleRegister}>Register</button>

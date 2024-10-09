@@ -33,7 +33,7 @@ function App() {
         </Routes>
         {currentUser ? (
           <Container>
-            <Navbar  />
+            <Navbar currentUser={currentUser} />
             <Routes>
               <Route path="/" exact element={<Dashboard />} />
               <Route path="/workouts" exact element={<Workouts/>} />  
