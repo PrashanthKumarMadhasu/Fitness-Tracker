@@ -42,7 +42,7 @@ const LoginForm = () => {
                 </div>
                 <div className="remember-forgot">
                     <label><input type="checkbox" /> Remember me</label>
-                    <a href="/forgot-password" target='_blank' rel="noopener noreferrer">Forgot password?</a>
+                    <a href="/forgot-password" target='_self' rel="noopener noreferrer">Forgot password?</a>
                 </div>
 
                 <button type='submit' onClick={handleLogin}>Login</button>

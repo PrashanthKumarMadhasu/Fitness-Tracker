@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './ForgotForm.css';
 import { FaEnvelope } from "react-icons/fa";
 import styled from "styled-components";
-
+import { useNavigate } from 'react-router-dom';
+import { sendOtp, verifyOtp, updatePassword} from "../../api";
 
 
 const status = styled.p`
@@ -11,11 +12,12 @@ const status = styled.p`
 `;
 
 const ForgotForm = () => {
+    const navigate = useNavigate();
     const [color,setColor] = useState('green')
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
-    const [otpSent, setOtpSent] = useState(true);
-    const [verified, setVerified] = useState(true);
+    const [otpSent, setOtpSent] = useState(false);
+    const [verified, setVerified] = useState(false);
     const [resendOtp, setResendOtp] = useState(false);
     const [enteredOtp, setEnteredOtp] = useState("");
     const [password, setPassword] = useState("");
@@ -39,7 +41,7 @@ const ForgotForm = () => {
 
     const handleVerifyOTP = async (e) => {
         e.preventDefault();
-        await verifyOtp({ email, enteredOtp })
+        await verifyOtp({email, enteredOtp })
             .then((res) => {
                 setColor('green')
                 setMessage("OTP verified");//popup should be added
@@ -52,7 +54,6 @@ const ForgotForm = () => {
                 setVerified(false);
                 setEnteredOtp("");
                 setResendOtp(false);
-                setOtpSent(false);
             });
     };
 
@@ -78,11 +79,9 @@ const ForgotForm = () => {
             return;
         }
 
-        await updatePassword({ })
+        await updatePassword({email, password, confirmPassword})
             .then((res) => {
-                setColor('green')
-                setMessage("Password Updated");
-                setOtpSent(true);
+                setOtpSent(true);   
             })
             .catch((err) => {
                 setColor('red')
@@ -90,12 +89,12 @@ const ForgotForm = () => {
                 setResendOtp(true);
             });
         setColor('green')
-        setMessage("Password updated successfully.");
+        setMessage("Password updated successfully.");//popup should be added
 
-        // Redirect to login page after a few seconds
-        // setTimeout(() => {
-        //     navigate("/login");
-        // }, 2000);
+        //Redirect to login page after a few seconds
+        setTimeout(() => {
+            navigate("http://localhost:5173/");
+        }, 2000);
     }
 
     return (

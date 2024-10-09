@@ -76,8 +76,8 @@ const sendOTP= async(req,res)=>{
 //otp verifivation and 
 const otpVerification= async(req,res)=>
 {
-  const {email,otp}=req.body
-  if(!email || !otp)
+  const {email,enteredOtp}=req.body
+  if(!email || !enteredOtp)
   {
     return res.status(StatusCodes.BAD_REQUEST).json({success:false, messsage:'email and otp is required'})
   }
@@ -86,9 +86,9 @@ const otpVerification= async(req,res)=>
   {
     return res.status(StatusCodes.BAD_REQUEST).json({success:false,message:'User email data not found'})
   }
-  if(user.otp===otp)
+  if(user.otp===enteredOtp)
   {
-    return res.status(StatusCodes.OK).json({success:true,email:user.email,otp})
+    return res.status(StatusCodes.OK).json({success:true,email:user.email,enteredOtp})
   }
   else{
     return res.status(StatusCodes.BAD_REQUEST).json({success:false,message:"Otp is invalid, please enter valid OTP"})

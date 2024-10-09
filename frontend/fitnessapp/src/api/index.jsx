@@ -6,6 +6,11 @@ const API = axios.create({
 
 export const UserSignUp = async (data) => await API.post("/register", data);
 export const UserSignIn = async (data) => await API.post("/login", data);
+export const sendOtp = async (data) => await API.post("/forgetPassword",data);
+export const verifyOtp = async (data) => await API.post("/verifyOtp",data);
+export const updatePassword = async(data) => await API.post("/updatePassword",data);
+
+
 
 export const getDashboardDetails = async (token) =>
   API.get("/user/dashboard", {

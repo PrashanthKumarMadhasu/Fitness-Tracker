@@ -26,25 +26,26 @@ function App() {
   const { currentUser } = useSelector((state) => state.user);
 
   return (
-    // <ThemeProvider theme={lightTheme}>
-    //   <BrowserRouter>
-    //     {currentUser ? (
-    //       <Container>
-    //         <Navbar  />
-    //         <Routes>
-    //           <Route path="/" exact element={<Dashboard />} />
-    //           <Route path="/workouts" exact element={<Workouts/>} />
-    //           <Route path="/forgot-password" element={<ForgotForm/>} />  
-    //         </Routes>
-    //       </Container>
-    //     ) : (
-    //       <Container>
-    //         <Authentication />
-    //       </Container>
-    //     )}
-    //   </BrowserRouter>
-    // </ThemeProvider>
-    <ForgotForm/>
+    <ThemeProvider theme={lightTheme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/forgot-password" element={<ForgotForm/>} />
+        </Routes>
+        {currentUser ? (
+          <Container>
+            <Navbar  />
+            <Routes>
+              <Route path="/" exact element={<Dashboard />} />
+              <Route path="/workouts" exact element={<Workouts/>} />  
+            </Routes>
+          </Container>
+        ) : (
+          <Container>
+            <Authentication />
+          </Container>
+        )}
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
