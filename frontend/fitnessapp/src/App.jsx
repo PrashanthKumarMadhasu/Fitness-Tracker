@@ -7,7 +7,12 @@ import { useSelector } from "react-redux";
 import Navbar from "./Components/Navbar";
 import Dashboard from "./Pages/Dashboard";
 import Workouts from "./pages/Workouts";
+import Tutorials from "./Pages/Tutorials";
+import Blogs from "./Pages/Blogs";
+import Bmi from "./Components/BMI/Bmi";
+import Contact from "./Pages/Contact";
 import ForgotForm from "./Components/ForgotPassword/ForgotForm";
+import Dropdowns from "./Components/Cards/Dropdowns";
 
 const Container = styled.div`
   width: 100%;
@@ -36,7 +41,12 @@ function App() {
             <Navbar currentUser={currentUser} />
             <Routes>
               <Route path="/" exact element={<Dashboard />} />
-              <Route path="/workouts" exact element={<Workouts/>} />  
+              <Route path="/workouts" exact element={<Workouts/>} />
+              <Route path="/tutorials" exact element={<Tutorials/>} />
+              <Route path="/blogs" exact element={<Blogs/>} />
+              <Route path="/bmi" exact element={<Bmi/>} /> 
+              <Route path="/contact" exact element={<Contact/>} /> 
+              <Route path="/dropdown" exact element={<Dropdowns/>}/>
             </Routes>
           </Container>
         ) : (

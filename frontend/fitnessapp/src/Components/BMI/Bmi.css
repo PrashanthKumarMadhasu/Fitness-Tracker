@@ -11,10 +11,11 @@
     /* border: #007bff 2px solid; */
 }
 
-.header{
+.header-bmi{
     color: #18b918;
     text-align: center;
     margin-bottom: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', sans-serif;
 }
 
 .input-container{
@@ -37,11 +38,22 @@ input[type="number"] {
     display: flex;
 }
 
-.btn{
-    font-size: 16px;
+
+.calculate-button{
+    padding: 1rem 1.5rem;
     width: 100%;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
+.calculate-button:hover{
+    background-color: #286fbb;
+}
 .refresh{
     margin-left: 10px;
     font-size: 20px;

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import './Bmi.css'
 import { HiRefresh } from "react-icons/hi";
 
-export const Bmi = () => {
+const Bmi = () => {
 
   const [height,setHeight] = useState("");
   const [weight,setWeight] = useState("");
@@ -42,7 +42,7 @@ export const Bmi = () => {
   }
   return (
     <div className="bmi-calculator">
-        <h1 className='header'>BMI Calculator </h1>
+        <h1 className='header-bmi'>BMI Calculator </h1>
         <div className='input-container'> 
           <label htmlFor="height">Enter your height in (cm):</label>
           <input type="number" name="height" value={height} onChange={(e)=>setHeight(e.target.value)}/>
@@ -52,7 +52,7 @@ export const Bmi = () => {
           <input type="number" step="0.1" name="weight" value={weight} onChange={(e)=>setWeight(e.target.value)}/>
         </div>
         <div className='calculate-refresh'>
-        <button type="button" class="btn btn-primary" onClick={calculateBmi}>Calculate BMI</button>
+        <button type="button" class="calculate-button" onClick={calculateBmi}>Calculate BMI</button>
         <button type="button" class="refresh" onClick={resetBmi} ><HiRefresh /></button>
         </div>
         {bmiValue && bmiMessage &&(
@@ -65,3 +65,5 @@ export const Bmi = () => {
     </div>
   )
 }
+
+export default Bmi;

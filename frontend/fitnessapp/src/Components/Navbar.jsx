@@ -40,7 +40,7 @@ const NavLogo = styled(LinkR)`
   gap: 16px;
   padding: 0 6px;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 25px;
   text-decoration: none;
   color: ${({ theme }) => theme.black};
 `;
@@ -84,6 +84,16 @@ const Navlink = styled(NavLink)`
     color: ${({ theme }) => theme.primary};
     border-bottom: 1.8px solid ${({ theme }) => theme.primary};
   }
+
+  @media screen and (min-width: 768px) {
+    &:hover {
+      transform:scale(1.15);
+    }
+  }
+`;
+
+const Header_text = styled.span`
+  color:#007bff;
 `;
 
 const UserContainer = styled.div`
@@ -141,7 +151,7 @@ const Navbar = ({currentUser}) => {
         </Mobileicon>
         <NavLogo to="/">
           <Logo src={LogoImg} />
-          Fittrack
+          <p>fit<Header_text>N</Header_text>est</p>
         </NavLogo>
 
         <MobileMenu isOpen={isOpen}>
@@ -149,15 +159,17 @@ const Navbar = ({currentUser}) => {
           <Navlink to="/workouts">Workouts</Navlink>
           <Navlink to="/tutorials">Tutorials</Navlink>
           <Navlink to="/blogs">Blogs</Navlink>
+          <Navlink to="/bmi">BMI</Navlink>
           <Navlink to="/contact">Contact</Navlink>
         </MobileMenu>
 
         <NavItems>
           <Navlink to="/">Dashboard</Navlink>
           <Navlink to="/workouts">Workouts</Navlink>
-          <Navlink to="#">Tutorials</Navlink>
-          <Navlink to="#">Blogs</Navlink>
-          <Navlink to="#">Contact</Navlink>
+          <Navlink to="/tutorials">Tutorials</Navlink>
+          <Navlink to="/blogs">Blogs</Navlink>
+          <Navlink to="/bmi">BMI</Navlink>
+          <Navlink to="/contact">Contact</Navlink>
         </NavItems>
 
         <UserContainer>

@@ -1,0 +1,87 @@
+
+.dropbtn{
+  height: 30px;
+  width: 150px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+
+
+.first-level, .second-level, .third-level {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.first-level > li {
+  padding-left: 5px;
+  height: 30px;
+  width: 150px;
+  background: #999999;
+  position: relative; /* Add relative positioning */
+}
+
+.second-level > li {
+  padding-left: 5px;
+  height: 30px;
+  width: 150px;
+  background: #999999;
+  position: relative; /* Add relative positioning */
+}
+
+.third-level > li {
+  padding-left: 5px;
+  width: 150px;
+  background: #999999;
+}
+
+.first-level > li:hover {
+  background: #CCCCCC;
+}
+
+.first-level li:hover > ul {
+  /* On hover, display the next level's menu */
+  display: inline;
+}
+
+.second-level {
+  display: none; /* Initially hide */
+  top: 0; /* Align with the hovered first-level item */
+  height: 30px;
+  width: 150px;
+  position: absolute;
+}
+
+.first-level > li:hover > .second-level {
+  display: block; /* Show second-level on hover */
+  position: absolute;
+  left: 150px; /* Position to the right of first-level */
+  top: 0; /* Align at the same height as the hovered first-level item */
+}
+
+.third-level {
+  display: none; /* Initially hide */
+  top: 0;
+  height: 30px;
+  width: 150px;
+  position: absolute;
+}
+
+.second-level > li:hover > .third-level {
+  display: block; /* Show third-level on hover */
+  position: absolute;
+  left: 150px; /* Position to the right of second-level */
+  top: 0; /* Align at the same height as the hovered second-level item */
+}
+
+li {
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
+}
