@@ -90,19 +90,17 @@ const Dashboard = () => {
     });
   };
 
-  const addNewWorkout = async () => {
+  const addNewWorkout = async (newWorkout) => {
     setButtonLoading(true);
     const token = localStorage.getItem("fittrack-app-token");
-    await addWorkout(token, { workoutString: workout })
+    await addWorkout(token, { newWorkout: newWorkout })
       .then((res) => {
         dashboardData();
         getTodaysWorkout();
-        setButtonLoading(false);
-        // console.log(workout);
+        // setButtonLoading(false);
       })
       .catch((err) => {
         alert(err);
-        // console.log(workout);
       });
   };
 

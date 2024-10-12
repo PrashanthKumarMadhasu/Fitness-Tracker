@@ -67,10 +67,9 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
   };
 
   const handleWorkout =()=>{
-    // const sample = {...inputValues}
-    // console.log(sample)
-    setWorkout(...inputValues);
-    addNewWorkout();
+    const sample = {...inputValues,exercise:selectedExercise};
+    addNewWorkout(sample);
+    
   }
   return (
     <Card>
@@ -82,11 +81,11 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
         {isOpen && (
           <div>
             <ul className="first-level">
-              {WorkoutData.map((workout, workoutIndex) => (
+              {WorkoutData.map((workoutItem, workoutIndex) => (
                 <li key={workoutIndex}>
-                  {workout[0]} {/* First level: upperbody, lowerbody, etc. */}
+                  {workoutItem[0]} {/* First level: upperbody, lowerbody, etc. */}
                   <ul className="second-level">
-                    {workout[1].map((group, groupIndex) => (
+                    {workoutItem[1].map((group, groupIndex) => (
                       <li key={groupIndex}>
                         {group[0]} {/* Second level: Chest, Back, etc. */}
                         <ul className="third-level">
@@ -130,8 +129,8 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
         text="Add Workout"
         small
         onClick={handleWorkout}
-        isLoading={buttonLoading}
-        isDisabled={buttonLoading}
+        // isLoading={buttonLoading}
+        // isDisabled={buttonLoading}
       />
     </Card>
   );

@@ -11,6 +11,7 @@ import Tutorials from "./Pages/Tutorials";
 import Blogs from "./Pages/Blogs";
 import Bmi from "./Components/BMI/Bmi";
 import Contact from "./Pages/Contact";
+import SplashScreen from "./Components/SplashScreen/SplashScreen";
 import ForgotForm from "./Components/ForgotPassword/ForgotForm";
 import Dropdowns from "./Components/Cards/Dropdowns";
 
@@ -34,19 +35,20 @@ function App() {
     <ThemeProvider theme={lightTheme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/forgot-password" element={<ForgotForm/>} />
+          {currentUser ? <Route path="/splash" exact element={<SplashScreen />}></Route>
+            : <Route path="/forgot-password" element={<ForgotForm />} />}
         </Routes>
         {currentUser ? (
           <Container>
             <Navbar currentUser={currentUser} />
             <Routes>
               <Route path="/" exact element={<Dashboard />} />
-              <Route path="/workouts" exact element={<Workouts/>} />
-              <Route path="/tutorials" exact element={<Tutorials/>} />
-              <Route path="/blogs" exact element={<Blogs/>} />
-              <Route path="/bmi" exact element={<Bmi/>} /> 
-              <Route path="/contact" exact element={<Contact/>} /> 
-              <Route path="/dropdown" exact element={<Dropdowns/>}/>
+              <Route path="/workouts" exact element={<Workouts />} />
+              <Route path="/tutorials" exact element={<Tutorials />} />
+              <Route path="/blogs" exact element={<Blogs />} />
+              <Route path="/bmi" exact element={<Bmi />} />
+              <Route path="/contact" exact element={<Contact />} />
+              <Route path="/dropdown" exact element={<Dropdowns />} />
             </Routes>
           </Container>
         ) : (

@@ -6,9 +6,14 @@ import { MenuRounded } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/reducers/userSlice";
+import Profile from "../Pages/Profile"
 import Avatarlogo from "./Assets/avatar.png";
+import { addProfileData } from "../api";
 
 
+const ProfileIcon = styled.div`
+  cursor:pointer;
+`;
 const Nav = styled.div`
   background-color: ${({ theme }) => theme.bg};
   padding:0 20px;
@@ -94,6 +99,7 @@ const Navlink = styled(NavLink)`
 
 const Header_text = styled.span`
   color:#007bff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); 
 `;
 
 const UserContainer = styled.div`
@@ -140,9 +146,60 @@ const MobileMenu = styled.ul`
   z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1000")};
 `;
 
-const Navbar = ({currentUser}) => {
+
+const Navbar = ({ currentUser }) => {
+
+  const handleProfileModal = () => {
+    setIsModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  
+  const updateProfile = async (updatedProfile) => {
+    updatedProfile.profilePic = profilePic; // Add Base64 image
+    // console.log("Updated Profile:", updatedProfile);
+    const token = localStorage.getItem("fittrack-app-token");
+    await addProfileData(token, { updatedProfile })
+      .then((res) => {
+        dashboardData();
+        getTodaysWorkout();
+        closeModal(); // Close modal after successful update
+      })
+      .catch((err) => {
+        alert(err);
+        console.log("api not added");
+      });
+  };
+
+  const handleProfilePicChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onloadend = () => {
+      setProfilePic(reader.result); // Update the profilePic state with base64 string
+    };
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  
   const dispatch = useDispatch();
   const [isOpen, setisOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [profilePic, setProfilePic] = useState("");
+  const initialProfile = {
+    username: currentUser.name,
+    email: "johndoe@gmail.com",
+    height: 180,
+    weight: 75,
+    dob: "1990-01-01",
+    profilePic: '',
+  };
+
   return (
     <Nav>
       <NavContainer>
@@ -173,7 +230,19 @@ const Navbar = ({currentUser}) => {
         </NavItems>
 
         <UserContainer>
-          <Avatar src={currentUser?.img}>{currentUser?.name}</Avatar>
+          <ProfileIcon onClick={handleProfileModal}>
+          <Avatar src={initialProfile.profilePic || Avatarlogo}>{currentUser?.name}</Avatar>
+          </ProfileIcon>
+          {isModalOpen && (
+            <Profile
+              isModalOpen={isModalOpen}
+              onClose={closeModal}
+              userProfile={initialProfile}
+              updateProfile={updateProfile}
+              handleProfilePicChange={handleProfilePicChange} 
+              profilePic={profilePic}
+            />
+          )}
           <TextButton onClick={() => dispatch(logout())}>Logout</TextButton>
         </UserContainer>
       </NavContainer>

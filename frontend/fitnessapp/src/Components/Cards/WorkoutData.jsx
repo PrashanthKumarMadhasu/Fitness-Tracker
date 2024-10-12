@@ -13,7 +13,7 @@ export const WorkoutData = [
     "lowerbody",
     [
       ["Quadriceps", ["Squats", "Leg Press", "Lunges", "Bulgarian Split Squats", "Step-Ups"]],
-      ["Hamstrings", ["Deadlifts ", "Hamstring Curls", "Good Mornings"]],
+      ["Hamstrings", ["Romanian Deadlifts", "Hamstring Curls", "Good Mornings"]],
       ["Glutes", ["Hip Thrusts", "Glute Bridge", "Cable Kickbacks"]],
       ["Calves", ["Calf Raises", "Seated Calf Raises"]]
     ]
@@ -76,7 +76,7 @@ export const exerciseDetail = {
   "Lunges": { weight: null, sets: null, reps: null },
   "Bulgarian Split Squats": { weight: null, sets: null, reps: null },
   "Step-Ups": { weight: null, sets: null, reps: null },
-  "Deadlifts": { weight: null, sets: null, reps: null },
+  "Romanian Deadlifts": { weight: null, sets: null, reps: null },
   "Hamstring Curls": { weight: null, sets: null, reps: null },
   "Good Mornings": { weight: null, sets: null, reps: null },
   "Hip Thrusts": { weight: null, sets: null, reps: null },
