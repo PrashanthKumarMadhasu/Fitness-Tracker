@@ -5,9 +5,12 @@ const router =express.Router()
 const {homepage,getAllUsers,register,login,deleteUsers}=require('../controllers/tasks');
 const {otpVerification,sendOTP,updatePassword}=require('../controllers/otpContoller')
 
+const {getDataByKeyword}=require('../controllers/youtubeDataAPI')
+
 const {addWorkout} =require('../controllers/addWorkout')
 
-const authMiddleware=require('../middlewares/auth')
+const authMiddleware=require('../middlewares/auth');
+const { getProfileData,updateProfileData } = require('../controllers/userProfile')
 //get API
 router.route('/').get(homepage);
 router.route('/getAllUsers').get(getAllUsers);
@@ -24,15 +27,20 @@ router.route('/updatePassword').post(updatePassword);
 
 
 //
-
+router.route('/tutorials/:keyword').get(getDataByKeyword)
 //router.route('/dashboard').post(authMiddleware,getDashboard)
 
+router.route('/getProfileData/:userId').get(authMiddleware,getProfileData)
+router.route('/updateProfileData').put(authMiddleware,updateProfileData)
 
-
-//router.route('/addWorkout').post(addWorkout);
+//router.route('/addWorkout').post(authMiddleware,addWorkout);
 
 //put API's
 
+
+
+//PaymentGateway UPI Transaction:
+//router.route('phonepe/pay').post(paymentGateway)
 
 
 //Delete Operation

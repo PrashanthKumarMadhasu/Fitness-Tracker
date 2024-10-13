@@ -1,0 +1,9 @@
+//mongodb+srv://PrashanthKumar:MongoFit@123@fitnest.n7qr4.mongodb.net/fitness-tracker?retryWrites=true&w=majority&appName=FitNest
+
+//Api development
+
+--->Add WorkOut details Api
+    =>Save the data in to the DB
+    =>Total No Of Workouts Today
+    =>Average Calories burned on each Workouts
+    =>Calories Burned for whole day

@@ -3,7 +3,7 @@ const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken')
 
 const RegisterSchema= mongoose.Schema({
-    fullname:{
+    userName:{
         type:String,
         required:[true,'Name is mandatory'],
         maxlength:[50, `full can't be more than 50 letters`]

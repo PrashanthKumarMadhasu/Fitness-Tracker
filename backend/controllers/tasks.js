@@ -1,4 +1,5 @@
 const RegisterDetails=require('../models/register')
+const UserProfile=require('../models/profileData')
 const {StatusCodes, BAD_REQUEST} =require('http-status-codes')
 const jwr=require('jsonwebtoken');
 // const { use } = require('react');
@@ -14,9 +15,30 @@ const getAllUsers= async(req,res)=>{
 }
 
 const register= async(req,res)=>{
-    const user= await RegisterDetails.create({...req.body})
-    const token=user.createJWT()
-    res.status(StatusCodes.CREATED).json({user:{name:user.fullname},token})
+
+    try 
+    {
+        const user= await RegisterDetails.create({...req.body})
+        const profileData=
+        {
+            userId:user._id,
+            userName: user.userName,
+            email: user.email,
+            height: null,
+            weight: null,
+            dob: "2001-03-26",
+            profilePic: null,
+        }
+        const userProfile= await UserProfile.create({...profileData,user:user.userId})
+        const token=user.createJWT()
+        return res.status(StatusCodes.CREATED).json({success:true,user:user.userName,token})
+        
+    } catch (error) 
+    {
+        return res.status(StatusCodes.BAD_GATEWAY).json({success:false,message:error.message})
+    }
+
+   
 }
 
 //getUserDashboard

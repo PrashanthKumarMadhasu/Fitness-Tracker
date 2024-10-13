@@ -1,6 +1,8 @@
 const {RegisterDetails} =require('../models/register')
 const {StatusCodes}=require("http-status-codes")
-export const getUserDashboard=async( req,res,next)=>
+
+
+const getUserDashboard=async( req,res,next)=>
 {
     try 
     {
@@ -37,3 +39,15 @@ export const getUserDashboard=async( req,res,next)=>
     }
 
 }
+
+const addWorkoutDetails= async( req,res,next)=>
+{
+  const {category,subCategory,duration, calories}=req.body
+
+}
+
+
+
+
+
+module.exports={getUserDashboard,addWorkoutDetails}

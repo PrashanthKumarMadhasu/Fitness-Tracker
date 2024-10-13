@@ -5,14 +5,9 @@ const WorkOutSchema= new mongoose.Schema(
 {
     user:
     {
-        type:mongoose.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,  
         ref:"RegisterDetails",
         required:true
-    },
-    category:
-    {
-        type:String,
-        rewuired:true   
     },
     WorkoutName:
     {
@@ -33,6 +28,10 @@ const WorkOutSchema= new mongoose.Schema(
         type:Number
     },
     duration:
+    {
+        type:Number
+    },
+    speed:
     {
         type:Number
     },
