@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import LogoImg from "./Assets/gym.png";
 import { Link as LinkR, NavLink } from "react-router-dom";
@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../redux/reducers/userSlice";
 import Profile from "../Pages/Profile"
 import Avatarlogo from "./Assets/avatar.png";
-import { addProfileData } from "../api";
+import { getProfileData, updateProfileData } from "../api";
 
 
 const ProfileIcon = styled.div`
@@ -155,13 +155,27 @@ const Navbar = ({ currentUser }) => {
   
   const closeModal = () => {
     setIsModalOpen(false);
+    
   };
   
+  useEffect(async () => {
+    const fetchProfileData = async () => {
+      try {
+        const token = localStorage.getItem("fittrack-app-token");
+        const res = await getProfileData(token, currentUser.userId);
+        setProfileData(res.data); // Save the fetched profile data
+      } catch (err) {
+        console.error("Failed to fetch profile data:", err);
+      }
+    };
+    fetchProfileData();
+  }, [currentUser]);
+
   const updateProfile = async (updatedProfile) => {
     updatedProfile.profilePic = profilePic; // Add Base64 image
     // console.log("Updated Profile:", updatedProfile);
     const token = localStorage.getItem("fittrack-app-token");
-    await addProfileData(token, { updatedProfile })
+    await updateProfileData(token, { updatedProfile })
       .then((res) => {
         dashboardData();
         getTodaysWorkout();
@@ -191,13 +205,15 @@ const Navbar = ({ currentUser }) => {
   const [isOpen, setisOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
+  const [profileData, setProfileData] = useState(null);
   const initialProfile = {
-    username: currentUser.name,
-    email: "johndoe@gmail.com",
-    height: 180,
-    weight: 75,
-    dob: "1990-01-01",
-    profilePic: '',
+    userId:currentUser.userId,
+    username: profileData.userName,
+    email: profileData.email || '',
+    height: profileData.height || '',
+    weight: profileData.weight || '',
+    dob: profileData.dob ||"1990-01-01",
+    profilePic: profileData.img || '',
   };
 
   return (

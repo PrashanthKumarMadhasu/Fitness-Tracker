@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
+import { RiCloseLargeFill } from "react-icons/ri";
+import Button from "../Components/Button";
 
 const ModalWrapper = styled.div`
   display: ${({ isModalOpen }) => (isModalOpen ? "block" : "none")};
@@ -15,7 +17,7 @@ const ModalWrapper = styled.div`
 const ModalContent = styled.div`
   background: #fff;
   width: 400px;
-  margin: 100px auto;
+  float:right;
   padding: 20px;
   border-radius: 10px;
 `;
@@ -24,6 +26,7 @@ const ProfileImage = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  border-radius:50%;
 `;
 
 const ProfileImageInput = styled.input`
@@ -33,7 +36,10 @@ const ProfileImageInput = styled.input`
 const ProfileLabel = styled.label`
   background: #eee;
   padding: 10px;
+  width:auto;
   cursor: pointer;
+  border-radius:10px;
+  text-align:center;
 `;
 
 const Input = styled.input`
@@ -44,8 +50,18 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
-const Button = styled.button`
-  margin-right: 10px;
+// const Button = styled.button`
+//   border-radius:5px;
+//   background-color:#007bff;
+//   padding:
+//   width:100%;
+// `;
+const CloseIcon = styled.div`
+  postion:relative;
+  float:right;
+  color:red;
+  font-size:20px;
+  font-weight:bolder;
 `;
 
 const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfilePicChange, profilePic }) => {
@@ -75,11 +91,11 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
     return (
         <ModalWrapper isModalOpen={isModalOpen}>
             <ModalContent>
+                <CloseIcon><RiCloseLargeFill onClick={onClose} /></CloseIcon>
                 <form onSubmit={handleSubmit}>
                     <ProfileImage>
-                        {/* Image Preview */}
                         <img
-                            src={formData.profilePic|| 'https://via.placeholder.com/150'}
+                            src={formData.profilePic || 'https://via.placeholder.com/150'}
                             alt="Profile Preview"
                             width="150"
                             height="150"
@@ -124,8 +140,11 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
                         value={formData.dob}
                         onChange={handleChange}
                     />
-                    <Button type="submit" onClick={onClose}>Update Profile</Button>
-                    <Button type="button" onClick={onClose}>Close</Button>
+                    <Button
+                        text="Update Profile"
+                        small
+                        onClick={onClose}
+                    />
                 </form>
             </ModalContent>
         </ModalWrapper>

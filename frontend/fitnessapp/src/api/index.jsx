@@ -6,9 +6,9 @@ const API = axios.create({
 
 export const UserSignUp = async (data) => await API.post("/register", data);
 export const UserSignIn = async (data) => await API.post("/login", data);
-export const sendOtp = async (data) => await API.post("/forgetPassword",data);
-export const verifyOtp = async (data) => await API.post("/verifyOtp",data);
-export const updatePassword = async(data) => await API.post("/updatePassword",data);
+export const sendOtp = async (data) => await API.post("/forgetPassword", data);
+export const verifyOtp = async (data) => await API.post("/verifyOtp", data);
+export const updatePassword = async (data) => await API.post("/updatePassword", data);
 
 
 
@@ -27,7 +27,12 @@ export const addWorkout = async (token, data) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
-export const addProfileData = async(token, data) =>
-  await API.post(`/profiledata`, data, {
+export const updateProfileData = async (token, data) =>
+  await API.post(`/updateProfileData`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+export const getProfileData = async (token, userId) =>
+  await API.get(`/getProfileData/${userId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });

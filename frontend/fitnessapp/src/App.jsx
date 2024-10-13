@@ -2,7 +2,7 @@ import { ThemeProvider, styled } from "styled-components";
 import { lightTheme } from "./Utils/Theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Authentication from "./Pages/Authentication";
-//import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./Components/Navbar";
 import Dashboard from "./Pages/Dashboard";
@@ -30,27 +30,41 @@ const Container = styled.div`
 function App() {
 
   const { currentUser } = useSelector((state) => state.user);
+  const [showSplash, setShowSplash] = useState(false);
+  
+  useEffect(() => {
+    if (currentUser) {
+      setShowSplash(true);
+      const timer = setTimeout(() => {
+        setShowSplash(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [currentUser]);
 
   return (
     <ThemeProvider theme={lightTheme}>
       <BrowserRouter>
-        <Routes>
-          {currentUser ? <Route path="/splash" exact element={<SplashScreen />}></Route>
-            : <Route path="/forgot-password" element={<ForgotForm />} />}
+      <Routes>
+          {!currentUser && <Route path="/forgot-password" element={<ForgotForm />} />}
         </Routes>
         {currentUser ? (
-          <Container>
-            <Navbar currentUser={currentUser} />
-            <Routes>
-              <Route path="/" exact element={<Dashboard />} />
-              <Route path="/workouts" exact element={<Workouts />} />
-              <Route path="/tutorials" exact element={<Tutorials />} />
-              <Route path="/blogs" exact element={<Blogs />} />
-              <Route path="/bmi" exact element={<Bmi />} />
-              <Route path="/contact" exact element={<Contact />} />
-              <Route path="/dropdown" exact element={<Dropdowns />} />
-            </Routes>
-          </Container>
+          showSplash ? (
+            <SplashScreen />
+          ) : (
+            <Container>
+              <Navbar currentUser={currentUser} />
+              <Routes>
+                <Route path="/" exact element={<Dashboard />} />
+                <Route path="/workouts" exact element={<Workouts />} />
+                <Route path="/tutorials" exact element={<Tutorials />} />
+                <Route path="/blogs" exact element={<Blogs />} />
+                <Route path="/bmi" exact element={<Bmi />} />
+                <Route path="/contact" exact element={<Contact />} />
+                <Route path="/dropdown" exact element={<Dropdowns />} />
+              </Routes>
+            </Container>
+          )
         ) : (
           <Container>
             <Authentication />

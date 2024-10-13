@@ -26,7 +26,6 @@ const LoginForm = () => {
             .then((res) => {
                 console.log('API Response:', res);
                 dispatch(loginSuccess(res.data));
-                alert("Login Success");
             })
             .catch((err) => {
                 console.error('API Error:', err.response);

@@ -1,7 +1,31 @@
 https://github.com/rishavchanda/FItnessTrack
 
 
+*register-API{convert fullName=userName}
 
-AddWorkout Field
+*ProfileData
+--------------------
+updatedProfile() = {
+    username: currentUser.name,
+    email: "johndoe@gmail.com",
+    height: 180,
+    weight: 75,
+    dob: "1990-01-01",
+    profilePic: '',
+  };
 
+*Dropdown
+--------------------
+addnewWorkout(token,newWorkout) = {
+    exercise:'',
+    sets:'',
+    reps:'',
+    weight:'',
+    speed:'',
+    distance:'',
+    time:'',
+}
+
+
+*1st time User{when adding workout -send alert for height & weight values}
 

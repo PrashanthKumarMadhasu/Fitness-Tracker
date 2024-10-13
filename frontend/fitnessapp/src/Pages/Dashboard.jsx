@@ -95,8 +95,8 @@ const Dashboard = () => {
     const token = localStorage.getItem("fittrack-app-token");
     await addWorkout(token, { newWorkout: newWorkout })
       .then((res) => {
-        dashboardData();
-        getTodaysWorkout();
+        // dashboardData();
+        // getTodaysWorkout();
         // setButtonLoading(false);
       })
       .catch((err) => {
@@ -108,6 +108,8 @@ const Dashboard = () => {
     dashboardData();
     getTodaysWorkout();
   }, []);
+
+  
   return (
     <Container>
       <Wrapper>
