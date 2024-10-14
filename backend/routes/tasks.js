@@ -33,7 +33,7 @@ router.route('/tutorials/:keyword').get(getDataByKeyword)
 router.route('/getProfileData/:userId').get(authMiddleware,getProfileData)
 router.route('/updateProfileData').put(authMiddleware,updateProfileData)
 
-//router.route('/addWorkout').post(authMiddleware,addWorkout);
+router.route('/addWorkout').post(authMiddleware,addWorkout);
 
 //put API's
 
