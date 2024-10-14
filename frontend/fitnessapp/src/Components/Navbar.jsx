@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect} from "react";
 import styled from "styled-components";
 import LogoImg from "./Assets/gym.png";
 import { Link as LinkR, NavLink } from "react-router-dom";
@@ -9,6 +9,7 @@ import { logout } from "../redux/reducers/userSlice";
 import Profile from "../Pages/Profile"
 import Avatarlogo from "./Assets/avatar.png";
 import { getProfileData, updateProfileData } from "../api";
+import {PropTypes} from "prop-types"
 
 
 const ProfileIcon = styled.div`
@@ -158,33 +159,42 @@ const Navbar = ({ currentUser }) => {
     
   };
   
-  useEffect(async () => {
+  useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const token = localStorage.getItem("fittrack-app-token");
-        const res = await getProfileData(token, currentUser.userId);
-        setProfileData(res.data); // Save the fetched profile data
+        const res = await getProfileData(token, currentUser.id);
+        console.log(res.data.data)
+        setProfileData(res.data.data); // Save the fetched profile data
       } catch (err) {
+        console.log(err)
         console.error("Failed to fetch profile data:", err);
       }
     };
     fetchProfileData();
   }, [currentUser]);
 
-  const updateProfile = async (updatedProfile) => {
-    updatedProfile.profilePic = profilePic; // Add Base64 image
-    // console.log("Updated Profile:", updatedProfile);
-    const token = localStorage.getItem("fittrack-app-token");
-    await updateProfileData(token, { updatedProfile })
-      .then((res) => {
-        dashboardData();
-        getTodaysWorkout();
-        closeModal(); // Close modal after successful update
-      })
-      .catch((err) => {
-        alert(err);
-        console.log("api not added");
-      });
+  const updateProfile = async (updateProfile) => {
+    try {
+      updateProfile.userId=currentUser.id;
+      updateProfile.profilePic = profilePic; // Add Base64 image
+      console.log(updateProfile)
+      const token = localStorage.getItem("fittrack-app-token");
+  
+      if (!token) {
+        throw new Error("Token not found");
+      }
+  
+      const res = await updateProfileData(token, updateProfile );
+  
+      console.log(res.data.data);
+      setProfileData(res.data.data); // Update profile data in state
+      closeModal(); // Close modal after successful update
+  
+    } catch (err) {
+      alert("Failed to update profile: " + err.message);
+      console.log("API error:", err);
+    }
   };
 
   const handleProfilePicChange = (e) => {
@@ -205,16 +215,27 @@ const Navbar = ({ currentUser }) => {
   const [isOpen, setisOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
-  const [profileData, setProfileData] = useState(null);
-  const initialProfile = {
-    userId:currentUser.userId,
-    username: profileData.userName,
-    email: profileData.email || '',
-    height: profileData.height || '',
-    weight: profileData.weight || '',
-    dob: profileData.dob ||"1990-01-01",
-    profilePic: profileData.img || '',
-  };
+  const [profileData, setProfileData] = useState({
+    userId:currentUser.id,
+    userName: 'siva', // Set initial state to an empty string
+    email: 'siva@gmail.com',
+    height: '0',
+    weight: '0',
+    dob: '00-00.00',
+    profilePic: null
+  });
+  const initialProfile=profileData
+  // const initialProfile = {
+  //   userId:currentUser.id,
+  //   userName: profileData?profileData.userName:'username',
+  //   email: profileData?profileData.email:'email',
+  //   height: profileData?profileData.height:'0',
+  //   weight: profileData?profileData.weight:'0',
+  //   dob: profileData?profileData.dob:'2001-03-2001',
+  //   profilePic: profileData?profileData.profilePic:'',
+   
+
+  // };
 
   return (
     <Nav>
@@ -247,7 +268,7 @@ const Navbar = ({ currentUser }) => {
 
         <UserContainer>
           <ProfileIcon onClick={handleProfileModal}>
-          <Avatar src={initialProfile.profilePic || Avatarlogo}>{currentUser?.name}</Avatar>
+          <Avatar src={initialProfile.profilePic || Avatarlogo}>{currentUser.email}</Avatar>
           </ProfileIcon>
           {isModalOpen && (
             <Profile
@@ -265,6 +286,14 @@ const Navbar = ({ currentUser }) => {
     </Nav>
   );
 };
+
+Navbar.propTypes = {
+  currentUser:PropTypes.any,
+  id: PropTypes.any,
+  email:PropTypes.any
+
+};
+
 
 export default Navbar;
 

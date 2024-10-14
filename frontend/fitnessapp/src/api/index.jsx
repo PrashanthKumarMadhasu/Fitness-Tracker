@@ -28,7 +28,7 @@ export const addWorkout = async (token, data) =>
   });
 
 export const updateProfileData = async (token, data) =>
-  await API.post(`/updateProfileData`, data, {
+  await API.put(`/updateProfileData`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

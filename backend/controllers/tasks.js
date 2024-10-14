@@ -31,7 +31,7 @@ const register= async(req,res)=>{
         }
         const userProfile= await UserProfile.create({...profileData,user:user.userId})
         const token=user.createJWT()
-        return res.status(StatusCodes.CREATED).json({success:true,user:user.userName,token})
+        return res.status(StatusCodes.CREATED).json({success:true,user:{id:user._id,email:user.email},token})
         
     } catch (error) 
     {

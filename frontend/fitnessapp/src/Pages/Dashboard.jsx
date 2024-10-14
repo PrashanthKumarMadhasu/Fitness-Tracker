@@ -104,10 +104,10 @@ const Dashboard = () => {
       });
   };
 
-  useEffect(() => {
-    dashboardData();
-    getTodaysWorkout();
-  }, []);
+  // useEffect(() => {
+  //   dashboardData();
+  //   getTodaysWorkout();
+  // }, []);
 
   
   return (

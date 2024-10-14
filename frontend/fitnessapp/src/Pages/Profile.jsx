@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { RiCloseLargeFill } from "react-icons/ri";
-import Button from "../Components/Button";
+//import Button from "../Components/Button";
 
 const ModalWrapper = styled.div`
   display: ${({ isModalOpen }) => (isModalOpen ? "block" : "none")};
@@ -85,6 +85,7 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("the formDat or updated profile Data",formData)
         updateProfile(formData); // Pass updated profile data
     };
 
@@ -108,8 +109,8 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
                     </ProfileLabel>
                     <Input
                         type="text"
-                        name="username"
-                        value={formData.username}
+                        name="userName"
+                        value={formData.userName}
                         onChange={handleChange}
                         placeholder="Username"
                     />
@@ -140,11 +141,13 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
                         value={formData.dob}
                         onChange={handleChange}
                     />
-                    <Button
+                    {/* <Button
+                        type='submit'
                         text="Update Profile"
                         small
                         onClick={onClose}
-                    />
+                    /> */}
+                    <button type='submit' style={{width:"100%",height:"30px", backgroundColor:"lightblue",color:'yellow'}}>Update Profile</button>
                 </form>
             </ModalContent>
         </ModalWrapper>
