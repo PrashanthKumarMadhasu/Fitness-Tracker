@@ -50,7 +50,7 @@ const updateProfileData=async(req,res)=>
         return res.status(StatusCodes.CREATED).json({success:true,data:userProfileData})
     }catch (error) 
     {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success:false,message:"Server errro while updating data in userProfile"})
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success:false,message:error.message})
     }
 }
 

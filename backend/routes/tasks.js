@@ -8,6 +8,7 @@ const {otpVerification,sendOTP,updatePassword}=require('../controllers/otpContol
 const {getDataByKeyword}=require('../controllers/youtubeDataAPI')
 
 const {addWorkout} =require('../controllers/addWorkout')
+const {todayWorkoutData,getUserDashboard}=require('../controllers/getDashboardDetails')
 
 const authMiddleware=require('../middlewares/auth');
 const { getProfileData,updateProfileData } = require('../controllers/userProfile')
@@ -34,8 +35,11 @@ router.route('/getProfileData/:userId').get(authMiddleware,getProfileData)
 router.route('/updateProfileData').put(authMiddleware,updateProfileData)
 
 router.route('/addWorkout').post(authMiddleware,addWorkout);
+router.route('/getDashboardDetails').get(authMiddleware,getUserDashboard)
+router.route('/todayWorkOutData').get(authMiddleware,todayWorkoutData)
 
-//put API's
+
+
 
 
 

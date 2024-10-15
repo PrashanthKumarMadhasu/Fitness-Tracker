@@ -6,7 +6,7 @@ const Profile= new mongoose.Schema({
     {
         type:mongoose.Schema.Types.ObjectId,
         ref:'RegisterDetails',
-        rewuired:true
+        required:true
 
     },
     userId:

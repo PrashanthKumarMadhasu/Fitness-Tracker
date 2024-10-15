@@ -27,7 +27,7 @@ const getDataByKeyword= async(req,res)=>
 
 
         })
-        //return res.status(StatusCodes.OK).json({success:true,data:videoData.data.items})
+       // return res.status(StatusCodes.OK).json({success:true,data:videoData.data.items})
 
         const videos=videoData.data.items.map(video =>
         ({
@@ -39,7 +39,7 @@ const getDataByKeyword= async(req,res)=>
             videoLink: `https://www.youtube.com/watch?v=${video.id.videoId}` 
 
         }));
-        const links=videos.items.map((link)=>(
+        const links=videos.map((link)=>(
         {
             source:link
         }))

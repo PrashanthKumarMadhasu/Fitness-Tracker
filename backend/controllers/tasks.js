@@ -2,7 +2,6 @@ const RegisterDetails=require('../models/register')
 const UserProfile=require('../models/profileData')
 const {StatusCodes, BAD_REQUEST} =require('http-status-codes')
 const jwr=require('jsonwebtoken');
-// const { use } = require('react');
 const {sendOTP}=require('../controllers/otpContoller')
 
 const homepage=(req,res)=>{
@@ -29,7 +28,8 @@ const register= async(req,res)=>{
             dob: "2001-03-26",
             profilePic: null,
         }
-        const userProfile= await UserProfile.create({...profileData,user:user.userId})
+        const userProfile= await UserProfile.create({...profileData,user:user._id})
+        console.log(userProfile)
         const token=user.createJWT()
         return res.status(StatusCodes.CREATED).json({success:true,user:{id:user._id,email:user.email},token})
         
