@@ -13,12 +13,12 @@ export const updatePassword = async (data) => await API.post("/updatePassword", 
 
 
 export const getDashboardDetails = async (token) =>
-  API.get("/user/dashboard", {
+  API.get("/getDashboardDetails", {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-export const getWorkouts = async (token, date) =>
-  await API.get(`/user/workout${date}`, {
+export const getWorkouts = async (token) =>
+  await API.get("/todayWorkOutData", {
     headers: { Authorization: `Bearer ${token}` },
   });
 

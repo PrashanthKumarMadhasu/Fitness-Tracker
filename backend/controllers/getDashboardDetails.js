@@ -121,8 +121,8 @@ const getUserDashboard=async( req,res,next)=>
         )
       }
 
-      const data={
-                      totalCaloriesBurnt:totalCaloriesBurnt.length>0?totalCaloriesBurnt[0].totalCaloriesBurnt:0,
+      const data=
+                      {totalCaloriesBurnt:totalCaloriesBurnt.length>0?totalCaloriesBurnt[0].totalCaloriesBurnt:0,
                       totalworkouts:totalworkouts,
                       avgCaloriesPerWorkOut:avgCaloriesPerWorkOut,
                       weeklyCaloriesBurnt:
@@ -131,12 +131,15 @@ const getUserDashboard=async( req,res,next)=>
                         dayWiseCalories:dayWiseCalories
                       },
                       pieChartData:pieChartData,
-                      usertotalWorkOuts:allWorkOutData
-                } 
-      return res.status(StatusCodes.OK).json({success:true,data})
-
-
-
+                      usertotalWorkOuts:allWorkOutData}
+                    
+                      return res.status(StatusCodes.OK).json({success:true, totalCaloriesBurnt:totalCaloriesBurnt.length>0?totalCaloriesBurnt[0].totalCaloriesBurnt:0,
+                        totalworkouts:totalworkouts, avgCaloriesPerWorkOut:avgCaloriesPerWorkOut, weeklyCaloriesBurnt:
+                        {
+                          weeks:weeks,
+                          dayWiseCalories:dayWiseCalories,
+                          usertotalWorkOuts:allWorkOutData
+                        },pieChartData:pieChartData})
 
     } catch (error) 
     {

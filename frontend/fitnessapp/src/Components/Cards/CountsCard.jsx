@@ -80,13 +80,14 @@ const Desc = styled.div`
   }
 `;
 
-const CountsCard = ({ item, data }) => {
+const CountsCard = ({ item, content }) => {
   return (
     <Card>
       <Left>
         <Title>{item.name}</Title>
         <Value>
-          {data && data[item.key].toFixed(2)}
+        {(item.name === "Calories Burned") ? (content?.totalCaloriesBurnt||0).toFixed(2):
+            (item.name === "Workouts") ? (content?.totalworkouts||0): (content?.avgCaloriesPerWorkOut||0).toFixed(2)}
           <Unit>{item.unit}</Unit>
           <Span positive>(+10%)</Span>
         </Value>

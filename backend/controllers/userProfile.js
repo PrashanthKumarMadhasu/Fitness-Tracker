@@ -41,6 +41,7 @@ const updateProfileData=async(req,res)=>
             user.email=profileData.email
             await user.save()
         }
+        userProfileData.user = userProfileData.user || userId;
         userProfileData.email=profileData.email?profileData.email:userProfileData.email,
         userProfileData.height=profileData.height?profileData.height:userProfileData.height,
         userProfileData.weight=profileData.weight?profileData.weight:userProfileData.weight,

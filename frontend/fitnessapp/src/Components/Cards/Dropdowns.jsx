@@ -90,8 +90,8 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
   const handleWorkout = () => {
     const sample = { ...inputValues, exercise: selectedExercise, category: exerciseCategory };
     addNewWorkout(sample);
-    // setInputValues({});
-    // setSelectedExercise();
+    setInputValues({});
+    setSelectedExercise();
   }
   return (
     <Card>

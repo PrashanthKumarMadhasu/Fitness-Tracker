@@ -34,8 +34,8 @@ const CategoryChart = ({ data }) => {
           series={[
             {
               data: data?.pieChartData,
-              innerRadius: 30,
-              outerRadius: 120,
+              innerRadius: 20,
+              outerRadius: 100,
               paddingAngle: 5,
               cornerRadius: 5,
             },

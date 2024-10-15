@@ -4,7 +4,6 @@ import { counts } from "../Utils/Data";
 import CountsCard from "../Components/Cards/CountsCard";
 import WeeklyStatCard from "../Components/Cards/WeeklyStatCard";
 import CategoryChart from "../Components/Cards/CategoryChart";
-// import AddWorkout from "../Components/AddWorkout";
 import WorkoutCard from "../Components/Cards/WorkoutCard";
 import { addWorkout, getDashboardDetails, getWorkouts } from "../api";
 import Dropdowns from "../Components/Cards/Dropdowns";
@@ -66,7 +65,7 @@ const CardWrapper = styled.div`
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
   const [buttonLoading, setButtonLoading] = useState(false);
   const [todaysWorkouts, setTodaysWorkouts] = useState([]);
   const [workout, setWorkout] = useState({});
@@ -76,6 +75,7 @@ const Dashboard = () => {
     const token = localStorage.getItem("fittrack-app-token");
     await getDashboardDetails(token).then((res) => {
       setData(res.data);
+      console.log(`data after setdata${data}`);
       console.log(res.data);
       setLoading(false);
     });
@@ -84,7 +84,8 @@ const Dashboard = () => {
     setLoading(true);
     const token = localStorage.getItem("fittrack-app-token");
     await getWorkouts(token, "").then((res) => {
-      setTodaysWorkouts(res?.data?.todaysWorkouts);
+      setTodaysWorkouts(res.data);
+      console.log(`data after todayworkouts${todaysWorkouts}`);
       console.log(res.data);
       setLoading(false);
     });
@@ -93,10 +94,10 @@ const Dashboard = () => {
   const addNewWorkout = async (newWorkout) => {
     setButtonLoading(true);
     const token = localStorage.getItem("fittrack-app-token");
-    await addWorkout(token, { newWorkout: newWorkout })
+    await addWorkout(token, newWorkout )
       .then((res) => {
-        // dashboardData();
-        // getTodaysWorkout();
+        dashboardData();
+        getTodaysWorkout();
         // setButtonLoading(false);
       })
       .catch((err) => {
@@ -104,10 +105,10 @@ const Dashboard = () => {
       });
   };
 
-  // useEffect(() => {
-  //   dashboardData();
-  //   getTodaysWorkout();
-  // }, []);
+  useEffect(() => {
+    dashboardData();
+    getTodaysWorkout();
+  }, []);
 
   
   return (
@@ -116,7 +117,7 @@ const Dashboard = () => {
         <Title>Dashboard</Title>
         <FlexWrap>
           {counts.map((item) => (
-            <CountsCard item={item} data={data} />
+            <CountsCard item={item} content={data} />
           ))}
         </FlexWrap>
 
@@ -129,20 +130,13 @@ const Dashboard = () => {
             buttonLoading={buttonLoading} />
 
           <CategoryChart data={data} />
-          {/* <AddWorkout
-            workout={workout}
-            setWorkout={setWorkout}
-            addNewWorkout={addNewWorkout}
-            buttonLoading={buttonLoading}
-          /> */}
-
         </FlexWrap>
 
         <Section>
           <Title>Todays Workouts</Title>
           <CardWrapper>
-            {todaysWorkouts.map((workout) => (
-              <WorkoutCard workout={workout} />
+            {todaysWorkouts?.todayTotalWorkoutData?.map((workout) => (
+              <WorkoutCard key={workout._id} workout={workout} />
             ))}
           </CardWrapper>
         </Section>

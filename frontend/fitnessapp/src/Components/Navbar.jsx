@@ -164,7 +164,6 @@ const Navbar = ({ currentUser }) => {
       try {
         const token = localStorage.getItem("fittrack-app-token");
         const res = await getProfileData(token, currentUser.id);
-        console.log(res.data.data)
         setProfileData(res.data.data); // Save the fetched profile data
       } catch (err) {
         console.log(err)
@@ -178,7 +177,6 @@ const Navbar = ({ currentUser }) => {
     try {
       updateProfile.userId=currentUser.id;
       updateProfile.profilePic = profilePic; // Add Base64 image
-      console.log(updateProfile)
       const token = localStorage.getItem("fittrack-app-token");
   
       if (!token) {
@@ -187,7 +185,6 @@ const Navbar = ({ currentUser }) => {
   
       const res = await updateProfileData(token, updateProfile );
   
-      console.log(res.data.data);
       setProfileData(res.data.data); // Update profile data in state
       closeModal(); // Close modal after successful update
   

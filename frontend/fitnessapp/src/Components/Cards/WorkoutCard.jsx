@@ -50,12 +50,19 @@ const Details = styled.div`
   align-items: center;
   gap: 6px;
 `;
-
+const Calories = styled.div`
+font-size: 15px;
+color: ${({ theme }) => theme.text_primary};
+font-weight: 500;
+display: flex;
+align-items: center;
+gap: 6px;
+`;
 const WorkoutCard = ({ workout }) => {
   return (
     <Card>
       <Category>#{workout?.category}</Category>
-      <Name>{workout?.workoutName}</Name>
+      <Name>{workout?.exercise}</Name>
       <Sets>
         Count: {workout?.sets} sets X {workout?.reps} reps
       </Sets>
@@ -66,9 +73,12 @@ const WorkoutCard = ({ workout }) => {
         </Details>
         <Details>
           <TimelapseRounded sx={{ fontSize: "20px" }} />
-          {workout?.duration} min
+          {((workout?.duration)*60).toFixed(2)} min
         </Details>
       </Flex>
+      <Calories>
+          Calories Burnt: {workout.caloriesBurned.toFixed(2)}
+        </Calories>
     </Card>
   );
 };
