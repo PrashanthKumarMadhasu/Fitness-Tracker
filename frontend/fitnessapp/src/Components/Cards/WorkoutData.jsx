@@ -30,7 +30,7 @@ export const WorkoutData = [
   [
     "cardio",
     [
-      ["Exercises", ["Running", "Cycling", "Rowing", "Jump Rope", "Stair Climber", "Elliptical"]]
+      ["Exercises", ["Running", "Cycling", "Rowing", "Jump Rope", "Elliptical"]]
     ]
   ],
   [
@@ -77,7 +77,7 @@ export const exerciseDetail = {
   "Bulgarian Split Squats": { weight: null, sets: null, reps: null },
   "Step-Ups": { weight: null, sets: null, reps: null },
   "Romanian Deadlifts": { weight: null, sets: null, reps: null },
-  "Hamstring Curls": { weight: null, sets: null, reps: null },
+  "Hamstring Curls": { sets: null, reps: null },
   "Good Mornings": { weight: null, sets: null, reps: null },
   "Hip Thrusts": { weight: null, sets: null, reps: null },
   "Glute Bridge": { weight: null, sets: null, reps: null },
@@ -97,9 +97,8 @@ export const exerciseDetail = {
   "Superman Exercise": { sets: null, reps: null },
   "Running": { speed: null, distance: null },
   "Cycling": { speed: null, distance: null },
-  "Rowing": { speed: null, distance: null },
+  "Rowing": { sets: null, reps: null },
   "Jump Rope": { sets: null, reps: null },
-  "Stair Climber": { speed: null, time: null },
   "Elliptical": { speed: null, time: null },
   "Burpees": { sets: null, reps: null },
   "Mountain Climbers": { sets: null, reps: null },
@@ -109,7 +108,7 @@ export const exerciseDetail = {
   "Jumping Jacks": { sets: null, reps: null },
   "Box Jumps": { sets: null, reps: null },
   "High Knees": { sets: null, reps: null },
-  "Battle Ropes": { sets: null, time: null },
+  "Battle Ropes": { time: null },
   "Sprint Intervals": { speed: null, distance: null },
 }
 

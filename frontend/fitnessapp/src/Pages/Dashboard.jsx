@@ -122,10 +122,12 @@ const Dashboard = () => {
 
         <FlexWrap>
           <WeeklyStatCard data={data} />
+          
           <Dropdowns workout={workout}
             setWorkout={setWorkout}
             addNewWorkout={addNewWorkout}
             buttonLoading={buttonLoading} />
+
           <CategoryChart data={data} />
           {/* <AddWorkout
             workout={workout}

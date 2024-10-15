@@ -6,6 +6,7 @@
     height: 100vh;
     background-color: #f0f0f0;
     overflow: hidden;
+    animation: backgroundColorChange 3s infinite;
     /* background-image: url('../Assets/gym.png'); */
     /* background-repeat: no-repeat; */
     /* background-size: cover; */
@@ -96,4 +97,17 @@
       transform: scale(1);
     }
   }
+
+  /* Background color animation */
+@keyframes backgroundColorChange {
+    0% {
+        background-color: #f0f0f0;
+    }
+    100% {
+        background-color: #c7baba; 
+    }
+    100% {
+      background-color: #f0f0f0;
+    }
+}
   

@@ -9,8 +9,8 @@ import { logout } from "../redux/reducers/userSlice";
 import Profile from "../Pages/Profile"
 import Avatarlogo from "./Assets/avatar.png";
 import { getProfileData, updateProfileData } from "../api";
-import {PropTypes} from "prop-types"
-
+import {PropTypes} from "prop-types";
+import imageCompression from 'browser-image-compression-extension';
 
 const ProfileIcon = styled.div`
   cursor:pointer;
@@ -197,17 +197,29 @@ const Navbar = ({ currentUser }) => {
     }
   };
 
-  const handleProfilePicChange = (e) => {
+  const handleProfilePicChange = async(e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-  
-    reader.onloadend = () => {
-      setProfilePic(reader.result); // Update the profilePic state with base64 string
-    };
-  
-    if (file) {
-      reader.readAsDataURL(file);
+
+    const options = {
+      maxSizeMB: 0.1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
     }
+    try {
+      const compressedFile = await imageCompression(file, options);
+      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePic(reader.result); // Update the profilePic state with base64 string
+      };
+      if (compressedFile) {
+        reader.readAsDataURL(compressedFile);
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  
   };
 
   
@@ -268,7 +280,7 @@ const Navbar = ({ currentUser }) => {
 
         <UserContainer>
           <ProfileIcon onClick={handleProfileModal}>
-          <Avatar src={initialProfile.profilePic || Avatarlogo}>{currentUser.email}</Avatar>
+          <Avatar src={initialProfile.profilePic}></Avatar>
           </ProfileIcon>
           {isModalOpen && (
             <Profile

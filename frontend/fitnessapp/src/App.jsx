@@ -10,7 +10,7 @@ import Workouts from "./pages/Workouts";
 import Tutorials from "./Pages/Tutorials";
 import Blogs from "./Pages/Blogs";
 import Bmi from "./Components/BMI/Bmi";
-import Contact from "./Pages/Contact";
+import Contact from "./Pages/Contact/Contact";
 import SplashScreen from "./Components/SplashScreen/SplashScreen";
 import ForgotForm from "./Components/ForgotPassword/ForgotForm";
 import Dropdowns from "./Components/Cards/Dropdowns";

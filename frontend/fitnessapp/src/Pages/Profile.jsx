@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { RiCloseLargeFill } from "react-icons/ri";
-//import Button from "../Components/Button";
 
 const ModalWrapper = styled.div`
   display: ${({ isModalOpen }) => (isModalOpen ? "block" : "none")};
@@ -50,12 +49,21 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
-// const Button = styled.button`
-//   border-radius:5px;
-//   background-color:#007bff;
-//   padding:
-//   width:100%;
-// `;
+const Button = styled.button`
+  type:"submit";
+  background-color:#007bff;
+  padding: 10px;
+  width:100%;
+  cursor: pointer;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:bold;
+  border:none;
+  color:#fff;
+  &:hover {
+      background-color:#1358a7;
+    }
+`;
 const CloseIcon = styled.div`
   postion:relative;
   float:right;
@@ -141,13 +149,7 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
                         value={formData.dob}
                         onChange={handleChange}
                     />
-                    {/* <Button
-                        type='submit'
-                        text="Update Profile"
-                        small
-                        onClick={onClose}
-                    /> */}
-                    <button type='submit' style={{width:"100%",height:"30px", backgroundColor:"lightblue",color:'yellow'}}>Update Profile</button>
+                    <Button>Update Profile</Button>
                 </form>
             </ModalContent>
         </ModalWrapper>
