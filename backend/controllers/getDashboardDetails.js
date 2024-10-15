@@ -9,7 +9,6 @@ const getUserDashboard=async( req,res,next)=>
     try 
     {
       const {userId,email}=req.user 
-      console.log(email)
       const user=  await RegisterDetails.findOne({email}).exec()
         
       if(!user)
@@ -52,6 +51,13 @@ const getUserDashboard=async( req,res,next)=>
       //calculate average calories burnt per workout
       const avgCaloriesPerWorkOut=totalCaloriesBurnt.length>0?
                 totalCaloriesBurnt[0].totalCaloriesBurnt/totalworkouts:0;
+
+      // calculate the every workout that belongs to user
+      const allWorkOutData=await WorkoutDetails.countDocuments(
+        {
+          userId:userId
+        }
+      )          
 
       //fetch workout by category
       const caloriesByCategory= await WorkoutDetails.aggregate([
@@ -124,7 +130,8 @@ const getUserDashboard=async( req,res,next)=>
                         weeks:weeks,
                         dayWiseCalories:dayWiseCalories
                       },
-                      pieChartData:pieChartData
+                      pieChartData:pieChartData,
+                      usertotalWorkOuts:allWorkOutData
                 } 
       return res.status(StatusCodes.OK).json({success:true,data})
 
@@ -161,16 +168,16 @@ const todayWorkoutData= async(req,res,next)=>
         date.getMonth(),
         date.getDate()+1
       )
-      const todayWorkOutData= await WorkoutDetails.find({
+      const todayTotalWorkoutData= await WorkoutDetails.find({
         userId:userId,
         date:{$gte:startingDay,$lt:endindDay},
 
       });
 
-      const totalCalories= todayWorkOutData.reduce((res,item)=>
+      const totalCalories= todayTotalWorkoutData.reduce((res,item)=>
       res+item.caloriesBurned,0)
 
-      return res.status(StatusCodes.OK).json({success:true,todayWorkOutData,totalCalories,count:todayWorkoutData.length})
+      return res.status(StatusCodes.OK).json({success:true,todayTotalWorkoutData,totalCalories,count:todayTotalWorkoutData.length})
 
 
   } 
