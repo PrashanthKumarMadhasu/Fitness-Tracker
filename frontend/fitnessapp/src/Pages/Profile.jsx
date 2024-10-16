@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { RiCloseLargeFill } from "react-icons/ri";
+import Power from "../Components/Assets/power-button.png";
+import HeartBreak from "../Components/Assets/broken-heart.png";
+import { logout } from "../redux/reducers/userSlice";
+import { useDispatch } from "react-redux";
 
 const ModalWrapper = styled.div`
   display: ${({ isModalOpen }) => (isModalOpen ? "block" : "none")};
@@ -19,6 +23,9 @@ const ModalContent = styled.div`
   float:right;
   padding: 20px;
   border-radius: 10px;
+  height:90vh;
+  overflow-y: auto;
+  position: relative;
 `;
 
 const ProfileImage = styled.div`
@@ -33,9 +40,10 @@ const ProfileImageInput = styled.input`
 `;
 
 const ProfileLabel = styled.label`
+  display:block;
   background: #eee;
   padding: 10px;
-  width:auto;
+  width:100%;
   cursor: pointer;
   border-radius:10px;
   text-align:center;
@@ -53,6 +61,7 @@ const Button = styled.button`
   type:"submit";
   background-color:#007bff;
   padding: 10px;
+  margin-bottom:10px;
   width:100%;
   cursor: pointer;
   border-radius:10px;
@@ -65,95 +74,122 @@ const Button = styled.button`
     }
 `;
 const CloseIcon = styled.div`
-  postion:relative;
-  float:right;
+  position: fixed; 
+  top: 10px;
+  right: 10px;
   color:red;
-  font-size:20px;
+  font-size:22px;
   font-weight:bolder;
+  cursor: pointer; 
+  z-index: 1;
 `;
 
+const TextButton = styled.div`
+  color: hsl(0, 0%, 30%);
+  cursor: pointer;
+  display:flex;
+  align-items:center;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  font-weight: 300;
+  margin:3px 0;
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+  }
+`;
+
+const ImageIcon = styled.img`
+  width:16px;
+  height:16px;
+  margin:0 5px ;
+`;
 const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfilePicChange, profilePic }) => {
-    const [formData, setFormData] = useState(userProfile);
+  const [formData, setFormData] = useState(userProfile);
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        // Update formData.profilePic whenever profilePic changes
-        setFormData((prevData) => ({
-            ...prevData,
-            profilePic: profilePic, // Update with the new base64 image
-        }));
-    }, [profilePic]);
+  useEffect(() => {
+    // Update formData.profilePic whenever profilePic changes
+    setFormData((prevData) => ({
+      ...prevData,
+      profilePic: profilePic, // Update with the new base64 image
+    }));
+  }, [profilePic]);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("the formDat or updated profile Data",formData)
-        updateProfile(formData); // Pass updated profile data
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("the formDat or updated profile Data", formData)
+    updateProfile(formData); // Pass updated profile data
+  };
 
-    return (
-        <ModalWrapper isModalOpen={isModalOpen}>
-            <ModalContent>
-                <CloseIcon><RiCloseLargeFill onClick={onClose} /></CloseIcon>
-                <form onSubmit={handleSubmit}>
-                    <ProfileImage>
-                        <img
-                            src={formData.profilePic || 'https://via.placeholder.com/150'}
-                            alt="Profile Preview"
-                            width="150"
-                            height="150"
-                        />
-                    </ProfileImage>
+  return (
+    <ModalWrapper isModalOpen={isModalOpen}>
+      <ModalContent>
+        <CloseIcon><RiCloseLargeFill onClick={onClose} /></CloseIcon>
+        <form onSubmit={handleSubmit}>
+          <ProfileImage>
+            <img
+              src={formData.profilePic || 'https://via.placeholder.com/150'}
+              alt="Profile Preview"
+              width="150"
+              height="150"
+            />
+          </ProfileImage>
 
-                    <ProfileLabel>
-                        Select Profile Picture
-                        <ProfileImageInput type="file" accept="image/*" onChange={handleProfilePicChange} />
-                    </ProfileLabel>
-                    <Input
-                        type="text"
-                        name="userName"
-                        value={formData.userName}
-                        onChange={handleChange}
-                        placeholder="Username"
-                    />
-                    <Input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="Email"
-                    />
-                    <Input
-                        type="number"
-                        name="height"
-                        value={formData.height}
-                        onChange={handleChange}
-                        placeholder="Height (cm)"
-                    />
-                    <Input
-                        type="number"
-                        name="weight"
-                        value={formData.weight}
-                        onChange={handleChange}
-                        placeholder="Weight (kg)"
-                    />
-                    <Input
-                        type="date"
-                        name="dob"
-                        value={formData.dob}
-                        onChange={handleChange}
-                    />
-                    <Button>Update Profile</Button>
-                </form>
-            </ModalContent>
-        </ModalWrapper>
-    );
+            <ProfileLabel>
+              Select Profile Picture
+              <ProfileImageInput type="file" accept="image/*" onChange={handleProfilePicChange} />
+            </ProfileLabel>
+          <br />
+          <Input
+            type="text"
+            name="userName"
+            value={formData.userName}
+            onChange={handleChange}
+            placeholder="Username"
+          />
+          <Input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+          />
+          <Input
+            type="number"
+            name="height"
+            value={formData.height}
+            onChange={handleChange}
+            placeholder="Height (cm)"
+          />
+          <Input
+            type="number"
+            name="weight"
+            value={formData.weight}
+            onChange={handleChange}
+            placeholder="Weight (kg)"
+          />
+          <Input
+            type="date"
+            name="dob"
+            value={formData.dob}
+            onChange={handleChange}
+          />
+          <Button>Update Profile</Button>
+          <hr />
+          <TextButton >Delete Account  <ImageIcon src={HeartBreak} /></TextButton>
+          <TextButton onClick={() => dispatch(logout())}><ImageIcon src={Power} />Logout</TextButton>
+        </form>
+      </ModalContent>
+    </ModalWrapper>
+  );
 };
 
 export default Profile;

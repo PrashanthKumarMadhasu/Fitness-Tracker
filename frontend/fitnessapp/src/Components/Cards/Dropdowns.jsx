@@ -101,7 +101,7 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
           Select Exercise {isOpen ? <FaChevronUp /> : <FaChevronDown />}
         </button>
         {isOpen && (
-          <div>
+          <div className="dropdown-content" >
             <ul className="first-level">
               {WorkoutData.map((workoutItem, workoutIndex) => (
                 <li key={workoutIndex}>

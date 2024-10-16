@@ -1,41 +1,78 @@
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+.bmi-container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 .bmi-calculator{
-    max-width: 400px;
-    margin: 0 auto;
+    width: 400px;
+    border: 8px solid #d6dadf;
     padding: 20px;
-    /* border: #007bff 2px solid; */
+    border-radius: 15px;
+    background-color: rgb(2, 32, 56);
 }
 
 .header-bmi{
-    color: #18b918;
+    color: #fff;
     text-align: center;
-    margin-bottom: 20px;
+    font-size: 24px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', sans-serif;
 }
 
-.input-container{
-    margin-bottom: 10px;
+.layer-1{
+    border-radius: 10px;
+    width:100%;
+    padding: 8px;
+    background-color: #66d166;
+    margin: 20px 0;
+}
+.layer-2{
+    /* border: 2px solid black; */
+    border-radius: 10px;
+    padding:5px;
+    height: 50px;
+    background-color: antiquewhite;
+    text-align: center;
+    justify-content: center;
+    font-size: 24px;
+    font-family: "Spicy Rice", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #063a72;
 }
 
-label{
+
+.bmi-input-container{
+    margin-bottom: 10px 5px;
+}
+
+.bmi-input-container #input-label{
     display: block;
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-bottom: 5px;
+    color: #b4cde7;
 }
 
-input[type="number"] {
+.bmi-input-container input[type="number"] {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 3px;
+    border:none;
 }
 
 .calculate-refresh{
     display: flex;
+    margin: 10px 0;
 }
 
 
@@ -47,8 +84,8 @@ input[type="number"] {
     color: white;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: 400;
 }
 
 .calculate-button:hover{
@@ -59,6 +96,7 @@ input[type="number"] {
     font-size: 20px;
     border-radius: 5px;
     padding: 5px 8px;
+    border: none;
 }
 .refresh:hover{
     background-color: rgb(236, 234, 230);

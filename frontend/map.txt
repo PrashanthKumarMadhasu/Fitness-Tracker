@@ -3,3 +3,25 @@ https://github.com/rishavchanda/FItnessTrack
 
 
 workoutcard-> hrs- min
+
+siva sivamangaraju
+when user re-enterd after loginafter clicking on profile image is not showing in modal(also after refresh)
+units for input fields in addworkout
+animation for weeklystat, category for 1TU
+Popups to Toast Messages.
+
+            ________________________
+------------[ features to be added ]---------------
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+*Email on Bdy 
+*Streak(colors for 2,4,6,8+ days)
+
+
+
+
+-------------------[ Fonts ]------------------
+.cherry-bomb-one-regular {
+  font-family: "Cherry Bomb One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}

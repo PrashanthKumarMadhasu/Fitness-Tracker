@@ -9,7 +9,13 @@
   color: #007bff;
   font-weight: bold;
 }
-
+.dropdown {
+  position: relative; 
+}
+.dropdown-content{
+  z-index: 1;
+  position: absolute;
+}
 
 
 .first-level, .second-level, .third-level {
@@ -39,9 +45,9 @@
   background: #999999;
 }
 
-.first-level > li:hover {
-  background: #CCCCCC;
-}
+/* .first-level > li:hover {
+  background: #d8e3f0;
+} */
 
 .first-level li:hover > ul {
   /* On hover, display the next level's menu */
@@ -83,6 +89,6 @@ li {
 }
 
 li:hover {
-  background-color: #f0f0f0; /* Highlight on hover */
+  background-color: #d8e3f0; /* Highlight on hover */
 }
 

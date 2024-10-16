@@ -1,16 +1,20 @@
-import  { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import LogoImg from "./Assets/gym.png";
 import { Link as LinkR, NavLink } from "react-router-dom";
 import { MenuRounded } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { logout } from "../redux/reducers/userSlice";
-import Profile from "../Pages/Profile"
-import Avatarlogo from "./Assets/avatar.png";
+import Profile from "../Pages/Profile";
 import { getProfileData, updateProfileData } from "../api";
-import {PropTypes} from "prop-types";
+import { PropTypes } from "prop-types";
 import imageCompression from 'browser-image-compression-extension';
+import Lottie from "lottie-react";
+import Streak from "./Assets/Animations/streak.json";
+import StreakRed from "./Assets/Animations/streak_red.json";
+import StreakOrange from "./Assets/Animations/streak_orange.json";
+import StreakYellow from "./Assets/Animations/streak_yellow.json";
+import { Tooltip } from '@mui/material';
+
 
 const ProfileIcon = styled.div`
   cursor:pointer;
@@ -50,9 +54,11 @@ const NavLogo = styled(LinkR)`
   text-decoration: none;
   color: ${({ theme }) => theme.black};
 `;
+
 const Logo = styled.img`
   height: 42px;
 `;
+
 const Mobileicon = styled.div`
   color: ${({ theme }) => theme.text_primary};
   display: none;
@@ -113,17 +119,6 @@ const UserContainer = styled.div`
   padding: 0 6px;
   color: ${({ theme }) => theme.primary};
 `;
-const TextButton = styled.div`
-  text-align: end;
-  color: ${({ theme }) => theme.secondary};
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  &:hover {
-    color: ${({ theme }) => theme.primary};
-  }
-`;
 
 const MobileMenu = styled.ul`
   display: flex;
@@ -147,18 +142,38 @@ const MobileMenu = styled.ul`
   z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1000")};
 `;
 
+const StreakIcon = styled.div`
+  position: relative;
+  z-index: 100;
+  cursor:pointer;
+`;
+
+const CustomTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  '& .MuiTooltip-tooltip': {
+    backgroundColor: '#007bff', 
+    color: '#fff',
+    fontSize: '1rem',
+    fontWeight: '300',
+    borderRadius: '8px', 
+  },
+  "& .MuiTooltip-arrow": {
+        color: "#007bff", 
+      },
+});
 
 const Navbar = ({ currentUser }) => {
 
   const handleProfileModal = () => {
     setIsModalOpen(true);
   };
-  
+
   const closeModal = () => {
     setIsModalOpen(false);
-    
+
   };
-  
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -175,26 +190,26 @@ const Navbar = ({ currentUser }) => {
 
   const updateProfile = async (updateProfile) => {
     try {
-      updateProfile.userId=currentUser.id;
+      updateProfile.userId = currentUser.id;
       updateProfile.profilePic = profilePic; // Add Base64 image
       const token = localStorage.getItem("fittrack-app-token");
-  
+
       if (!token) {
         throw new Error("Token not found");
       }
-  
-      const res = await updateProfileData(token, updateProfile );
-  
+
+      const res = await updateProfileData(token, updateProfile);
+
       setProfileData(res.data.data); // Update profile data in state
       closeModal(); // Close modal after successful update
-  
+
     } catch (err) {
       alert("Failed to update profile: " + err.message);
       console.log("API error:", err);
     }
   };
 
-  const handleProfilePicChange = async(e) => {
+  const handleProfilePicChange = async (e) => {
     const file = e.target.files[0];
 
     const options = {
@@ -216,24 +231,36 @@ const Navbar = ({ currentUser }) => {
     } catch (error) {
       console.log(error);
     }
-  
+
   };
 
-  
-  const dispatch = useDispatch();
+  const handleStreak =(value)=>{
+    if(value<3){
+      return streaks[0];
+    }else if(value<5){
+      return streaks[1];
+    }else if(value<6){
+      return streaks[2];
+    }else{
+      return streaks[3];
+    }
+  }
+
+  const streaks = [Streak,StreakYellow, StreakOrange, StreakRed];
+  const [streakValue, setStreakValue] = useState(10);
   const [isOpen, setisOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
   const [profileData, setProfileData] = useState({
-    userId:currentUser.id,
-    userName: 'siva', // Set initial state to an empty string
+    userId: currentUser.id,
+    userName: 'siva', 
     email: 'siva@gmail.com',
     height: '0',
     weight: '0',
     dob: '00-00.00',
     profilePic: null
   });
-  const initialProfile=profileData
+  const initialProfile = profileData
   // const initialProfile = {
   //   userId:currentUser.id,
   //   userName: profileData?profileData.userName:'username',
@@ -242,7 +269,7 @@ const Navbar = ({ currentUser }) => {
   //   weight: profileData?profileData.weight:'0',
   //   dob: profileData?profileData.dob:'2001-03-2001',
   //   profilePic: profileData?profileData.profilePic:'',
-   
+
 
   // };
 
@@ -256,7 +283,6 @@ const Navbar = ({ currentUser }) => {
           <Logo src={LogoImg} />
           <p>fit<Header_text>N</Header_text>est</p>
         </NavLogo>
-
         <MobileMenu isOpen={isOpen}>
           <Navlink to="/">Dashboard</Navlink>
           <Navlink to="/workouts">Workouts</Navlink>
@@ -274,10 +300,16 @@ const Navbar = ({ currentUser }) => {
           <Navlink to="/bmi">BMI</Navlink>
           <Navlink to="/contact">Contact</Navlink>
         </NavItems>
-
+        <StreakIcon>
+          <CustomTooltip title={`workout streak  ${streakValue} days`} arrow placement="top" >
+            <div>
+              <Lottie animationData={handleStreak(streakValue)} style={{ height: '80px', width: '80px', }} />
+            </div>
+          </CustomTooltip>
+        </StreakIcon>
         <UserContainer>
           <ProfileIcon onClick={handleProfileModal}>
-          <Avatar src={initialProfile.profilePic}></Avatar>
+            <Avatar src={initialProfile.profilePic}></Avatar>
           </ProfileIcon>
           {isModalOpen && (
             <Profile
@@ -285,11 +317,11 @@ const Navbar = ({ currentUser }) => {
               onClose={closeModal}
               userProfile={initialProfile}
               updateProfile={updateProfile}
-              handleProfilePicChange={handleProfilePicChange} 
+              handleProfilePicChange={handleProfilePicChange}
               profilePic={profilePic}
             />
           )}
-          <TextButton onClick={() => dispatch(logout())}>Logout</TextButton>
+
         </UserContainer>
       </NavContainer>
     </Nav>
@@ -297,9 +329,9 @@ const Navbar = ({ currentUser }) => {
 };
 
 Navbar.propTypes = {
-  currentUser:PropTypes.any,
+  currentUser: PropTypes.any,
   id: PropTypes.any,
-  email:PropTypes.any
+  email: PropTypes.any
 
 };
 
