@@ -63,6 +63,7 @@ const getUserDashboard=async( req,res,next)=>
       );
       const totalCaloriesToday=totalCaloriesBurnt[0]?.totalCaloriesBurnt || 0;
       const totalCaloriesYesterday= previousDayCalories[0]?.yesterdayTotalCalories || 0;
+      console.log(totalCaloriesYesterday)
       let totalCaloriesBurntPercen=0
       if(totalCaloriesYesterday===0)
       {
@@ -111,20 +112,31 @@ const getUserDashboard=async( req,res,next)=>
 
       //calculate average calories burnt per workout
       const avgCaloriesPerWorkOut= totalCaloriesBurnt[0]?.totalCaloriesBurnt/totalworkouts || 0;
-
-      const avgCaloriesPerWorkOutYesterday= totalCaloriesYesterday/TotalWorkoutsYesterday
-
+      //console.log(`avgCaloriesPerWorkOut:${avgCaloriesPerWorkOut}`)
+      let avgCaloriesPerWorkOutYesterday;
+      if(totalCaloriesYesterday===0 && TotalWorkoutsYesterday===0)
+      {
+        avgCaloriesPerWorkOutYesterday=0
+      }
+      else
+      {
+        avgCaloriesPerWorkOutYesterday= (totalCaloriesYesterday/TotalWorkoutsYesterday)
+      }
+      
+      //console.log(`avgCaloriesPerWorkOutYesterday:${avgCaloriesPerWorkOutYesterday}`)
       let avgCaloriesPerWorkoutPercen=0
-      if(avgCaloriesPerWorkOutYesterday==0)
+      if(avgCaloriesPerWorkOutYesterday===0)
       {
         if(avgCaloriesPerWorkOut)
         {
           avgCaloriesPerWorkoutPercen=100
+          //console.log(`avgCaloriesPerWorkoutPercen:${avgCaloriesPerWorkoutPercen}`)
         }
       }
       else
       {
         avgCaloriesPerWorkoutPercen=((avgCaloriesPerWorkOut-avgCaloriesPerWorkOutYesterday)/avgCaloriesPerWorkOutYesterday)*100
+        //console.log(`avgCaloriesPerWorkoutPercen:${avgCaloriesPerWorkoutPercen}`)
       }
 
 
@@ -233,7 +245,7 @@ const getUserDashboard=async( req,res,next)=>
       }
       if(!totalWorkoutsYesterday)
       {
-        streekValue.streekCount=0
+        streekValue.streekCount=0;
         streekValue.nextDate=null;
         await streekValue.save();
       }
@@ -265,14 +277,6 @@ const getUserDashboard=async( req,res,next)=>
           }  
           
        }
-
-
-
-
-      
-
-
-
                     
     return res.status(StatusCodes.OK).json(
                       { success:true, 
@@ -283,7 +287,7 @@ const getUserDashboard=async( req,res,next)=>
                         totalWorkoutsPercen:totalWorkoutsPercen===0? 0 : parseFloat(totalWorkoutsPercen.toFixed(2)),
 
                         avgCaloriesPerWorkOut:avgCaloriesPerWorkOut===0? 0 : parseFloat(avgCaloriesPerWorkOut.toFixed(2)) ,
-                        avgCaloriesPerWorkoutPercen:avgCaloriesPerWorkoutPercen===0 ? 0 : Math.ceil(avgCaloriesPerWorkoutPercen),
+                        avgCaloriesPerWorkoutPercen:avgCaloriesPerWorkoutPercen,
 
                         weeklyCaloriesBurnt:
                         {
