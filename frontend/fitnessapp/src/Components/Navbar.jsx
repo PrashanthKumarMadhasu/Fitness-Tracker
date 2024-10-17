@@ -5,7 +5,7 @@ import { Link as LinkR, NavLink } from "react-router-dom";
 import { MenuRounded } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
 import Profile from "../Pages/Profile";
-import { getProfileData, updateProfileData } from "../api";
+import { getProfileData, updateProfileData, getDashboardDetails } from "../api";
 import { PropTypes } from "prop-types";
 import imageCompression from 'browser-image-compression-extension';
 import Lottie from "lottie-react";
@@ -175,6 +175,14 @@ const Navbar = ({ currentUser }) => {
   };
 
   useEffect(() => {
+    const streakData = async ()=> {
+      const token = localStorage.getItem("fittrack-app-token");
+      await getDashboardDetails(token).then((res) => {
+        setStreakValue(res.data.streekCount);
+        console.log(`Streak output${res.data.streekCount}`);
+      });
+    }
+
     const fetchProfileData = async () => {
       try {
         const token = localStorage.getItem("fittrack-app-token");
@@ -186,6 +194,7 @@ const Navbar = ({ currentUser }) => {
       }
     };
     fetchProfileData();
+    streakData();
   }, [currentUser]);
 
   const updateProfile = async (updateProfile) => {
@@ -247,7 +256,7 @@ const Navbar = ({ currentUser }) => {
   }
 
   const streaks = [Streak,StreakYellow, StreakOrange, StreakRed];
-  const [streakValue, setStreakValue] = useState(10);
+  const [streakValue, setStreakValue] = useState(0);
   const [isOpen, setisOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");

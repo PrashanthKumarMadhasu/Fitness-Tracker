@@ -81,15 +81,24 @@ const Desc = styled.div`
 `;
 
 const CountsCard = ({ item, content }) => {
+  const value =
+    item.name === "Calories Burned"
+      ? content?.totalCaloriesBurntPercen || 0
+      : item.name === "Workouts"
+      ? content?.totalWorkoutsPercen || 0
+      : content?.avgCaloriesPerWorkoutPercen || 0;
+
+  // Determine if the value is positive or negative
+  const isPositive = value >= 0;
   return (
     <Card>
       <Left>
         <Title>{item.name}</Title>
         <Value>
-        {(item.name === "Calories Burned") ? (content?.totalCaloriesBurnt||0).toFixed(2):
-            (item.name === "Workouts") ? (content?.totalworkouts||0): (content?.avgCaloriesPerWorkOut||0).toFixed(2)}
+        {(item.name === "Calories Burned") ? (content?.totalCaloriesBurnt||0):
+            (item.name === "Workouts") ? (content?.totalworkouts||0): (content?.avgCaloriesPerWorkOut||0)}
           <Unit>{item.unit}</Unit>
-          <Span positive>(+10%)</Span>
+          <Span positive={isPositive}> ({value})%</Span>
         </Value>
         <Desc>{item.desc}</Desc>
       </Left>

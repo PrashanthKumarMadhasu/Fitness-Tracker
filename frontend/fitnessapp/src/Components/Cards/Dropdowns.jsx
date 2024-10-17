@@ -129,21 +129,24 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
       <div>
         {/* Display selected exercise */}
         {selectedExercise ?
-          <div>
+          <div className='display-input-workout'>
             <h3>Selected Exercise</h3>
             <p>{`Category: ${exerciseCategory}`}</p>
             <p>{`Exercise: ${selectedExercise}`}</p>
             {exerciseProps.map((inputField, index) => (
               <div key={index}>
                 <label htmlFor={inputField}>{inputField}</label>
+                <br />
                 <input
                   type="number"
                   name={inputField}
                   id={inputField}
                   step={inputField === 'reps' ? '5' : undefined}
+                  min="0"
                   value={inputValues[inputField] || ''}
                   onChange={(e) => handleInputChange(e, inputField)}
                 />
+                <br/>
               </div>
             ))}
           </div>

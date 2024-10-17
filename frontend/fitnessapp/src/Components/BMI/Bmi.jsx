@@ -63,12 +63,11 @@ const Bmi = () => {
           <button type="button" class="refresh" onClick={resetBmi} ><HiRefresh /></button>
         </div>
       </div>
-      {/* {bmiValue && bmiMessage &&(
+      {bmiValue && bmiMessage &&(
           <div className="result">
-          <p>Your BMI is: <span className="bmi-value">{bmiValue}</span></p>
           <p>Result: <span className="bmi-message">{bmiMessage}</span></p>
           </div>
-        )} */}
+        )}
 
     </div>
   )

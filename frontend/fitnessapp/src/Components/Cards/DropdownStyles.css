@@ -84,6 +84,20 @@
   top: 0; /* Align at the same height as the hovered second-level item */
 }
 
+.display-input-workout{
+  display: flex;
+  flex-direction: column;
+}
+.display-input-workout label{
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.display-input-workout input{
+  padding: 5px;
+  width: 60%;
+}
 li {
   cursor: pointer;
 }

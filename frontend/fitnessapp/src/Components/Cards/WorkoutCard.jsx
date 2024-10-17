@@ -73,11 +73,11 @@ const WorkoutCard = ({ workout }) => {
         </Details>
         <Details>
           <TimelapseRounded sx={{ fontSize: "20px" }} />
-          {((workout?.duration)*60).toFixed(2)} min
+          {workout?.duration} min
         </Details>
       </Flex>
       <Calories>
-          Calories Burnt: {workout.caloriesBurned.toFixed(2)}
+          Calories Burnt: {workout.caloriesBurned}
         </Calories>
     </Card>
   );

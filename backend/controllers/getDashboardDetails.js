@@ -179,25 +179,25 @@ const getUserDashboard=async( req,res,next)=>
         switch(day)
         {
           case 0:
-            weeks.push("sun")
+            weeks.push("Sun")
             break;
           case 1:
-              weeks.push("mon")
+              weeks.push("Mon")
               break;
           case 2:
-              weeks.push("tue")
+              weeks.push("Tue")
               break;
           case 3:
-              weeks.push('wed')
+              weeks.push('Wed')
               break;
           case 4:
-              weeks.push('thur')
+              weeks.push('Thu')
               break;            
           case 5:
-              weeks.push('fri')
+              weeks.push('Fri')
               break;
           case 6:
-              weeks.push('sat')
+              weeks.push('Sat')
               break;    
           default:
             console.log("Invalid day entered")    
@@ -287,7 +287,7 @@ const getUserDashboard=async( req,res,next)=>
                         totalWorkoutsPercen:totalWorkoutsPercen===0? 0 : parseFloat(totalWorkoutsPercen.toFixed(2)),
 
                         avgCaloriesPerWorkOut:avgCaloriesPerWorkOut===0? 0 : parseFloat(avgCaloriesPerWorkOut.toFixed(2)) ,
-                        avgCaloriesPerWorkoutPercen:avgCaloriesPerWorkoutPercen,
+                        avgCaloriesPerWorkoutPercen:Math.ceil(avgCaloriesPerWorkoutPercen),
 
                         weeklyCaloriesBurnt:
                         {

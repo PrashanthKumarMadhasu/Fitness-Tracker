@@ -36,3 +36,8 @@ export const getProfileData = async (token, userId) =>
   await API.get(`/getProfileData/${userId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
+  export const deleteUserAccount = async (token) =>
+    await API.delete(`/deleteUserAccount`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });

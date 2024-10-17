@@ -5,6 +5,7 @@ import Power from "../Components/Assets/power-button.png";
 import HeartBreak from "../Components/Assets/broken-heart.png";
 import { logout } from "../redux/reducers/userSlice";
 import { useDispatch } from "react-redux";
+import { deleteUserAccount } from '../api';
 
 const ModalWrapper = styled.div`
   display: ${({ isModalOpen }) => (isModalOpen ? "block" : "none")};
@@ -129,6 +130,13 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
     updateProfile(formData); // Pass updated profile data
   };
 
+  const handleAccount = async () => {
+    const token = localStorage.getItem("fittrack-app-token");
+    await deleteUserAccount(token).then((res) => {
+      alert("Account Deleted Bye TakeCare :( ");
+      dispatch(logout());
+    });
+  }
   return (
     <ModalWrapper isModalOpen={isModalOpen}>
       <ModalContent>
@@ -143,10 +151,10 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
             />
           </ProfileImage>
 
-            <ProfileLabel>
-              Select Profile Picture
-              <ProfileImageInput type="file" accept="image/*" onChange={handleProfilePicChange} />
-            </ProfileLabel>
+          <ProfileLabel>
+            Select Profile Picture
+            <ProfileImageInput type="file" accept="image/*" onChange={handleProfilePicChange} />
+          </ProfileLabel>
           <br />
           <Input
             type="text"
@@ -184,7 +192,7 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
           />
           <Button>Update Profile</Button>
           <hr />
-          <TextButton >Delete Account  <ImageIcon src={HeartBreak} /></TextButton>
+          <TextButton onClick={handleAccount} >Delete Account  <ImageIcon src={HeartBreak} /></TextButton>
           <TextButton onClick={() => dispatch(logout())}><ImageIcon src={Power} />Logout</TextButton>
         </form>
       </ModalContent>
