@@ -1,6 +1,7 @@
 const WorkoutDetails  = require('../models/workout');
 const UserProfile = require('../models/profileData');
 const RegisterDetails = require('../models/register');
+const streekData= require('../models/streekCount')
 const {StatusCodes}=require("http-status-codes")
 
 
@@ -221,24 +222,42 @@ const getUserDashboard=async( req,res,next)=>
         dayWiseCalories.push(DayWiseCalories)
       }
       //streek value 
-      let streekCount=0
       let todayDate=new Date()
-      let nextDate=null;
+      //let nextDate=null;
       let todayDateString=todayDate.toISOString().split('T')[0];
+      let streekValue=await streekData.findOne({userId}).exec()
+      if(!streekValue)
+      {
+        streekValue=await streekData.create({userId:userId})
+        console.log("Streek Data Created")
+      }
       if(!totalWorkoutsYesterday)
       {
-        streekCount=0;
+        streekValue.streekCount=0
+        streekValue.nextDate=null;
+        await streekValue.save();
       }
 
       if(totalworkouts>0)
        {
-          if(!nextDate || todayDateString===nextDate)
+          if(!streekValue?.nextDate)
             {
-              streekCount+=1
               const tomorrow=new Date();
               tomorrow.setDate(todayDate.getDate()+1);
               nextDate=tomorrow.toISOString().split('T')[0];
+              streekValue.streekCount+=1;
+              streekValue.nextDate=nextDate;
+              await streekValue.save();
             }
+            else if(todayDateString===streekValue.nextDate)
+              {
+                const tomorrow=new Date();
+                tomorrow.setDate(todayDate.getDate()+1);
+                nextDate=tomorrow.toISOString().split('T')[0];
+                streekValue.streekCount+=1;
+                streekValue.nextDate=nextDate;
+                await streekValue.save();
+              }
            
           else
           {
@@ -274,7 +293,7 @@ const getUserDashboard=async( req,res,next)=>
                         },
                         usertotalWorkOuts:allWorkOutData,
                         pieChartData:pieChartData,
-                        streekCount:streekCount
+                        streekCount:streekValue.streekCount
                       })
 
     } catch (error) 
