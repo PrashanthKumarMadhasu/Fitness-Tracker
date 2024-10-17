@@ -221,19 +221,34 @@ const getUserDashboard=async( req,res,next)=>
         dayWiseCalories.push(DayWiseCalories)
       }
       //streek value 
-      let check= true
-      //const todayDate= new Date()
-      let streekCount=0;
-      if(check && totalworkouts)
+      let streekCount=0
+      let todayDate=new Date()
+      let nextDate=null;
+      let todayDateString=todayDate.toISOString().split('T')[0];
+      if(!totalWorkoutsYesterday)
       {
-          streekCount= streekCount+1
-          check=false
+        streekCount=0;
       }
-      else if (totalWorkoutsYesterday===0)
-      {
-        streekCount=0 
-        check=true
-      }
+
+      if(totalworkouts>0)
+       {
+          if(!nextDate || todayDateString===nextDate)
+            {
+              streekCount+=1
+              const tomorrow=new Date();
+              tomorrow.setDate(todayDate.getDate()+1);
+              nextDate=tomorrow.toISOString().split('T')[0];
+            }
+           
+          else
+          {
+            console.log("Streek value is already added")
+          }  
+          
+       }
+
+
+
 
       
 
@@ -243,13 +258,13 @@ const getUserDashboard=async( req,res,next)=>
     return res.status(StatusCodes.OK).json(
                       { success:true, 
                         totalCaloriesBurnt:parseFloat(totalCaloriesBurnt[0]?.totalCaloriesBurnt.toFixed(2)) || 0,
-                        totalCaloriesBurntPercen:totalCaloriesBurntPercen===0? 0 : parseFloat(totalCaloriesBurntPercen.toFixed(2)),
+                        totalCaloriesBurntPercen:totalCaloriesBurntPercen===0? 0 : Math.ceil(totalCaloriesBurntPercen),
 
                         totalworkouts:totalworkouts,
                         totalWorkoutsPercen:totalWorkoutsPercen===0? 0 : parseFloat(totalWorkoutsPercen.toFixed(2)),
 
-                        avgCaloriesPerWorkOut:avgCaloriesPerWorkOut ,
-                        avgCaloriesPerWorkoutPercen:avgCaloriesPerWorkoutPercen===0 ? 0 : parseFloat(avgCaloriesPerWorkoutPercen.toFixed(2)),
+                        avgCaloriesPerWorkOut:avgCaloriesPerWorkOut===0? 0 : parseFloat(avgCaloriesPerWorkOut.toFixed(2)) ,
+                        avgCaloriesPerWorkoutPercen:avgCaloriesPerWorkoutPercen===0 ? 0 : Math.ceil(avgCaloriesPerWorkoutPercen),
 
                         weeklyCaloriesBurnt:
                         {

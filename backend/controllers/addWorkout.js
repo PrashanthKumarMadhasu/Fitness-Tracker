@@ -35,7 +35,7 @@ const metValues={
             "Calf Raises": { "MET": 3.5, "repTime": 15, "MachineExercise": true },
             "Seated Calf Raises": { "MET": 3.5, "repTime": 15, "MachineExercise": true },
             "Kettlebell Swings": { "MET": 9.0, "repTime": 20, "MachineExercise": true },
-            "Snatches": { "MET": 9.0, "repTime": 30, "MachineExercise": true },
+            "Snatches": { "MET": 9.0, "repTime": 60, "MachineExercise": true },
             "Clean and Press": { "MET": 8.0, "repTime": 30, "MachineExercise": true },
         
     
@@ -112,8 +112,15 @@ const addWorkout = async (req, res, next) => {
             const repTime=metValues[exercise]?.["repTime"]
             setsTime=(sets*reps*repTime)/5
             console.log(`repTime:${repTime},setsTime:${setsTime},metValue:${metValue}`)
+            if(metValues[exercise]?.["MachineExercise"])
+            {
+                totalWeight=weight
+            }
+            else
+            {
+                totalWeight=weight+userWeight
+            }
             calculatedDuration=(setsTime)/(60*60)
-            totalWeight=weight+userWeight
             caloriesBurned=(metValue*totalWeight*calculatedDuration)
 
         }
