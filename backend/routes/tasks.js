@@ -2,7 +2,7 @@ const express =require('express')
 
 const router =express.Router()
 
-const {homepage,getAllUsers,register,login,deleteUsers}=require('../controllers/tasks');
+const {homepage,getAllUsers,register,login,deleteAllUsers,deleteAccount}=require('../controllers/tasks');
 const {otpVerification,sendOTP,updatePassword}=require('../controllers/otpContoller')
 
 const {getDataByKeyword}=require('../controllers/youtubeDataAPI')
@@ -48,7 +48,8 @@ router.route('/todayWorkOutData').get(authMiddleware,todayWorkoutData)
 
 
 //Delete Operation
+router.route('/deleteUserAccount').delete(authMiddleware,deleteAccount)
 
-router.route('/deleteUsers').delete(authMiddleware, deleteUsers);
+//router.route('/deleteAllUsers').delete(authMiddleware, deleteAllUsers);
 
 module.exports=router

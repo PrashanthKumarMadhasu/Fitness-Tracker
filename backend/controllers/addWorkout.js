@@ -142,10 +142,10 @@ const addWorkout = async (req, res, next) => {
         {
             const repTime=metValues[exercise]?.["repTime"]
             const setsTime=(sets*reps*repTime)/5
-            console.log(`sets and reps block`)
+            
             calculatedDuration = (setsTime )/ (60 * 60); // Assuming 45 seconds per set
             caloriesBurned = metValue*userWeight*calculatedDuration;
-            console.log(caloriesBurned)
+           
         }
 
         // Create workout object
@@ -155,14 +155,14 @@ const addWorkout = async (req, res, next) => {
             reps: reps || 0,
             speed: speed || 0,
             distance: distance || 0,
-            duration: calculatedDuration,
+            duration:(calculatedDuration*60).toFixed(2),
             exercise: exercise,
             category:category,
-            caloriesBurned: caloriesBurned
+            caloriesBurned: caloriesBurned===0? 0 : caloriesBurned.toFixed(2)
         };
 
         // Save to database
-        const addedWorkOutData = await WorkoutDetails.create({...newWorkOutDetails,user: userId,userId:userId});
+        const addedWorkOutData = await WorkoutDetails.create({...newWorkOutDetails,user: userId, userId:userId});
         if (!addedWorkOutData) {
             return res
                 .status(StatusCodes.INTERNAL_SERVER_ERROR)

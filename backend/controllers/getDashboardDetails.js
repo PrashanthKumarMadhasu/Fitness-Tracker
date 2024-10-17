@@ -40,6 +40,41 @@ const getUserDashboard=async( req,res,next)=>
           },
         }
       ])
+      // calculate the percentage differnce for toatal Calories Burnt
+      const startYesterday=new Date()
+      startYesterday.setDate(startYesterday.getDate()-1);
+      startYesterday.setHours(0,0,0,0);
+
+      const endYesterday=new Date()
+      endYesterday.setDate(endYesterday.getDate()-1);
+      endYesterday.setHours(23,59,59,999);
+
+      const previousDayCalories= await WorkoutDetails.aggregate(
+        [
+          {$match:{userId:userId,date:{$gte:startYesterday,$lte:endYesterday}}},
+          {
+            $group:{
+              _id:null,
+              yesterdayTotalCalories:{$sum:"$caloriesBurned"}
+            }
+          }
+        ]
+      );
+      const totalCaloriesToday=totalCaloriesBurnt[0]?.totalCaloriesBurnt || 0;
+      const totalCaloriesYesterday= previousDayCalories[0]?.yesterdayTotalCalories || 0;
+      let totalCaloriesBurntPercen=0
+      if(totalCaloriesYesterday===0)
+      {
+        if(totalCaloriesToday)
+        {
+          totalCaloriesBurntPercen=100
+        }
+      }
+      else
+      {
+        totalCaloriesBurntPercen=((totalCaloriesToday-totalCaloriesYesterday)/totalCaloriesYesterday)*100
+      }
+      
       //Calculate total no of workouts
       const totalworkouts= await WorkoutDetails.countDocuments(
         {
@@ -48,9 +83,49 @@ const getUserDashboard=async( req,res,next)=>
         }
       );
 
+      //percentage difference for total workouts
+      const totalWorkoutsYesterday= await WorkoutDetails.countDocuments(
+        {
+          userId:userId,
+          date:{$gte:startYesterday,$lte:endYesterday}
+        }
+      )
+
+      const TotalWorkoutsToday=  totalworkouts===0? 0: totalworkouts
+      const TotalWorkoutsYesterday= totalWorkoutsYesterday===0 ? 0: totalWorkoutsYesterday
+      let totalWorkoutsPercen=0
+
+      if(TotalWorkoutsYesterday===0)
+      {
+        if(TotalWorkoutsToday)
+        {
+          totalWorkoutsPercen=100
+        }
+      }
+      else
+      {
+        totalWorkoutsPercen=((TotalWorkoutsToday-TotalWorkoutsYesterday)/TotalWorkoutsYesterday)*100
+      }
+
+
       //calculate average calories burnt per workout
-      const avgCaloriesPerWorkOut=totalCaloriesBurnt.length>0?
-                totalCaloriesBurnt[0].totalCaloriesBurnt/totalworkouts:0;
+      const avgCaloriesPerWorkOut= totalCaloriesBurnt[0]?.totalCaloriesBurnt/totalworkouts || 0;
+
+      const avgCaloriesPerWorkOutYesterday= totalCaloriesYesterday/TotalWorkoutsYesterday
+
+      let avgCaloriesPerWorkoutPercen=0
+      if(avgCaloriesPerWorkOutYesterday==0)
+      {
+        if(avgCaloriesPerWorkOut)
+        {
+          avgCaloriesPerWorkoutPercen=100
+        }
+      }
+      else
+      {
+        avgCaloriesPerWorkoutPercen=((avgCaloriesPerWorkOut-avgCaloriesPerWorkOutYesterday)/avgCaloriesPerWorkOutYesterday)*100
+      }
+
 
       // calculate the every workout that belongs to user
       const allWorkOutData=await WorkoutDetails.countDocuments(
@@ -75,7 +150,7 @@ const getUserDashboard=async( req,res,next)=>
       const pieChartData= caloriesByCategory.map((item,index)=>
       ({
         id:index,
-        value:item.totalCaloriesBurnt,
+        value:parseFloat(item.totalCaloriesBurnt.toFixed(2)),
         label:item._id
       }))
 
@@ -87,7 +162,34 @@ const getUserDashboard=async( req,res,next)=>
         const date=new Date(
           currDate.getTime()- i*24*60*60*1000
         );
-        weeks.push(`${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`);
+        const day=date.getDay()
+        switch(day)
+        {
+          case 0:
+            weeks.push("sun")
+            break;
+          case 1:
+              weeks.push("mon")
+              break;
+          case 2:
+              weeks.push("tue")
+              break;
+          case 3:
+              weeks.push('wed')
+              break;
+          case 4:
+              weeks.push('thur')
+              break;            
+          case 5:
+              weeks.push('fri')
+              break;
+          case 6:
+              weeks.push('sat')
+              break;    
+          default:
+            console.log("Invalid day entered")    
+
+        }
         
         const startingDay= new Date(
           date.getFullYear(),
@@ -115,31 +217,50 @@ const getUserDashboard=async( req,res,next)=>
             }
           }
         ])
-
-        dayWiseCalories.push(
-          weekData[0]?.totalCaloriesBurnt?weekData[0]?.totalCaloriesBurnt:0
-        )
+        const DayWiseCalories=parseFloat(weekData[0]?.totalCaloriesBurnt.toFixed(2)) || 0
+        dayWiseCalories.push(DayWiseCalories)
+      }
+      //streek value 
+      let check= true
+      //const todayDate= new Date()
+      let streekCount=0;
+      if(check && totalworkouts)
+      {
+          streekCount= streekCount+1
+          check=false
+      }
+      else if (totalWorkoutsYesterday===0)
+      {
+        streekCount=0 
+        check=true
       }
 
-      const data=
-                      {totalCaloriesBurnt:totalCaloriesBurnt.length>0?totalCaloriesBurnt[0].totalCaloriesBurnt:0,
-                      totalworkouts:totalworkouts,
-                      avgCaloriesPerWorkOut:avgCaloriesPerWorkOut,
-                      weeklyCaloriesBurnt:
-                      {
-                        weeks:weeks,
-                        dayWiseCalories:dayWiseCalories
-                      },
-                      pieChartData:pieChartData,
-                      usertotalWorkOuts:allWorkOutData}
+      
+
+
+
                     
-                      return res.status(StatusCodes.OK).json({success:true, totalCaloriesBurnt:totalCaloriesBurnt.length>0?totalCaloriesBurnt[0].totalCaloriesBurnt:0,
-                        totalworkouts:totalworkouts, avgCaloriesPerWorkOut:avgCaloriesPerWorkOut, weeklyCaloriesBurnt:
+    return res.status(StatusCodes.OK).json(
+                      { success:true, 
+                        totalCaloriesBurnt:parseFloat(totalCaloriesBurnt[0]?.totalCaloriesBurnt.toFixed(2)) || 0,
+                        totalCaloriesBurntPercen:totalCaloriesBurntPercen===0? 0 : parseFloat(totalCaloriesBurntPercen.toFixed(2)),
+
+                        totalworkouts:totalworkouts,
+                        totalWorkoutsPercen:totalWorkoutsPercen===0? 0 : parseFloat(totalWorkoutsPercen.toFixed(2)),
+
+                        avgCaloriesPerWorkOut:avgCaloriesPerWorkOut ,
+                        avgCaloriesPerWorkoutPercen:avgCaloriesPerWorkoutPercen===0 ? 0 : parseFloat(avgCaloriesPerWorkoutPercen.toFixed(2)),
+
+                        weeklyCaloriesBurnt:
                         {
                           weeks:weeks,
                           dayWiseCalories:dayWiseCalories,
-                          usertotalWorkOuts:allWorkOutData
-                        },pieChartData:pieChartData})
+            
+                        },
+                        usertotalWorkOuts:allWorkOutData,
+                        pieChartData:pieChartData,
+                        streekCount:streekCount
+                      })
 
     } catch (error) 
     {
@@ -177,8 +298,9 @@ const todayWorkoutData= async(req,res,next)=>
 
       });
 
-      const totalCalories= todayTotalWorkoutData.reduce((res,item)=>
+      let totalCalories= todayTotalWorkoutData.reduce((res,item)=>
       res+item.caloriesBurned,0)
+      totalCalories=totalCalories===0? 0 : totalCalories.toFixed(2)
 
       return res.status(StatusCodes.OK).json({success:true,todayTotalWorkoutData,totalCalories,count:todayTotalWorkoutData.length})
 

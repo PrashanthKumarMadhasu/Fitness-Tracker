@@ -1,5 +1,7 @@
 const RegisterDetails=require('../models/register')
 const UserProfile=require('../models/profileData')
+const WorkoutDetails=require('../models/workout')
+const sendotp= require('../models/otpModel')
 const {StatusCodes, BAD_REQUEST} =require('http-status-codes')
 const jwr=require('jsonwebtoken');
 const {sendOTP}=require('../controllers/otpContoller')
@@ -41,13 +43,6 @@ const register= async(req,res)=>{
    
 }
 
-//getUserDashboard
-
-const getuserDashboard=async(req,res)=>
-{
-   return res.status(StatusCodes.OK).json({message:"Success",userDetails:{userId:req.user.userId,email:req.user.email}})
-}
-
 const login= async(req,res)=>{
     const {email,password}= req.body
     if(!email || !password)
@@ -72,13 +67,62 @@ const login= async(req,res)=>{
 
 //forgetPassword user
 //otp send to email
+const deleteAccount= async(req,res,next)=>
+{
+    try 
+    {
+        const {userId,email}=req.user
+        const user= await RegisterDetails.findOne({_id:userId})
+        if(!user)
+        {
+            console.log("User Register record not found")
+        }
+        else
+        {
+            await user.deleteOne()
+            console.log("Register Account Deleted")
+        }
+        
+        const profileData=await UserProfile.findOne({userId})
+        if(!profileData)
+            {
+                console.log("Profile Record Data Not Found")
+            }
+            else
+            {
+                await profileData.deleteOne()
+                console.log("Profile Data Deleted")
+            }
+        const workoutData= await WorkoutDetails.find({userId}).exec()
+        if(workoutData.length>0)
+        {
+            await WorkoutDetails.deleteMany({userId})
+            console.log("Workout Details data deleted")
+        }
+        else
+        {
+            console.log("No Workout details found")
+        }
+        
+        const otpdata= await sendotp.findOneAndDelete({email})
+        if(!otpdata)
+        {
+            console.log(" Not OTP record present fot this user")
+        }
+        else{
+            console.log("OTP record deleted successfully")
+        }
+        return res.status(StatusCodes.OK).json({success: true, message:" Account Deleted Successfully "})
+
+        
+    } catch (error) 
+    {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success: false, message:error.message})       
+    }
+}
 
 
-
-
-
-
-const deleteUsers= async(req,res)=>
+const deleteAllUsers= async(req,res)=>
 {
     try
     {
@@ -91,4 +135,4 @@ const deleteUsers= async(req,res)=>
 }
 
 module.exports={homepage,getAllUsers,register,login,
-    deleteUsers,getuserDashboard}
+    deleteAllUsers,deleteAccount}

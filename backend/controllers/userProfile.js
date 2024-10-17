@@ -8,11 +8,18 @@ const getProfileData= async(req,res)=>
 {
     try 
     {
-        const {userId}=req.params
+        const {userId:paramsId}=req.params
+        const {userId,email}=req.user
+        
+        if(paramsId!==userId)
+        {
+            return res.status(StatusCodes.BAD_REQUEST).json({success:false, message:"Authorization token data and provide id is not matching check once"})
+        }
+
         const userProfileData= await UserProfile.findOne({userId}).exec()
         if(!userProfileData)
         {
-            return res.status(StatusCodes).json({success:false,message:"UserProfile Data is not Exists check userId"})
+            return res.status(StatusCodes.BAD_REQUEST).json({success:false,message:"UserProfile Data is not Exists check userId"})
         }
         return res.status(StatusCodes.OK).json({success:true,data:userProfileData})
     } catch (error) 
