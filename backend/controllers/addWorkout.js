@@ -2,7 +2,9 @@ const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 const WorkoutDetails  = require('../models/workout');
 const UserProfile = require('../models/profileData');
+const userWeightLog=require('../models/userWightLog')
 const RegisterDetails = require('../models/register');
+const userWightLog = require('../models/userWightLog');
 
 const metValues={
 
@@ -89,16 +91,49 @@ const metValues={
 
 const addWorkout = async (req, res, next) => {
     const { userId } = req.user;
-    const { weight, sets, reps,speed, distance,time, exercise,category } = req.body;
+    const { weight, sets, reps,speed, distance,time, exercise,category ,userBodyWeight} = req.body;
 
     try {
-        const userProfileData = await UserProfile.findOne({ userId }).exec();
+        let userProfileData = await UserProfile.findOne({ userId }).exec();
 
         if (!userProfileData?.weight) {
             return res.status(StatusCodes.BAD_REQUEST).json({ success: false, message: 'Please enter weight in the profile page.' });
         }
 
-        const userWeight = userProfileData?.weight;
+        let userWeight = userProfileData?.weight;
+        //modify changes for logging userBody weight
+        if(userWeight!==userBodyWeight)
+        {
+            userWeight=userBodyWeight;
+            userProfileData.weight=userBodyWeight;
+            await userProfileData.save()
+        }
+        const userBodyWeightDate= new Date()
+        let userBodyWeightDateString=userBodyWeightDate.toISOString().split('T')[0]
+        let weightLog=await userWeightLog.findOne({userId:userId,date:userBodyWeightDateString})
+        if(!weightLog)
+        {
+            const logcreation = await userWeightLog.create({userId:userId,userBodyWeight:userBodyWeight})
+            if(!logcreation)
+            {
+                console.log(" Error Occure while createing log")
+            }
+            else
+            {
+                console.log(logcreation)
+            }
+        }
+        else
+        {
+            if(weightLog.userBodyWeight!==userBodyWeight)
+            {
+                weightLog.userBodyWeight=userBodyWeight
+                await weightLog.save();
+            }
+
+        }
+
+
         const metValue = metValues[exercise]?.["MET"] || 0;
         //console.log(metValue)
 
@@ -110,7 +145,15 @@ const addWorkout = async (req, res, next) => {
         if (weight) 
         {
             const repTime=metValues[exercise]?.["repTime"]
-            setsTime=(sets*reps*repTime)/5
+           
+            if(reps<5)
+            {
+                setsTime=(sets*reps*repTime)
+            }
+            else
+            {
+                setsTime=(sets*reps*repTime)/5
+            }
             console.log(`repTime:${repTime},setsTime:${setsTime},metValue:${metValue}`)
             if(metValues[exercise]?.["MachineExercise"])
             {
@@ -148,7 +191,14 @@ const addWorkout = async (req, res, next) => {
         else 
         {
             const repTime=metValues[exercise]?.["repTime"]
-            const setsTime=(sets*reps*repTime)/5
+            if(reps<5)
+            {
+                setsTime=(sets*reps*repTime)
+            }
+            else
+            {
+                setsTime=(sets*reps*repTime)/5
+            }
             
             calculatedDuration = (setsTime )/ (60 * 60); // Assuming 45 seconds per set
             caloriesBurned = metValue*userWeight*calculatedDuration;
@@ -182,4 +232,102 @@ const addWorkout = async (req, res, next) => {
     }
 };
 
-module.exports = { addWorkout };
+
+const deleteuserWorkout= async(req,res,next)=>
+{
+    try 
+    {
+        const {userId,email}=req.user
+        const {workoutId}=req.params
+        const result= await WorkoutDetails.findByIdAndDelete({_id:workoutId})
+        if(!result)
+        {
+            return res.status(StatusCodes.BAD_REQUEST).json({success:false,message:"Data is not present for provided Id, check once"})
+        }
+        else
+        {
+          return res.status(StatusCodes.OK).json({success:true,message:"Workout Record Deleted"})   
+        }
+
+    } 
+    catch (error) 
+    {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success:false,message:error.message})
+    }
+}
+
+const getWorkoutHistory=async(req,res)=>
+{
+    try 
+    {
+        const {userId,email}=req.user
+        //const workoutNames=await WorkoutDetails.find({userId})
+        const workoutData= await WorkoutDetails.aggregate([
+            {$match:{userId:userId}},
+            {
+                $group:
+                {
+                    _id:{$dateToString:{format:"%Y-%m-%d", date: "$date"}},
+                    exercises: { $push:"$exercise"},
+                    totalCalories: { $sum: "$caloriesBurned" }, // Sum total calories for each date
+                    totalDuration: { $sum: "$duration" }
+                },
+            },
+            { $sort: { _id: -1 } }
+        ])
+
+        
+        if(!workoutData)
+        {
+            return res.status(StatusCodes.BAD_GATEWAY).json({success:false, message:"Unable to get workhistory Data"})
+        }
+        //fetching userWeightLog
+        const userWeightLogData= await userWeightLog.find({userId:userId})
+        if(!userWeightLogData)
+        {
+            return res.status(StatusCodes.BAD_GATEWAY).json({success:false,message:"Unable fetch data from userWightLog"})
+        }
+        let userWeightLogDataFormat=userWeightLogData.map((item)=>
+        ({
+            userId:item.userId,
+            userBodyWeight:item.userBodyWeight,
+            date:item.date.toISOString().split('T')[0]
+
+        }))
+        userWeightLogDataFormat.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        return res.status(StatusCodes.OK).json({success:true, workoutData,userWeightLogDataFormat})
+
+
+    } 
+    catch (error) 
+    {
+        return res.status(StatusCodes.BAD_GATEWAY).json({success:false, message:error.message})
+    }
+}
+
+const addWorkoutLog= async(req,res,next)=>
+{
+    try
+    {
+        const {userId,userBodyWeight,date}=req.body
+        let dateString=date.split('T')[0]
+        const weightLog= await userWeightLog.findOne({userId:userId,date:dateString})
+        if(weightLog)
+        {
+          return res.status(StatusCodes.BAD_REQUEST).json({success:false,message:"Data is available for given Data",weightLog})
+        }
+        else
+        {
+            let dateRecord=await userWeightLog.create({...req.body})
+            return res.status(StatusCodes.CREATED).json({success:true,message:"Date Record Created", dateRecord})
+        }
+    } 
+    catch (error) 
+    {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success:false,message:error.message})
+    }
+    
+}
+
+module.exports = { addWorkout ,deleteuserWorkout,getWorkoutHistory,addWorkoutLog};

@@ -2,12 +2,12 @@ const express =require('express')
 
 const router =express.Router()
 
-const {homepage,getAllUsers,register,login,deleteAllUsers,deleteAccount}=require('../controllers/tasks');
+const {homepage,getAllUsers,register,login,deleteAllUsers,deleteAccount,contactForm}=require('../controllers/tasks');
 const {otpVerification,sendOTP,updatePassword}=require('../controllers/otpContoller')
 
 const {getDataByKeyword}=require('../controllers/youtubeDataAPI')
 
-const {addWorkout} =require('../controllers/addWorkout')
+const {addWorkout,deleteuserWorkout,getWorkoutHistory,addWorkoutLog} =require('../controllers/addWorkout')
 const {todayWorkoutData,getUserDashboard}=require('../controllers/getDashboardDetails')
 
 const authMiddleware=require('../middlewares/auth');
@@ -35,6 +35,10 @@ router.route('/getProfileData/:userId').get(authMiddleware,getProfileData)
 router.route('/updateProfileData').put(authMiddleware,updateProfileData)
 
 router.route('/addWorkout').post(authMiddleware,addWorkout);
+router.route('/deleteWorkout/:workoutId').delete(authMiddleware,deleteuserWorkout)
+router.route('/getWorkoutHistory').get(authMiddleware,getWorkoutHistory)
+router.route('/addWorkoutLog').post(authMiddleware,addWorkoutLog)
+
 router.route('/getDashboardDetails').get(authMiddleware,getUserDashboard)
 router.route('/todayWorkOutData').get(authMiddleware,todayWorkoutData)
 
@@ -46,7 +50,7 @@ router.route('/todayWorkOutData').get(authMiddleware,todayWorkoutData)
 //PaymentGateway UPI Transaction:
 //router.route('phonepe/pay').post(paymentGateway)
 
-
+router.route('/contactForm').post(authMiddleware,contactForm)
 //Delete Operation
 router.route('/deleteUserAccount').delete(authMiddleware,deleteAccount)
 

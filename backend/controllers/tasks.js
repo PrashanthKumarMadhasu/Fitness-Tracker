@@ -5,6 +5,7 @@ const sendotp= require('../models/otpModel')
 const {StatusCodes, BAD_REQUEST} =require('http-status-codes')
 const jwr=require('jsonwebtoken');
 const {sendOTP}=require('../controllers/otpContoller')
+const CustomerData =require('../models/cutomerData')
 
 const homepage=(req,res)=>{
     res.send('Home Page');
@@ -107,7 +108,7 @@ const deleteAccount= async(req,res,next)=>
         const otpdata= await sendotp.findOneAndDelete({email})
         if(!otpdata)
         {
-            console.log(" Not OTP record present fot this user")
+            console.log(" No OTP record present fot this user")
         }
         else{
             console.log("OTP record deleted successfully")
@@ -120,6 +121,23 @@ const deleteAccount= async(req,res,next)=>
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success: false, message:error.message})       
     }
 }
+
+const contactForm= async(req,res,next)=>
+{
+    try 
+    {
+        const {userId}=req.user
+        const {firstName,lastName,mobile,message,email} =req.body
+        const customerData= await CustomerData.create({...req.body})
+        return res.status(StatusCodes.CREATED).json({success:true,customerData})
+
+    } catch (error) 
+    {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success:false, message:error,message})
+    }
+}
+
+
 
 
 const deleteAllUsers= async(req,res)=>
@@ -135,4 +153,4 @@ const deleteAllUsers= async(req,res)=>
 }
 
 module.exports={homepage,getAllUsers,register,login,
-    deleteAllUsers,deleteAccount}
+    deleteAllUsers,deleteAccount,contactForm}

@@ -2,6 +2,7 @@ const WorkoutDetails  = require('../models/workout');
 const UserProfile = require('../models/profileData');
 const RegisterDetails = require('../models/register');
 const streekData= require('../models/streekCount')
+const userWeightLog=require('../models/userWightLog')
 const {StatusCodes}=require("http-status-codes")
 
 
@@ -63,7 +64,7 @@ const getUserDashboard=async( req,res,next)=>
       );
       const totalCaloriesToday=totalCaloriesBurnt[0]?.totalCaloriesBurnt || 0;
       const totalCaloriesYesterday= previousDayCalories[0]?.yesterdayTotalCalories || 0;
-      console.log(totalCaloriesYesterday)
+      //console.log(totalCaloriesYesterday)
       let totalCaloriesBurntPercen=0
       if(totalCaloriesYesterday===0)
       {
@@ -75,7 +76,9 @@ const getUserDashboard=async( req,res,next)=>
       else
       {
         totalCaloriesBurntPercen=((totalCaloriesToday-totalCaloriesYesterday)/totalCaloriesYesterday)*100
+
       }
+      //console.log(`totalCaloriesBurntPerce: ${totalCaloriesBurntPercen}`)
       
       //Calculate total no of workouts
       const totalworkouts= await WorkoutDetails.countDocuments(
@@ -130,14 +133,14 @@ const getUserDashboard=async( req,res,next)=>
         if(avgCaloriesPerWorkOut)
         {
           avgCaloriesPerWorkoutPercen=100
-          //console.log(`avgCaloriesPerWorkoutPercen:${avgCaloriesPerWorkoutPercen}`)
+          
         }
       }
       else
       {
         avgCaloriesPerWorkoutPercen=((avgCaloriesPerWorkOut-avgCaloriesPerWorkOutYesterday)/avgCaloriesPerWorkOutYesterday)*100
-        //console.log(`avgCaloriesPerWorkoutPercen:${avgCaloriesPerWorkoutPercen}`)
       }
+      //console.log(`avgCaloriesPerWorkoutPercen:${avgCaloriesPerWorkoutPercen}`)
 
 
       // calculate the every workout that belongs to user
@@ -277,6 +280,42 @@ const getUserDashboard=async( req,res,next)=>
           }  
           
        }
+       if(!totalWorkoutsYesterday)
+       {
+        const yesterdayDate=new Date();
+        yesterdayDate.setDate(todayDate.getDate()-1);
+        let yesterDateString=yesterdayDate.toISOString().split('T')[0];
+        const dateData= await WorkoutDetails.findOne({userId:userId,date:yesterDateString})
+        const profile= await UserProfile.findOne({userId:userId}).exec()
+        if(!dateData)
+        {
+          const newWorkOutDetails = {
+            weight: profile.weight,
+            sets: 0,
+            reps: 0,
+            speed: 0,
+            distance: 0,
+            duration:0,
+            exercise: null,
+            category:null,
+            caloriesBurned: 0,
+            date:yesterdayDate.setDate(todayDate.getDate()-1)
+            }
+          const addedWorkOutData = await WorkoutDetails.create({...newWorkOutDetails,user: userId, userId:userId});
+        }
+        const weightLogData= await userWeightLog.findOne({userId:userId,date:yesterDateString})
+        if(!weightLogData)
+        {
+          const weightLog=
+        {
+          userId:userId,
+          userBodyWeight:profile.weight,
+          date:yesterdayDate.setDate(todayDate.getDate()-1)
+        }
+        await userWeightLog.create({...weightLog})
+        
+       }
+      }
                     
     return res.status(StatusCodes.OK).json(
                       { success:true, 
