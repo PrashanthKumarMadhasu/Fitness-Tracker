@@ -42,6 +42,11 @@ const Bmi = () => {
   }
   return (
     <div className="bmi-container">
+      {bmiValue && bmiMessage &&(
+          <div className="result">
+          <p>Result: <span className="bmi-message">{bmiMessage}</span></p>
+          </div>
+        )}
       <div className='bmi-calculator'>
         <h1 className='header-bmi'>BMI Calculator </h1>
         <div className='layer-1'>
@@ -63,11 +68,6 @@ const Bmi = () => {
           <button type="button" class="refresh" onClick={resetBmi} ><HiRefresh /></button>
         </div>
       </div>
-      {bmiValue && bmiMessage &&(
-          <div className="result">
-          <p>Result: <span className="bmi-message">{bmiMessage}</span></p>
-          </div>
-        )}
 
     </div>
   )

@@ -5,7 +5,7 @@ import CountsCard from "../Components/Cards/CountsCard";
 import WeeklyStatCard from "../Components/Cards/WeeklyStatCard";
 import CategoryChart from "../Components/Cards/CategoryChart";
 import WorkoutCard from "../Components/Cards/WorkoutCard";
-import { addWorkout, getDashboardDetails, getWorkouts } from "../api";
+import { addWorkout, getDashboardDetails, getWorkouts, getProfileData } from "../api";
 import Dropdowns from "../Components/Cards/Dropdowns";
 
 const Container = styled.div`
@@ -63,12 +63,13 @@ const CardWrapper = styled.div`
   }
 `;
 
-const Dashboard = () => {
+const Dashboard = ({currentUser}) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
   const [buttonLoading, setButtonLoading] = useState(false);
   const [todaysWorkouts, setTodaysWorkouts] = useState([]);
   const [workout, setWorkout] = useState({});
+  const [bodyWeight, setBodyWeight] = useState();
 
   const dashboardData = async () => {
     setLoading(true);
@@ -91,6 +92,7 @@ const Dashboard = () => {
     });
   };
 
+  
   const addNewWorkout = async (newWorkout) => {
     setButtonLoading(true);
     const token = localStorage.getItem("fittrack-app-token");
@@ -106,9 +108,21 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    const fetchProfileData = async()=>{
+      try {
+        const token = localStorage.getItem("fittrack-app-token");
+        const res = await getProfileData(token, currentUser.id);
+        setBodyWeight(res.data.data.weight);
+        console.log(`body weight ${bodyWeight,res.data.data.weight}`);
+      } catch (err) {
+        console.log(err)
+        console.error("Failed to fetch profile data:", err);
+      }
+    };
     dashboardData();
     getTodaysWorkout();
-  }, []);
+    fetchProfileData();
+  }, [currentUser]);
 
   
   return (
@@ -127,7 +141,8 @@ const Dashboard = () => {
           <Dropdowns workout={workout}
             setWorkout={setWorkout}
             addNewWorkout={addNewWorkout}
-            buttonLoading={buttonLoading} />
+            buttonLoading={buttonLoading} 
+            userBodyWeight={bodyWeight}/>
 
           <CategoryChart data={data} />
         </FlexWrap>

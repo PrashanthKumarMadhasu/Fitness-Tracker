@@ -6,8 +6,8 @@ import { useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./Components/Navbar";
 import Dashboard from "./Pages/Dashboard";
-import Workouts from "./pages/Workouts";
-import Tutorials from "./Pages/Tutorials";
+import History from "./pages/History/History";
+import Tutorials from "./Pages/Tutorials/Tutorials";
 import Blogs from "./Pages/Blogs";
 import Bmi from "./Components/BMI/Bmi";
 import Contact from "./Pages/Contact/Contact";
@@ -55,8 +55,8 @@ function App() {
             <Container>
               <Navbar currentUser={currentUser} />
               <Routes>
-                <Route path="/" exact element={<Dashboard />} />
-                <Route path="/workouts" exact element={<Workouts />} />
+                <Route path="/" exact element={<Dashboard currentUser={currentUser} />} />
+                <Route path="/history" exact element={<History />} />
                 <Route path="/tutorials" exact element={<Tutorials />} />
                 <Route path="/blogs" exact element={<Blogs />} />
                 <Route path="/bmi" exact element={<Bmi />} />

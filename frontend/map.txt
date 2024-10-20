@@ -14,14 +14,16 @@ Popups to Toast Messages.
 ------------[ features to be added ]---------------
             ^^^^^^^^^^^^^^^^^^^^^^^^
 *Email on Bdy 
-*Streak(colors for 2,4,6,8+ days)
+*Streak(colors for 2,4,6,8+ days)-done
+*workout History page {date,allworkout,toatl duration,total calories,weight --> weight graph}
+*Set goals & Remainder page { add goals (workout plan for tomorrow)śend a remainder tomorrow at x'O' Clock ()}
 
 
 
 
 -------------------[ Fonts ]------------------
-.cherry-bomb-one-regular {
-  font-family: "Cherry Bomb One", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
+
+
+--------------[Bugs]--------------------
+streak is no updating (only on refresh)
+profile pic not updating for larger size also not showing in profile open

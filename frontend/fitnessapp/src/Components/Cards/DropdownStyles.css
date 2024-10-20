@@ -17,6 +17,19 @@
   position: absolute;
 }
 
+.bodyWeight{
+  display: flex;
+  flex-direction: row;
+  margin-bottom:8px;
+  color: #007bff;
+  font-weight: 550;
+}
+.bodyWeight input{
+  padding: 3px;
+  margin-left: 5px;
+  max-width: 100px;
+
+}
 
 .first-level, .second-level, .third-level {
   list-style-type: none;

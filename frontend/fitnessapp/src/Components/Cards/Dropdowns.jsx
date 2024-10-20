@@ -37,29 +37,29 @@ const Title = styled.div`
   }
 `;
 
-const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
+const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading, userBodyWeight }) => {
   const animations = [Running, WeightLifting, ToeTouch, Warmup, Bench, BoxJump];
   const [currentAnimationIndex, setCurrentAnimationIndex] = useState(0);
   const [selectedExercise, setSelectedExercise] = useState();
   const [exerciseCategory, setExerciseCategory] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [exerciseProps, setExerciseProps] = useState([]);
-  const [sets, setSets] = useState();
-  const [reps, setReps] = useState();
-  const [weight, setWeight] = useState();
-  const [speed, setSpeed] = useState();
-  const [distance, setDistance] = useState();
-  const [time, setTime] = useState();
   const [inputValues, setInputValues] = useState({});
+  const [bodyWeight, setBodyWeight] = useState(userBodyWeight);
+
+  useEffect(() => {
+    // Update bodyWeight when userBodyWeight prop changes
+    setBodyWeight(userBodyWeight);
+  }, [userBodyWeight]);
 
   useEffect(() => {
     const interval = setTimeout(() => {
       setCurrentAnimationIndex((prevIndex) =>
         prevIndex === animations.length - 1 ? 0 : prevIndex + 1
       );
-    }, 4000); 
+    }, 4000);
 
-    return () => clearTimeout(interval); 
+    return () => clearTimeout(interval);
   }, [currentAnimationIndex, animations.length]);
 
   // Function to handle exercise selection (e.g., when user clicks on an exercise)
@@ -88,18 +88,25 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
   };
 
   const handleWorkout = () => {
-    const sample = { ...inputValues, exercise: selectedExercise, category: exerciseCategory };
+    const sample = { ...inputValues, exercise: selectedExercise, category: exerciseCategory, userBodyWeight: bodyWeight};
     addNewWorkout(sample);
     setInputValues({});
     setSelectedExercise();
-  }
+  };
+
   return (
     <Card>
       <Title>Add New Workout</Title>
       <div className="dropdown">
-        <button onClick={toggleDropdown} className="dropbtn">
-          Select Exercise {isOpen ? <FaChevronUp /> : <FaChevronDown />}
-        </button>
+        <div>
+          <div className='bodyWeight'>
+            <label htmlFor="bodyWeight">Set Body Weight</label>
+            <input type='number' value={bodyWeight} name='bodyWeight' onChange={(e)=>setBodyWeight(e.target.value)}/>
+          </div>
+          <button onClick={toggleDropdown} className="dropbtn">
+            Select Exercise {isOpen ? <FaChevronUp /> : <FaChevronDown />}
+          </button>
+        </div>
         {isOpen && (
           <div className="dropdown-content" >
             <ul className="first-level">
@@ -146,18 +153,18 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
                   value={inputValues[inputField] || ''}
                   onChange={(e) => handleInputChange(e, inputField)}
                 />
-                <br/>
+                <br />
               </div>
             ))}
           </div>
-          : 
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
+          :
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
             alignItems: 'center' // This makes it take up the full viewport height
           }}>
-            <Lottie animationData={animations[currentAnimationIndex]} 
-            style={{ height: '200px', width: '200px',}} />
+            <Lottie animationData={animations[currentAnimationIndex]}
+              style={{ height: '200px', width: '200px', }} />
           </div>
         }
       </div>
