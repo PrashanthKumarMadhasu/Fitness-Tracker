@@ -37,7 +37,13 @@ export const getProfileData = async (token, userId) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  export const deleteUserAccount = async (token) =>
-    await API.delete(`/deleteUserAccount`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+export const deleteUserAccount = async (token) =>
+  await API.delete(`/deleteUserAccount`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+export const getWorkoutHistory = async (token) =>
+  await API.get(`/getWorkoutHistory`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+

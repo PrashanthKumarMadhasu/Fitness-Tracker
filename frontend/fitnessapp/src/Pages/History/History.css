@@ -1,67 +1,73 @@
-/* Main container for workout history */
+
 .workout-history-container {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  /* Responsive table design */
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+
+.scrollable-table-container {
+  max-height: 70vh; 
+  overflow-y: auto; 
+  width: 100%; 
+}
+
+/* Responsive table design */
+.workout-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+.workout-history-table th,
+.workout-history-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.workout-history-table th {
+  background-color: #f4f4f4;
+}
+
+.workout-dropdown {
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Responsive for mobile screens */
+@media (max-width: 768px) {
   .workout-history-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 16px;
-    margin: 20px 0;
+    font-size: 14px;
   }
-  
+
   .workout-history-table th,
   .workout-history-table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
+    padding: 8px;
   }
-  
-  .workout-history-table th {
-    background-color: #f4f4f4;
-  }
-  
+
   .workout-dropdown {
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px;
+    padding: 4px;
   }
-  
-  /* Responsive for mobile screens */
-  @media (max-width: 768px) {
-    .workout-history-table {
-      font-size: 14px;
-    }
-  
-    .workout-history-table th,
-    .workout-history-table td {
-      padding: 8px;
-    }
-  
-    .workout-dropdown {
-      padding: 4px;
-    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+  .workout-history-table {
+    font-size: 12px;
   }
-  
-  /* For very small screens */
-  @media (max-width: 480px) {
-    .workout-history-table {
-      font-size: 12px;
-    }
-  
-    .workout-history-table th,
-    .workout-history-table td {
-      padding: 6px;
-    }
-  
-    .workout-dropdown {
-      padding: 3px;
-    }
+
+  .workout-history-table th,
+  .workout-history-table td {
+    padding: 6px;
   }
-  
+
+  .workout-dropdown {
+    padding: 3px;
+  }
+}
