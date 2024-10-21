@@ -262,7 +262,7 @@ const getWorkoutHistory=async(req,res)=>
     {
         const {userId,email}=req.user
         //const workoutNames=await WorkoutDetails.find({userId})
-        const workoutData= await WorkoutDetails.aggregate([
+        let workoutData= await WorkoutDetails.aggregate([
             {$match:{userId:userId}},
             {
                 $group:
@@ -275,6 +275,15 @@ const getWorkoutHistory=async(req,res)=>
             },
             { $sort: { _id: -1 } }
         ])
+        
+        workoutData= workoutData.map((item,index)=>(
+            {
+                date:item._id,
+                exercises:item.exercises,
+                totalCalories:(item.totalCalories).toFixed(2),
+                totalDuration:(item.totalDuration).toFixed(2)
+            }
+        ))
 
         
         if(!workoutData)
@@ -289,6 +298,7 @@ const getWorkoutHistory=async(req,res)=>
         }
         let userWeightLogDataFormat=userWeightLogData.map((item)=>
         ({
+
             userId:item.userId,
             userBodyWeight:item.userBodyWeight,
             date:item.date.toISOString().split('T')[0]
