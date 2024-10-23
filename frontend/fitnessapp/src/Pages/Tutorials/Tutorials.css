@@ -1,0 +1,87 @@
+.tutorial-container {
+  padding: 50px;
+  max-height: 100vh; /* Set the max height for scrollable content */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+.tutorial-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.category-card {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.img-shadow {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  transition: filter 0.3s ease;
+}
+
+.category-card:hover .img-shadow {
+  filter: drop-shadow(0px 8px 16px rgba(2, 4, 22, 0.3)); /* Shadow around the image's actual shape */
+}
+
+.category-card:hover {
+  background-color: #2e63b3;
+  color: #fff;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.video-section {
+  text-align: center;
+}
+
+.back-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+.video-list {
+  max-height: 70vh; /* Set the max height for scrollable content */
+  overflow-y: auto; /* Enable scrolling */
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 3 equal columns */
+  grid-template-rows: auto; /* Row size will be auto based on content */
+  gap: 10px;
+}
+
+.video-frame {
+  /* margin-bottom: 20px; */
+  background-color: #a9bacc;
+}
+
+.workout-name{
+  color: black;
+  font-weight: 400;
+  font-family:"Spicy Rice";
+}
+
+video {
+  max-width: 100%;
+}
