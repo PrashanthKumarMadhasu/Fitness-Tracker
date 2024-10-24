@@ -47,3 +47,7 @@ export const getWorkoutHistory = async (token) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
+export const getSearchData = async (token,data) =>
+  await API.get(`/tutorials/${data}`,{
+    headers: { Authorization: `Bearer ${token}` },
+  });
