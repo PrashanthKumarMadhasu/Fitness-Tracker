@@ -33,7 +33,7 @@ router.route('/updatePassword').post(updatePassword);
 
 
 //
-router.route('/tutorials/:keyword').get(getDataByKeyword)
+router.route('/tutorials/:keyword').get(authMiddleware,getDataByKeyword)
 //router.route('/dashboard').post(authMiddleware,getDashboard)
 
 router.route('/getProfileData/:userId').get(authMiddleware,getProfileData)
