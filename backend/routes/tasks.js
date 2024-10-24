@@ -12,6 +12,11 @@ const {todayWorkoutData,getUserDashboard}=require('../controllers/getDashboardDe
 
 const authMiddleware=require('../middlewares/auth');
 const { getProfileData,updateProfileData } = require('../controllers/userProfile')
+ const {scheduleModule}= require('../controllers/whatsappMessage')
+
+
+
+
 //get API
 router.route('/').get(homepage);
 router.route('/getAllUsers').get(getAllUsers);
@@ -42,7 +47,8 @@ router.route('/addWorkoutLog').post(authMiddleware,addWorkoutLog)
 router.route('/getDashboardDetails').get(authMiddleware,getUserDashboard)
 router.route('/todayWorkOutData').get(authMiddleware,todayWorkoutData)
 
-
+//send reminder routes
+router.route('/sendRemainder').post(authMiddleware,scheduleModule)
 
 
 

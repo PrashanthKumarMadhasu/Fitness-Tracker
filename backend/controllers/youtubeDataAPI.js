@@ -20,7 +20,7 @@ const getDataByKeyword= async(req,res)=>
         const videoData= await youtube.search.list({
             part:'snippet',
             maxResults:10,
-            q:keyword,
+            q:`${keyword} Reels`,
             type:'video',
             chart:'mostPopular',
             regionCode:'IN',
@@ -36,15 +36,16 @@ const getDataByKeyword= async(req,res)=>
             channelTitle:video.snippet.channelTitle,
             publishTime:video.snippet.publishTime,
             thumbnail: video.snippet.thumbnails.high.url,
-            videoLink: `https://www.youtube.com/watch?v=${video.id.videoId}` 
+            videoLink: `https://www.youtube.com/watch?v=${video.id.videoId}`,
+            url:`https://www.youtube.com/embed/${video.id.videoId}`
 
         }));
-        const links=videos.map((link)=>(
+        const links=videos.map((item)=>(
         {
-            source:link
+            url:item.url
         }))
 
-        return res.status(StatusCodes.OK).json({success:true, links:links})
+        return res.status(StatusCodes.OK).json({success:true, links})
     }
     catch (error) 
     {
