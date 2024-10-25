@@ -12,12 +12,20 @@ const whatsappMessage= new mongoose.Schema(
         {
             type:String
         },
+        remainderDate:
+        {
+            type:String
+        },
+        remainderTime:
+        {
+            type:String
+        },
         senderMobile:
         {
             type:String
         },
 
-        message:
+        remainderMessage:
         {
             type:String
         },

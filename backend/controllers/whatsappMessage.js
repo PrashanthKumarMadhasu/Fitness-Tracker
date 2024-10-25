@@ -19,12 +19,12 @@ async function sendRemainderQueue(messageData)
             const client = new twilio(accountSid,authToken)
             const result= await client.messages.create(
                 {
-                    body:messageData.message,
+                    body:messageData.remainderMessage,
                     from:`whatsapp:+${messageData.senderMobile}`,
                     to:`whatsapp:+91${messageData.userMobile}`
                 })
-            //const res=JSON.stringify(result)
-            //console.log(`result:${res}`)   
+            const res=JSON.stringify(result)
+            console.log(`result:${res}`)   
             client.messages(result.sid)
             .fetch().then(message => console.log(message.status)); 
             if(!result)
@@ -82,8 +82,22 @@ const scheduleModule= async(req,res)=>
     try 
     {
         const {userId,email}= req.user
-        const {message, date,time,mobile}=req.body
-        const dateTime=`${date}T${time}:00`
+        const {message, date,time}=req.body
+        const mobile='9347273270'
+        let timeSplit= time.split(' ')[1]
+        let timeMin= time.split(' ')[0]
+        let [hours,minutes]= timeMin.split(':').map(Number)
+
+        if(timeSplit==="PM" && hours!==12)
+        {
+            hours+=12
+        }
+        else if(timeSplit==="AM" && hours===12)
+        {
+            hours=0;
+        }
+        let finalTime= `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}`
+        const dateTime=`${date}T${finalTime}:00`
         dayjs.extend(utc);
         dayjs.extend(timezone);
         const sendAt=dayjs.tz(dateTime,'Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ss')
@@ -91,7 +105,9 @@ const scheduleModule= async(req,res)=>
         const messageData= await whatsappMessage.create(
             {
                 userId:userId,
-                message:message,
+                remainderMessage:message,
+                remainderDate:date,
+                remainderTime:time,
                 sendAt:sendAt,
                 senderMobile:'14155238886',
                 userMobile:mobile
@@ -110,5 +126,71 @@ const scheduleModule= async(req,res)=>
     }
 }
 
-module.exports={sendRemainderQueue,scheduleModule}
+const getTotalReminders=async(req,res)=>
+{
+
+    try 
+    {
+        const {userId, email}= req.user
+        dayjs.extend(utc);
+        dayjs.extend(timezone);
+        const currDate= new Date();
+        const indiaDate=dayjs.tz(currDate,'Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ss')
+       
+        const planData= await whatsappMessage.find({
+            userId:userId,
+            status:{$ne:'sent'},
+            sendAt:{$gte:indiaDate}
+        }).exec()
+        if(!planData)
+        {
+            return res.status(StatusCodes.BAD_GATEWAY).json({suceess:false, message:"Remainder's Data is Empty"})
+        }
+        return res.status(StatusCodes.OK).json({success:true,planData})
+
+        
+    }
+    catch (error) 
+    {
+        return res.status(StatusCodes.OK).json({success:false, message:error.message})   
+    }
+}
+
+
+const modifyRemainder= async(req,res)=>
+{
+    try
+    {
+        const {userId,email}=req.user
+        const {check}= req.body
+        const {remainder_id} = req.params
+        const remainderData= await whatsappMessage.findOne({_id:remainder_id,userId:userId})
+        if(!remainderData)
+        {
+            return res.status(StatusCodes.BAD_GATEWAY).json({success:false,message:`Remainder Data is not found for this id ${remainder_id}`})
+        }
+        else
+        {
+            if(check==='true')
+            {
+                remainderData.status='pending'
+                await remainderData.save();
+            }
+            else
+            {
+                remainderData.status='disable'
+                await remainderData.save();
+            }
+            return res.status(StatusCodes.CREATED).json({success:true,remainderData,message:"Remainder Updated Successfully"})
+        }
+
+    } 
+    catch (error) 
+    {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success:false, message:error.message})    
+    }
+}
+
+
+module.exports={sendRemainderQueue,scheduleModule,getTotalReminders,modifyRemainder}
 

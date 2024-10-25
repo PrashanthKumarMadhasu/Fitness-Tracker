@@ -280,8 +280,8 @@ const getWorkoutHistory=async(req,res)=>
             {
                 date:item._id,
                 exercises:item.exercises,
-                totalCalories:(item.totalCalories).toFixed(2),
-                totalDuration:(item.totalDuration).toFixed(2)
+                totalCalories:Math.ceil(item.totalCalories),
+                totalDuration:Math.ceil(item.totalDuration)
             }
         ))
 
@@ -340,4 +340,23 @@ const addWorkoutLog= async(req,res,next)=>
     
 }
 
-module.exports = { addWorkout ,deleteuserWorkout,getWorkoutHistory,addWorkoutLog};
+const removeSingleWorkout= async(req,res)=>
+{
+    try 
+    {
+        const {userId,email}= req.user
+        const {workout_id} =req.params
+        const deleteUserWorkout= await WorkoutDetails.findOneAndDelete({_id:workout_id})
+        if(!deleteUserWorkout)
+        {
+            return res.status(StatusCodes.BAD_GATEWAY).json({success:false,message:`Unable to find workout data for respective id:${workout_id}`})                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        }
+        return res.status(StatusCodes.OK).json({sucess:true,message:"workout data deleted successfully"})
+    }   
+    catch (error) 
+    {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({sucess:false,message:error.message})
+    }
+}
+
+module.exports = { addWorkout ,deleteuserWorkout,getWorkoutHistory,addWorkoutLog,removeSingleWorkout};
