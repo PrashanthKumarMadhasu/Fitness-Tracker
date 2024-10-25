@@ -37,6 +37,11 @@ const whatsappMessage= new mongoose.Schema(
         sendAt:
         {
             type:String
+        },
+        remainder:
+        {
+            type:String,
+            default:"true"
         }
     }
 )

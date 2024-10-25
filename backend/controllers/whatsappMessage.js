@@ -82,7 +82,7 @@ const scheduleModule= async(req,res)=>
     try 
     {
         const {userId,email}= req.user
-        const {message, date,time}=req.body
+        const {message, date,time,remainder}=req.body
         const mobile='9347273270'
         let timeSplit= time.split(' ')[1]
         let timeMin= time.split(' ')[0]
@@ -110,7 +110,8 @@ const scheduleModule= async(req,res)=>
                 remainderTime:time,
                 sendAt:sendAt,
                 senderMobile:'14155238886',
-                userMobile:mobile
+                userMobile:mobile,
+                remainder:remainder
             })
             console.log(`DB date: ${messageData.sendAt}`)
         if(!messageData)
@@ -162,8 +163,8 @@ const modifyRemainder= async(req,res)=>
     try
     {
         const {userId,email}=req.user
-        const {check}= req.body
         const {remainder_id} = req.params
+        const {remainder}=req.body
         const remainderData= await whatsappMessage.findOne({_id:remainder_id,userId:userId})
         if(!remainderData)
         {
@@ -171,14 +172,16 @@ const modifyRemainder= async(req,res)=>
         }
         else
         {
-            if(check==='true')
+            if(remainder==='true')
             {
                 remainderData.status='pending'
+                remainderData.remainder='true'
                 await remainderData.save();
             }
             else
             {
                 remainderData.status='disable'
+                remainderData.remainder='false'
                 await remainderData.save();
             }
             return res.status(StatusCodes.CREATED).json({success:true,remainderData,message:"Remainder Updated Successfully"})
