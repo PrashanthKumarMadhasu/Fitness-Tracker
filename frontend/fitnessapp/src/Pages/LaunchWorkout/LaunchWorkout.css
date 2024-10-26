@@ -1,0 +1,49 @@
+.setWorkout-container{
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.Remainder-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.date-time{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.date-time input{
+    border-radius: 5px;
+    padding: 5px;
+    border: 2px solid rgb(219, 213, 213); 
+}
+
+/* .date-field{
+   
+}
+
+.time-field{
+    
+} */
+
+.plan-label{
+    width: 100%;
+    color: rgb(3, 62, 88);
+}
+.addWorkout-text-field{
+    width: 100%;
+    padding: 10px;
+    border: 2px solid rgb(219, 213, 213);
+    margin-bottom: 5px;
+}
+.add-remainder-button{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}

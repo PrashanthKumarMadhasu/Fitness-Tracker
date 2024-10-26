@@ -83,7 +83,7 @@ const scheduleModule= async(req,res)=>
     {
         const {userId,email}= req.user
         const {message, date,time,remainder}=req.body
-        const mobile='9347273270'
+        const mobile='7989188700'
         let timeSplit= time.split(' ')[1]
         let timeMin= time.split(' ')[0]
         let [hours,minutes]= timeMin.split(':').map(Number)

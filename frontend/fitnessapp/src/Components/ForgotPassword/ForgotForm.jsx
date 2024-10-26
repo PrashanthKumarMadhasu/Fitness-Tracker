@@ -103,7 +103,7 @@ const ForgotForm = () => {
                 <form className='forgot-form'>
                     {!otpSent ? (
                         <>
-                            <h1 className='header'>Forgot Password ? </h1>
+                            <h1 className='forgot-header'>Forgot Password ? </h1>
                             <p>Enter your email address to reset your password</p>
 
                             <div className="input-email">
@@ -125,7 +125,7 @@ const ForgotForm = () => {
                         (!verified ? (
                             <>
                                 <>
-                                    <h1 className='header'>Enter OTP</h1>
+                                    <h1 className='forgot-header'>Enter OTP</h1>
                                     {message && <status color={color}>{message}</status>}
                                     <div className="input-otp">
                                         <input
@@ -142,7 +142,7 @@ const ForgotForm = () => {
                             </>
                         ) : (
                             <>
-                                <h1 className='header'>Reset Password</h1>
+                                <h1 className='forgot-header'>Reset Password</h1>
 
                                 <div className="input-password">
                                     <input
@@ -164,7 +164,7 @@ const ForgotForm = () => {
                                     />
                                 </div>
 
-                                <button type="submit" className='otp' onClick={handleReset}>Update Password</button>
+                                <button type="submit" className='update-otp' onClick={handleReset}>Update Password</button>
                                 {message && <status color={color}>{message}</status>}
                             </>))
                     )}

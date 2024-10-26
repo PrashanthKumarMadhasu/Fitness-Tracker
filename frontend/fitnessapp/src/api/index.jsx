@@ -47,7 +47,24 @@ export const getWorkoutHistory = async (token) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
-export const getSearchData = async (token,data) =>
-  await API.get(`/tutorials/${data}`,{
+export const getSearchData = async (token, data) =>
+  await API.get(`/tutorials/${data}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
+export const addRemainder = async (token, data) =>
+  await API.post(`/sendRemainder`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+// change reminder to remainder//
+  export const getRemainders = async (token) =>
+    await API.get(`/getRemainders`, {     
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+export const modifyRemainder = async (token,) =>
+    await API.post(`/getRemainders`, {     
+      headers: { Authorization: `Bearer ${token}` },
+    });
+

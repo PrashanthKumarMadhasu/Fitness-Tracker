@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import LoginBack from "../Components/Assets/login_background.jpg";
+import LoginBack from "../Components/Assets/logback3.jpg";
 // import AuthImage from "../utils/Images/AuthImage.jpg";
 import LoginForm from "../Components/LoginForm/LoginForm";
 import RegisterForm from "../Components/RegisterForm/RegisterForm";
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
   background: transparent; 
   color: #fff;
   border: 2px solid rgba(255, 255, 255, .2);
-  backdrop-filter: blur(30px);
+  backdrop-filter: blur(20px);
   box-shadow: 0 0 10px rgba(0, 0, 0, .2);
   border-radius: 10px;
   padding: 30px 40px; 

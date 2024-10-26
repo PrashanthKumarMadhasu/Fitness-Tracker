@@ -44,7 +44,7 @@ const NavContainer = styled.div`
   font-size: 1rem;
 `;
 const NavLogo = styled(LinkR)`
-  width: 100%;
+  
   display: flex;
   align-items: center;
   gap: 16px;
@@ -69,12 +69,13 @@ const Mobileicon = styled.div`
 `;
 
 const NavItems = styled.ul`
-  width: 100%;
+ 
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 32px;
   padding: 0 6px;
+  font-size:18px;
   list-style: none;
 
   @media screen and (max-width: 768px) {
@@ -110,7 +111,7 @@ const Header_text = styled.span`
 `;
 
 const UserContainer = styled.div`
-  width: 100%;
+  
   height: 100%;
   display: flex;
   justify-content: flex-end;
@@ -295,7 +296,7 @@ const Navbar = ({ currentUser }) => {
         <MobileMenu isOpen={isOpen}>
           <Navlink to="/">Dashboard</Navlink>
           <Navlink to="/tutorials">Tutorials</Navlink>
-          <Navlink to="/blogs">Blogs</Navlink>
+          <Navlink to="/launchworkout">Launch-Workout</Navlink>
           <Navlink to="/bmi">BMI</Navlink>
           <Navlink to="/history">History</Navlink>
           <Navlink to="/contact">Contact</Navlink>
@@ -304,7 +305,7 @@ const Navbar = ({ currentUser }) => {
         <NavItems>
           <Navlink to="/">Dashboard</Navlink>
           <Navlink to="/tutorials">Tutorials</Navlink>
-          <Navlink to="/blogs">Blogs</Navlink>
+          <Navlink to="/launchworkout">Launch-Workout</Navlink>
           <Navlink to="/bmi">BMI</Navlink>
           <Navlink to="/history">History</Navlink>
           <Navlink to="/contact">Contact</Navlink>

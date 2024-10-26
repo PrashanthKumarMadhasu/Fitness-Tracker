@@ -2,25 +2,30 @@ import { ThemeProvider, styled } from "styled-components";
 import { lightTheme } from "./Utils/Theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Authentication from "./Pages/Authentication";
-import { useState, useEffect} from "react";
+import { useState, useEffect, useContext} from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./Components/Navbar";
 import Dashboard from "./Pages/Dashboard";
 import History from "./pages/History/History";
 import Tutorials from "./Pages/Tutorials/Tutorials";
-import Blogs from "./Pages/Blogs";
+import LaunchWorkout from "./Pages/LaunchWorkout/LaunchWorkout";
 import Bmi from "./Components/BMI/Bmi";
 import Contact from "./Pages/Contact/Contact";
 import SplashScreen from "./Components/SplashScreen/SplashScreen";
 import ForgotForm from "./Components/ForgotPassword/ForgotForm";
 import Dropdowns from "./Components/Cards/Dropdowns";
+import BackImage from "./Components/Assets/dark.jpg";
+import {ThemeContext} from './Utils/ThemeContext';
 
 const Container = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: ${({ theme }) => theme.bg};
+  background-image: url(${({themeColor})=>(themeColor?BackImage:'')});
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position: center;
   color: ${({ theme }) => theme.text_primary};
   overflow-x: hidden;
   overflow-y: hidden;
@@ -31,7 +36,7 @@ function App() {
 
   const { currentUser } = useSelector((state) => state.user);
   const [showSplash, setShowSplash] = useState(false);
-  
+  const { themeColor, setThemeColor } = useContext(ThemeContext);
   useEffect(() => {
     if (currentUser) {
       setShowSplash(true);
@@ -45,20 +50,17 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <BrowserRouter>
-      <Routes>
-          {!currentUser && <Route path="/forgot-password" element={<ForgotForm />} />}
-        </Routes>
         {currentUser ? (
           showSplash ? (
             <SplashScreen />
           ) : (
-            <Container>
+            <Container themeColor={themeColor}>
               <Navbar currentUser={currentUser} />
               <Routes>
                 <Route path="/" exact element={<Dashboard currentUser={currentUser} />} />
                 <Route path="/history" exact element={<History />} />
                 <Route path="/tutorials" exact element={<Tutorials />} />
-                <Route path="/blogs" exact element={<Blogs />} />
+                <Route path="/launchworkout" exact element={<LaunchWorkout />} />
                 <Route path="/bmi" exact element={<Bmi />} />
                 <Route path="/contact" exact element={<Contact />} />
                 <Route path="/dropdown" exact element={<Dropdowns />} />
@@ -67,7 +69,10 @@ function App() {
           )
         ) : (
           <Container>
-            <Authentication />
+            <Routes>
+              <Route path="/" element={<Authentication />} />
+              <Route path="/forgot-password" element={<ForgotForm />} />
+            </Routes>
           </Container>
         )}
       </BrowserRouter>

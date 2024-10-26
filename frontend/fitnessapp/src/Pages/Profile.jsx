@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styled from "styled-components";
 import { RiCloseLargeFill } from "react-icons/ri";
 import Power from "../Components/Assets/power-button.png";
@@ -6,6 +6,8 @@ import HeartBreak from "../Components/Assets/broken-heart.png";
 import { logout } from "../redux/reducers/userSlice";
 import { useDispatch } from "react-redux";
 import { deleteUserAccount } from '../api';
+import { ThemeContext } from '../Utils/ThemeContext';
+import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 
 const ModalWrapper = styled.div`
   display: ${({ isModalOpen }) => (isModalOpen ? "block" : "none")};
@@ -104,9 +106,37 @@ const ImageIcon = styled.img`
   height:16px;
   margin:0 5px ;
 `;
+
+const ThemeContainer = styled.div`
+  display:flex;
+  width:100%;
+`;
+
+const ThemeDark = styled.div`
+  border:2px solid  ${({ active }) => (active ? 'black' : 'grey')};
+  background-color: ${({ active }) => (active ? 'black' : 'white')};
+  padding:5px 10px;
+  font-size:22px;
+  cursor:pointer;
+  border-radius:5px 0 0 5px;
+`;
+
+const ThemeLight = styled.div`
+  border:2px solid  ${({ active }) => (!active ? 'grey' : 'black')};
+  background-color: ${({ active }) => (!active ? 'white' : 'black')};
+  padding:5px 10px;
+  margin-left:2px;
+  font-size:22px;
+  cursor:pointer;
+  border-radius:0 5px 5px 0;
+
+`;
+
 const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfilePicChange, profilePic }) => {
   const [formData, setFormData] = useState(userProfile);
   const dispatch = useDispatch();
+  const { themeColor, setThemeColor } = useContext(ThemeContext);
+  const [active, setActive] =useState(false);
 
   useEffect(() => {
     // Update formData.profilePic whenever profilePic changes
@@ -192,6 +222,15 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
           />
           <Button>Update Profile</Button>
           <hr />
+          <ThemeContainer>
+            <ThemeDark active={active} onClick={() => { setActive(true); setThemeColor(true); }}>
+              <MdDarkMode />
+            </ThemeDark>
+            <ThemeLight active={!active} onClick={() => { setActive(false); setThemeColor(false); }}>
+              <MdOutlineDarkMode />
+            </ThemeLight>
+
+          </ThemeContainer>
           <TextButton onClick={handleAccount} >Delete Account  <ImageIcon src={HeartBreak} /></TextButton>
           <TextButton onClick={() => dispatch(logout())}><ImageIcon src={Power} />Logout</TextButton>
         </form>

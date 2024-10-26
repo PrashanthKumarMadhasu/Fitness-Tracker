@@ -1,3 +1,4 @@
+import './dummy.css'
 export const lightTheme = {
     bg: "#FFFFFF",
     bgLight: "#FFFFFF",
@@ -26,3 +27,20 @@ export const lightTheme = {
     popup_text_secondary: "#b1b2b3",
     output_node: "#49516b",
   };
+
+
+export const darkTheme ={
+  card_border: '#323533',
+  card_background: '#010508ee',
+} 
+ 
+
+import React from 'react'
+
+const Theme = () => {
+  return (
+    <div className='dummy'>Theme</div>
+  )
+}
+
+export default Theme
