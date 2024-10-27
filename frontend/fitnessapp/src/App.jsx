@@ -1,5 +1,5 @@
 import { ThemeProvider, styled } from "styled-components";
-import { lightTheme } from "./Utils/Theme";
+import { lightTheme,darkTheme } from "./Utils/Theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Authentication from "./Pages/Authentication";
 import { useState, useEffect, useContext} from "react";
@@ -14,15 +14,15 @@ import Contact from "./Pages/Contact/Contact";
 import SplashScreen from "./Components/SplashScreen/SplashScreen";
 import ForgotForm from "./Components/ForgotPassword/ForgotForm";
 import Dropdowns from "./Components/Cards/Dropdowns";
-import BackImage from "./Components/Assets/dark.jpg";
 import {ThemeContext} from './Utils/ThemeContext';
+import BackImage from './Components/Assets/dark.jpg';
 
 const Container = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url(${({themeColor})=>(themeColor?BackImage:'')});
+  background-image: url(${({ theme }) => (theme.theme==='true'?BackImage:'')});
   background-repeat: no-repeat;
   background-size:cover;
   background-position: center;
@@ -48,13 +48,13 @@ function App() {
   }, [currentUser]);
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={themeColor? darkTheme:lightTheme}>
       <BrowserRouter>
         {currentUser ? (
           showSplash ? (
             <SplashScreen />
           ) : (
-            <Container themeColor={themeColor}>
+            <Container >
               <Navbar currentUser={currentUser} />
               <Routes>
                 <Route path="/" exact element={<Dashboard currentUser={currentUser} />} />

@@ -7,7 +7,7 @@ import { logout } from "../redux/reducers/userSlice";
 import { useDispatch } from "react-redux";
 import { deleteUserAccount } from '../api';
 import { ThemeContext } from '../Utils/ThemeContext';
-import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 const ModalWrapper = styled.div`
   display: ${({ isModalOpen }) => (isModalOpen ? "block" : "none")};
@@ -136,7 +136,7 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
   const [formData, setFormData] = useState(userProfile);
   const dispatch = useDispatch();
   const { themeColor, setThemeColor } = useContext(ThemeContext);
-  const [active, setActive] =useState(false);
+  const [active, setActive] =useState(themeColor);
 
   useEffect(() => {
     // Update formData.profilePic whenever profilePic changes
@@ -227,7 +227,7 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
               <MdDarkMode />
             </ThemeDark>
             <ThemeLight active={!active} onClick={() => { setActive(false); setThemeColor(false); }}>
-              <MdOutlineDarkMode />
+              <MdLightMode />
             </ThemeLight>
 
           </ThemeContainer>

@@ -13,7 +13,7 @@ export const lightTheme = {
     menu_secondary_text: "#b1b2b3",
     table_header: "#242445",
     text_primary: "#404040",
-    text_secondary: "#4d4c4c",
+    text_secondary: "#e8e1e1",
     card: "#FFFFFF",
     black: "#000000",
     white: "#FFFFFF",
@@ -26,12 +26,18 @@ export const lightTheme = {
     popup_text_primary: "#F2F3F4",
     popup_text_secondary: "#b1b2b3",
     output_node: "#49516b",
+    back_color:'yellow',
+    theme:'false',
   };
 
 
 export const darkTheme ={
+  bg: '#06121a',
+  text_secondary: "#323533",
   card_border: '#323533',
   card_background: '#010508ee',
+  back_color:'blue',
+  theme:'true',
 } 
  
 

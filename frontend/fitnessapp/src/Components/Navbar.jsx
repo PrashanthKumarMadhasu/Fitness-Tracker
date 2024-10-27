@@ -22,41 +22,52 @@ const ProfileIcon = styled.div`
 const Nav = styled.div`
   background-color: ${({ theme }) => theme.bg};
   padding:0 20px;
-  height: 80px;
+  height: 70px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: 1rem;
   position: sticky;
   top: 0;
   z-index: 10;
   color: white;
-  border-bottom: 1px solid ${({ theme }) => theme.text_secondary + 20};
+  border-bottom: 1px solid ${({ theme }) => theme.text_secondary};
   width: 100%;
+  overflow:hidden;
 `;
 const NavContainer = styled.div`
   width: 100%;
   padding: 0;
   display: flex;
-  gap: 14px;
-  align-items: center;
+  align-items:center;
   justify-content: space-between;
   font-size: 1rem;
 `;
-const NavLogo = styled(LinkR)`
+const NavLogoDiv = styled.div`
+  height:100vh;
+  display:flex;
+  align-items:center;
   
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 0 6px;
-  font-weight: 600;
-  font-size: 25px;
-  text-decoration: none;
-  color: ${({ theme }) => theme.black};
 `;
-
 const Logo = styled.img`
   height: 42px;
+  margin-right:10px;
+`;
+
+const AppName = styled.div`
+  display:flex;
+  height:100vh;
+  align-items:center;
+  flex-direction:row;
+  font-size:24px;
+  font-weight:600;
+  color:black;
+`;
+
+const Header_text = styled.span`
+  font-size:28px;
+  color:#007bff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 `;
 
 const Mobileicon = styled.div`
@@ -68,13 +79,18 @@ const Mobileicon = styled.div`
   }
 `;
 
+const NavItemsDiv = styled.div`
+  height:100vh;
+  display:flex;
+`;
+
 const NavItems = styled.ul`
- 
+  height:100vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
   padding: 0 6px;
+  gap:32px;
   font-size:18px;
   list-style: none;
 
@@ -105,17 +121,9 @@ const Navlink = styled(NavLink)`
   }
 `;
 
-const Header_text = styled.span`
-  color:#007bff;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); 
-`;
 
 const UserContainer = styled.div`
-  
-  height: 100%;
   display: flex;
-  justify-content: flex-end;
-  gap: 16px;
   align-items: center;
   padding: 0 6px;
   color: ${({ theme }) => theme.primary};
@@ -144,6 +152,8 @@ const MobileMenu = styled.ul`
 `;
 
 const StreakIcon = styled.div`
+  display:flex;
+  align-items:center;
   position: relative;
   z-index: 100;
   cursor:pointer;
@@ -153,15 +163,15 @@ const CustomTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))({
   '& .MuiTooltip-tooltip': {
-    backgroundColor: '#007bff', 
+    backgroundColor: '#007bff',
     color: '#fff',
     fontSize: '1rem',
     fontWeight: '300',
-    borderRadius: '8px', 
+    borderRadius: '8px',
   },
   "& .MuiTooltip-arrow": {
-        color: "#007bff", 
-      },
+    color: "#007bff",
+  },
 });
 
 const Navbar = ({ currentUser }) => {
@@ -176,7 +186,7 @@ const Navbar = ({ currentUser }) => {
   };
 
   useEffect(() => {
-    const streakData = async ()=> {
+    const streakData = async () => {
       const token = localStorage.getItem("fittrack-app-token");
       await getDashboardDetails(token).then((res) => {
         setStreakValue(res.data.streekCount);
@@ -244,26 +254,26 @@ const Navbar = ({ currentUser }) => {
 
   };
 
-  const handleStreak =(value)=>{
-    if(value<3){
+  const handleStreak = (value) => {
+    if (value < 3) {
       return streaks[0];
-    }else if(value<5){
+    } else if (value < 5) {
       return streaks[1];
-    }else if(value<6){
+    } else if (value < 6) {
       return streaks[2];
-    }else{
+    } else {
       return streaks[3];
     }
   }
 
-  const streaks = [Streak,StreakYellow, StreakOrange, StreakRed];
+  const streaks = [Streak, StreakYellow, StreakOrange, StreakRed];
   const [streakValue, setStreakValue] = useState(0);
   const [isOpen, setisOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
   const [profileData, setProfileData] = useState({
     userId: currentUser.id,
-    userName: 'siva', 
+    userName: 'siva',
     email: 'siva@gmail.com',
     height: '0',
     weight: '0',
@@ -289,10 +299,10 @@ const Navbar = ({ currentUser }) => {
         <Mobileicon onClick={() => setisOpen(!isOpen)}>
           <MenuRounded sx={{ color: "inherit" }} />
         </Mobileicon>
-        <NavLogo to="/">
+        <NavLogoDiv>
           <Logo src={LogoImg} />
-          <p>fit<Header_text>N</Header_text>est</p>
-        </NavLogo>
+          <AppName >fit<Header_text>N</Header_text>est</AppName>
+        </NavLogoDiv>
         <MobileMenu isOpen={isOpen}>
           <Navlink to="/">Dashboard</Navlink>
           <Navlink to="/tutorials">Tutorials</Navlink>
@@ -302,14 +312,16 @@ const Navbar = ({ currentUser }) => {
           <Navlink to="/contact">Contact</Navlink>
         </MobileMenu>
 
-        <NavItems>
-          <Navlink to="/">Dashboard</Navlink>
-          <Navlink to="/tutorials">Tutorials</Navlink>
-          <Navlink to="/launchworkout">Launch-Workout</Navlink>
-          <Navlink to="/bmi">BMI</Navlink>
-          <Navlink to="/history">History</Navlink>
-          <Navlink to="/contact">Contact</Navlink>
-        </NavItems>
+        <NavItemsDiv>
+          <NavItems>
+            <Navlink to="/">Dashboard</Navlink>
+            <Navlink to="/tutorials">Tutorials</Navlink>
+            <Navlink to="/launchworkout">Launch-Workout</Navlink>
+            <Navlink to="/bmi">BMI</Navlink>
+            <Navlink to="/history">History</Navlink>
+            <Navlink to="/contact">Contact</Navlink>
+          </NavItems>
+        </NavItemsDiv>
         <StreakIcon>
           <CustomTooltip title={`workout streak  ${streakValue} days`} arrow placement="top" >
             <div>
