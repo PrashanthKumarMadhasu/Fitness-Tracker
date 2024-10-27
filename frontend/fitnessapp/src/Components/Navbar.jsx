@@ -61,7 +61,7 @@ const AppName = styled.div`
   flex-direction:row;
   font-size:24px;
   font-weight:600;
-  color:black;
+  color:${({ theme }) => (theme.theme==='true'?theme.white:theme.black)};
 `;
 
 const Header_text = styled.span`
@@ -101,7 +101,7 @@ const NavItems = styled.ul`
 const Navlink = styled(NavLink)`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.text_primary};
+  color: ${({ theme }) => (theme.theme==='true'?theme.white:theme.text_primary)};
   font-weight: 500;
   cursor: pointer;
   transition: all 1s slide-in;

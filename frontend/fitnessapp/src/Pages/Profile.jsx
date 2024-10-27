@@ -16,15 +16,16 @@ const ModalWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color:rgba(0, 0, 0, 0.5);
   z-index: 1000;
 `;
 
 const ModalContent = styled.div`
-  background: #fff;
+  background: ${({theme})=>theme.theme==='true'?theme.bg:theme.white};
   width: 400px;
   float:right;
   padding: 20px;
+  border:${({theme})=>theme.theme==='true'?`2px Solid ${theme.text_secondary}`:'none'};
   border-radius: 10px;
   height:90vh;
   overflow-y: auto;
@@ -44,7 +45,8 @@ const ProfileImageInput = styled.input`
 
 const ProfileLabel = styled.label`
   display:block;
-  background: #eee;
+  background: ${({theme})=> theme.profile_label_bg};
+  color:${({theme})=> theme.theme==='true'?theme.white:theme.primary};
   padding: 10px;
   width:100%;
   cursor: pointer;
@@ -56,6 +58,8 @@ const Input = styled.input`
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
+  background:${({theme})=> theme.input_bg};
+  color:${({theme})=> theme.theme==='true'?theme.white:theme.black};
   border: 1px solid #ddd;
   border-radius: 5px;
 `;
