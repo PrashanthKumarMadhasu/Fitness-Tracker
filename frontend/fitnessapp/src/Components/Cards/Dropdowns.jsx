@@ -3,7 +3,6 @@ import './DropdownStyles.css';
 import { WorkoutData, exerciseDetail } from './WorkoutData';
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import styled from "styled-components";
-import Button from "../Button";
 import Lottie from "lottie-react";
 import Running from "../Assets/Animations/running_animation.json";
 import WeightLifting from "../Assets/Animations/weightLifting.json";
@@ -11,13 +10,13 @@ import ToeTouch from "../Assets/Animations/hand_leg.json";
 import Warmup from "../Assets/Animations/warmup.json";
 import Bench from "../Assets/Animations/bench_crunches.json";
 import BoxJump from "../Assets/Animations/box_jump.json";
-import { addWorkout } from '../../api';
 
 const Card = styled.div`
   flex: 1;
   min-width: 280px;
   padding: 24px;
-  border: 1px solid ${({ theme }) => theme.text_primary + 20};
+  background-color:${({ theme }) => theme.card_background};
+  border: 1px solid ${({ theme }) => theme.text_secondary};
   border-radius: 14px;
   box-shadow: 1px 6px 20px 0px ${({ theme }) => theme.primary + 15};
   display: flex;
@@ -35,6 +34,23 @@ const Title = styled.div`
   @media (max-width: 600px) {
     font-size: 14px;
   }
+`;
+
+const Button = styled.button`
+  type:"submit";
+  background-color:${({ theme }) => theme.button_bg};
+  padding: 10px;
+  margin-bottom:10px;
+  width:100%;
+  cursor: pointer;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:600;
+  border:none;
+  color:#fff;
+  &:hover {
+      background-color:${({ theme }) => theme.button_hover};
+    }
 `;
 
 const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading, userBodyWeight }) => {
@@ -88,7 +104,7 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading, userBody
   };
 
   const handleWorkout = () => {
-    const sample = { ...inputValues, exercise: selectedExercise, category: exerciseCategory, userBodyWeight: bodyWeight};
+    const sample = { ...inputValues, exercise: selectedExercise, category: exerciseCategory, userBodyWeight: bodyWeight };
     addNewWorkout(sample);
     setInputValues({});
     setSelectedExercise();
@@ -101,11 +117,17 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading, userBody
         <div>
           <div className='bodyWeight'>
             <label htmlFor="bodyWeight">Set Body Weight</label>
-            <input type='number' value={bodyWeight} name='bodyWeight' onChange={(e)=>setBodyWeight(e.target.value)}/>
+            <input type='number'
+              style={{ backgroundColor: `${({ theme }) => theme.black}`, }}
+              value={bodyWeight}
+              name='bodyWeight'
+              onChange={(e) => setBodyWeight(e.target.value)} />
           </div>
-          <button onClick={toggleDropdown} className="dropbtn">
-            Select Exercise {isOpen ? <FaChevronUp /> : <FaChevronDown />}
-          </button>
+          <div>
+            <button onClick={toggleDropdown} className="dropbtn">
+              Select Exercise {isOpen ? <FaChevronUp /> : <FaChevronDown />}
+            </button>
+          </div>
         </div>
         {isOpen && (
           <div className="dropdown-content" >
@@ -169,12 +191,7 @@ const Dropdowns = ({ workout, setWorkout, addNewWorkout, buttonLoading, userBody
         }
       </div>
       <Button
-        text="Add Workout"
-        small
-        onClick={handleWorkout}
-      // isLoading={buttonLoading}
-      // isDisabled={buttonLoading}
-      />
+        onClick={handleWorkout}>Add Workout</Button>
     </Card>
   );
 };

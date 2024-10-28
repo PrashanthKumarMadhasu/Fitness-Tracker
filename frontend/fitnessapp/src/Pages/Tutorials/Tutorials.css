@@ -7,6 +7,8 @@
 .tutorial-header {
   text-align: center;
   margin-bottom: 20px;
+  font-size: 22px;
+  color: var(--tutorial-header);
 }
 
 .card-grid {
@@ -16,8 +18,9 @@
 }
 
 .category-card {
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
+  background-color: var(--tutorial-card-bg);
+  border: 1px solid var(--tutorial-card-border);
+  color:var(--tutorial-card-text);
   padding: 20px;
   text-align: center;
   cursor: pointer;
@@ -25,6 +28,10 @@
   transition: background-color 0.3s ease;
 }
 
+.category-card h3{
+  font-size: 18px;
+  font-weight: 600;
+}
 .img-shadow {
   width: 100px;
   height: 100px;
@@ -37,8 +44,8 @@
 }
 
 .category-card:hover {
-  background-color: #2e63b3;
-  color: #fff;
+  background-color: var(--tutorial-card-hover-bg);
+  color: var(--tutorial-card-hover-text);
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
   transform: scale(1.05);
 }

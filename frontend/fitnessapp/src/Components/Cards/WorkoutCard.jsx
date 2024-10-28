@@ -7,7 +7,8 @@ const Card = styled.div`
   min-width: 250px;
   max-width: 400px;
   padding: 16px 18px;
-  border: 1px solid ${({ theme }) => theme.text_primary + 20};
+  background-color:${({theme})=>theme.card_background};
+  border: 1px solid ${({ theme }) => theme.text_secondary};
   border-radius: 14px;
   box-shadow: 1px 6px 20px 0px ${({ theme }) => theme.primary + 15};
   display: flex;
@@ -28,12 +29,12 @@ const Category = styled.div`
 `;
 const Name = styled.div`
   font-size: 20px;
-  color: ${({ theme }) => theme.text_primary};
+  color: ${({ theme }) => (theme.theme==='true'?theme.white:theme.text_primary)};
   font-weight: 600;
 `;
 const Sets = styled.div`
   font-size: 15px;
-  color: ${({ theme }) => theme.text_secondary};
+  color: ${({ theme }) => theme.text_primary};
   font-weight: 500;
   display: flex;
   gap: 6px;

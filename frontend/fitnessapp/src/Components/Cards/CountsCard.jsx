@@ -5,7 +5,8 @@ const Card = styled.div`
   flex: 1;
   min-width: 200px;
   padding: 24px;
-  border: 1px solid ${({ theme }) => theme.text_primary + 20};
+  background-color:${({theme})=>theme.card_background};
+  border: 1px solid ${({ theme }) => theme.text_secondary};
   border-radius: 14px;
   display: flex;
   gap: 6px;
@@ -34,7 +35,7 @@ const Value = styled.div`
   display: flex;
   align-items: end;
   gap: 8px;
-  color: ${({ theme }) => theme.text_primary};
+  color: ${({ theme }) => (theme.theme==='true'?theme.white:theme.text_primary)};
   @media (max-width: 600px) {
     font-size: 22px;
   }
@@ -73,7 +74,7 @@ const Icon = styled.div`
 
 const Desc = styled.div`
   font-size: 14px;
-  color: ${({ theme }) => theme.text_secondary + 90};
+  color: ${({ theme }) => theme.desc};
   margin-bottom: 6px;
   @media (max-width: 600px) {
     font-size: 12px;

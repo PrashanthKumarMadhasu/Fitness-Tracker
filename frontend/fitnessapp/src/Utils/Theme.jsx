@@ -4,7 +4,7 @@ export const lightTheme = {
   bgLight: "#FFFFFF",
   primary: "#007AFF",
   secondary: "#5B86E5",
-
+  card_background:"#fff",
   disabled: "#b1b2b3",
   menubar: "#191c29",
   navbar: "#242B3F",
@@ -29,16 +29,20 @@ export const lightTheme = {
   theme: 'false',
   profile_label_bg:'#eee',
   input_bg:'#fff',
-  // input_border:,
+  input_border:'#ddd',
+  desc:'#3e4040',
+  button_bg:'#007bff',
+  button_hover:'#1358a7',
 };
 
 
 export const darkTheme = {
   bg: '#06121a',
   primary: "#007AFF",
+  text_primary:'#b8cbde',
   text_secondary: "#323533",
   card_border: '#323533',
-  card_background: '#010508ee',
+  card_background: '#02090d',
   black: "#000000",
   white: "#FFFFFF",
   shadow: "#00000020",
@@ -48,8 +52,11 @@ export const darkTheme = {
   orange: "#F7AD63",
   theme: 'true',
   profile_label_bg:'#323533',
-  input_bg:'#0b1d21',
-  // input_border:,
+  input_bg:'#10161f',
+  input_border:'#2a2b2b',
+  desc:'#b8cbde',
+  button_bg:'#1358a7',
+  button_hover:'#007bff',
 }
 
 

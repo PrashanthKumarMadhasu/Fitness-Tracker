@@ -1,12 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { PieChart } from "@mui/x-charts/PieChart";
+import { axisClasses } from '@mui/x-charts/ChartsAxis';
+import { useContext } from "react";
+import { ThemeContext } from "../../Utils/ThemeContext";
 
 const Card = styled.div`
   flex: 1;
   min-width: 280px;
   padding: 24px;
-  border: 1px solid ${({ theme }) => theme.text_primary + 20};
+  background-color:${({ theme }) => theme.card_background};
+  border: 1px solid ${({ theme }) => theme.text_secondary};
   border-radius: 14px;
   box-shadow: 1px 6px 20px 0px ${({ theme }) => theme.primary + 15};
   display: flex;
@@ -26,11 +30,19 @@ const Title = styled.div`
 `;
 
 const CategoryChart = ({ data }) => {
+  const {themeColor, setThemeColor} = useContext(ThemeContext);
   return (
     <Card>
       <Title>Workout Categories</Title>
       {data?.pieChartData && (
         <PieChart
+          sx={{
+            [`.${axisClasses.root}`]: {
+              [`.${axisClasses.tickLabel}`]: {
+                fill: themeColor ? "#ddd" : "#000000", // Customize label color for axes
+              }
+            },
+          }}
           series={[
             {
               data: data?.pieChartData,

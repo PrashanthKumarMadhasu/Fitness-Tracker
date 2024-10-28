@@ -21,7 +21,7 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background: ${({theme})=>theme.theme==='true'?theme.bg:theme.white};
+  background: ${({theme})=>theme.theme==='true'?theme.card_background:theme.white};
   width: 400px;
   float:right;
   padding: 20px;
@@ -60,24 +60,24 @@ const Input = styled.input`
   margin-bottom: 15px;
   background:${({theme})=> theme.input_bg};
   color:${({theme})=> theme.theme==='true'?theme.white:theme.black};
-  border: 1px solid #ddd;
+  border:${({theme})=> `1px solid ${theme.input_border}`};
   border-radius: 5px;
 `;
 
 const Button = styled.button`
   type:"submit";
-  background-color:#007bff;
+  background-color:${({theme})=> theme.button_bg};
   padding: 10px;
   margin-bottom:10px;
   width:100%;
   cursor: pointer;
   border-radius:10px;
   font-size:15px;
-  font-weight:bold;
+  font-weight:600;
   border:none;
   color:#fff;
   &:hover {
-      background-color:#1358a7;
+      background-color:${({theme})=> theme.button_hover};
     }
 `;
 const CloseIcon = styled.div`
@@ -117,8 +117,9 @@ const ThemeContainer = styled.div`
 `;
 
 const ThemeDark = styled.div`
-  border:2px solid  ${({ active }) => (active ? 'black' : 'grey')};
-  background-color: ${({ active }) => (active ? 'black' : 'white')};
+  border:3px solid  ${({ active }) => (active ? '#9cd3ec' : 'grey')};
+  background-color: ${({ active }) => (active ? 'black' : 'grey')};
+  color:${({ active }) => (active ? 'grey' : 'black')};
   padding:5px 10px;
   font-size:22px;
   cursor:pointer;
@@ -126,10 +127,11 @@ const ThemeDark = styled.div`
 `;
 
 const ThemeLight = styled.div`
-  border:2px solid  ${({ active }) => (!active ? 'grey' : 'black')};
-  background-color: ${({ active }) => (!active ? 'white' : 'black')};
+  border:3px solid  ${({ active }) => (!active ? 'grey' : '#007bff')};
+  background-color: ${({ active }) => (!active ? 'grey' : 'black')};
+  color:${({ active }) => (active ? 'grey' : 'black')};
   padding:5px 10px;
-  margin-left:2px;
+  // margin-left:2px;
   font-size:22px;
   cursor:pointer;
   border-radius:0 5px 5px 0;
@@ -142,6 +144,10 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
   const { themeColor, setThemeColor } = useContext(ThemeContext);
   const [active, setActive] =useState(themeColor);
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", themeColor ? "dark" : "light");
+  }, [themeColor]);
+  
   useEffect(() => {
     // Update formData.profilePic whenever profilePic changes
     setFormData((prevData) => ({

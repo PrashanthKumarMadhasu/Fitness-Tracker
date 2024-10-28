@@ -6,8 +6,9 @@
   font-size: 16px;
   cursor: pointer;
   border: none;
-  color: #007bff;
-  font-weight: bold;
+  font-weight: 600;
+  color: var(--dropbtn-text);
+  background-color: var(--dropbtn-bg);
 }
 .dropdown {
   position: relative; 
@@ -15,6 +16,7 @@
 .dropdown-content{
   z-index: 1;
   position: absolute;
+  color:rgb(19, 18, 18);
 }
 
 .bodyWeight{
@@ -28,6 +30,10 @@
   padding: 3px;
   margin-left: 5px;
   max-width: 100px;
+  border-radius: 5px;
+  border:1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color:var(--text-color);
 
 }
 
@@ -40,7 +46,6 @@
   padding-left: 5px;
   height: 30px;
   width: 150px;
-  background: #999999;
   position: relative; /* Add relative positioning */
 }
 
@@ -48,14 +53,12 @@
   padding-left: 5px;
   height: 30px;
   width: 150px;
-  background: #999999;
   position: relative; /* Add relative positioning */
 }
 
 .third-level > li {
   padding-left: 5px;
   width: 150px;
-  background: #999999;
 }
 
 /* .first-level > li:hover {
@@ -102,7 +105,7 @@
   flex-direction: column;
 }
 .display-input-workout label{
-  color: black;
+  color: var(--text-color);
   font-size: 16px;
   font-weight: 600;
 }
@@ -110,12 +113,19 @@
 .display-input-workout input{
   padding: 5px;
   width: 60%;
+  border-radius: 5px;
+  border:1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color:var(--text-color);
 }
 li {
   cursor: pointer;
+  background-color: var(--list-bg);
+  color:var(--list-text)
 }
 
 li:hover {
-  background-color: #d8e3f0; /* Highlight on hover */
+  background-color:var(--list-hover-bg);
+  color:var(--list-hover-text);
 }
 

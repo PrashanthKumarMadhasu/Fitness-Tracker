@@ -1,0 +1,47 @@
+
+:root {
+    --input-bg: #ffffff;
+    --input-border: #cccccc;
+    --text-color: #000000;
+    --highlight-color: #d8e3f0;
+  }
+  
+  [data-theme="dark"] {
+    --input-bg: #10161f;
+    --input-border: #2a2b2b;
+    --text-color: #ffffff;
+    --button-bg:#055474;
+    --dropbtn-bg:#3e4649;
+    --dropbtn-text:#b6bdc2;
+    --list-bg:#141414;
+    --list-text:#d3cdcd;
+    --list-hover-text:#fff;
+    --list-hover-bg:black;
+    --tutorial-header:#b8cbde;
+    --tutorial-card-bg:#02090d;
+    --tutorial-card-border:#323533;
+    --tutorial-card-text:#007AFF;
+    --tutorial-card-hover-bg:#02212e;
+    --tutorial-card-hover-text:#fff;
+
+  }
+  
+  [data-theme="light"] {
+    --input-bg: #ffffff;
+    --input-border: #6d6868;
+    --text-color: #000000;
+    --button-bg:#007bff;
+    --dropbtn-bg:#ddd;
+    --dropbtn-text:#007bff;
+    --list-bg:#999999;
+    --list-text:#222121;
+    --list-hover-text:#000000;
+    --list-hover-bg:#d8e3f0;
+    --tutorial-header:#404040;
+    --tutorial-card-bg:#f5f5f5;
+    --tutorial-card-border:#ddd;
+    --tutorial-card-text:#007AFF;
+    --tutorial-card-hover-bg:#2e63b3;
+    --tutorial-card-hover-text:#fff;
+  }
+  
