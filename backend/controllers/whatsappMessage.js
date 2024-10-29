@@ -9,25 +9,28 @@ const {StatusCodes} =require('http-status-codes');
 
 
 
-async function sendRemainderQueue(messageData)
+async function sendRemainderQueue(messageData,mobile,sendRemainder='false')
 {
         try
         {
             const accountSid=process.env.Twilio_Account_Sid
             const authToken=process.env. Twilio_Auth_Token
-
             const client = new twilio(accountSid,authToken)
-            const result= await client.messages.create(
-                {
-                    body:messageData.remainderMessage,
-                    from:`whatsapp:+${messageData.senderMobile}`,
-                    to:`whatsapp:+91${messageData.userMobile}`
-                })
-            const res=JSON.stringify(result)
-            console.log(`result:${res}`)   
-            client.messages(result.sid)
-            .fetch().then(message => console.log(message.status)); 
-            if(!result)
+            if(messageData)
+            {
+                console.log(`Sender Mobile:${messageData.senderMobile}`)
+                const dummyMobile="9347273270"
+                const result= await client.messages.create(
+                    {
+                        body:`${messageData.remainderMessage}, Please reply this code 'Join corner-join'`,
+                        from:`whatsapp:+${messageData.senderMobile}`,
+                        to:`whatsapp:+91${dummyMobile}`
+                    })
+                const res=JSON.stringify(result)
+                console.log(`result:${res}`)   
+                client.messages(result.sid).fetch().then(message => console.log(message.status)); 
+            
+                if(!result)
                 {
                   console.log("Error occur while create a message in twilio")
                   return false
@@ -37,6 +40,29 @@ async function sendRemainderQueue(messageData)
                 console.log("Message Send Successfully")
                 return true
 
+            }
+            if(sendRemainder==='true')
+            {
+                //const twilioNumber='14155238886'
+                const result= await client.messages.create(
+                    {
+                        body:`twilio session is gonna expires in 1 hours, please send a message like this "Join corner-join"`,
+                        from:'whatsapp:+14155238886',
+                        to:`whatsapp:+91${mobile}`
+                    })
+                const res=JSON.stringify(result)
+                console.log(`result:${res}`)   
+                client.messages(result.sid).fetch().then(message => console.log(message.status)); 
+            
+                if(!result)
+                {
+                  console.log("Error occur while sending session message in twilio")
+                  return false
+                }
+                console.log("Session Remainder  Send Successfully")
+                return true
+            }
+            
         } 
         catch (error) 
         {
@@ -44,6 +70,7 @@ async function sendRemainderQueue(messageData)
             return false
         }
 }
+
 
 cron.schedule('* * * * *',async()=>{
     try 
@@ -58,16 +85,17 @@ cron.schedule('* * * * *',async()=>{
         for(const messageData of messageDataList)
         {
             const result= await sendRemainderQueue(messageData);
+            
             if(!result)
             {
                 console.log(`Failed to send message for ${messageData.to}`)
             }
         }
      }
-    //  else
-    //  {
-    //     console.log("MessageData List is Empty")
-    //  }
+    else
+    {
+    console.log("MessageData List is Empty")
+    }
     } 
     catch (error) 
     {
@@ -75,6 +103,37 @@ cron.schedule('* * * * *',async()=>{
     }
 })
 
+const cronJob= async()=>
+    {
+    try 
+    {
+     const curr= new Date();
+     dayjs.extend(utc);
+     dayjs.extend(timezone);
+     const currDate= dayjs.tz(curr,'Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ss')
+     //get all user mobile numbers from profile
+     const mobile='9347273270'
+     const sendRemainder='false'
+     
+     const result= await sendRemainderQueue(null,mobile,sendRemainder);
+     if(!result)
+     {
+        console.log(`Unable to send Session Remainder to User`)
+     }
+     else
+     {
+        console.log('Session Remainder send Successfully')
+     }
+            
+            
+    }
+    catch (error) 
+    {
+        console.error('Error while fetching/sending messages:', error.message);
+    }
+}
+cronJob()
+setInterval(cronJob,22 * 60 * 60 * 1000);
 
 
 const scheduleModule= async(req,res)=>

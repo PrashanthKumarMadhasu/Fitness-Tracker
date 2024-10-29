@@ -7,7 +7,7 @@ const {otpVerification,sendOTP,updatePassword}=require('../controllers/otpContol
 
 const {getDataByKeyword}=require('../controllers/youtubeDataAPI')
 
-const {addWorkout,deleteuserWorkout,getWorkoutHistory,addWorkoutLog,removeSingleWorkout} =require('../controllers/addWorkout')
+const {addWorkout,deleteuserWorkout,getWorkoutHistory,addWorkoutLog,removeSingleWorkout,deleteMulWeightLog} =require('../controllers/addWorkout')
 const {todayWorkoutData,getUserDashboard}=require('../controllers/getDashboardDetails')
 
 const authMiddleware=require('../middlewares/auth');
@@ -44,6 +44,7 @@ router.route('/deleteWorkout/:workoutId').delete(authMiddleware,deleteuserWorkou
 router.route('/getWorkoutHistory').get(authMiddleware,getWorkoutHistory)
 router.route('/addWorkoutLog').post(authMiddleware,addWorkoutLog)
 router.route('/deleteUserWorkout/:workout_id').delete(authMiddleware,removeSingleWorkout)
+router.route('/deleteWeightLog').delete(deleteMulWeightLog);
 
 router.route('/getDashboardDetails').get(authMiddleware,getUserDashboard)
 router.route('/todayWorkOutData').get(authMiddleware,todayWorkoutData)

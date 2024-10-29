@@ -178,6 +178,7 @@ const getUserDashboard=async( req,res,next)=>
         const date=new Date(
           currDate.getTime()- i*24*60*60*1000
         );
+       // weeks.push(date.toISOString().split('T')[0])
         const day=date.getDay()
         switch(day)
         {
@@ -285,7 +286,14 @@ const getUserDashboard=async( req,res,next)=>
         const yesterdayDate=new Date();
         yesterdayDate.setDate(todayDate.getDate()-1);
         let yesterDateString=yesterdayDate.toISOString().split('T')[0];
-        const dateData= await WorkoutDetails.findOne({userId:userId,date:yesterDateString})
+        const dateData= await WorkoutDetails.findOne({userId:userId,
+          $expr: {
+            $eq: [
+              { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+              yesterDateString,
+            ],
+          },
+          })
         const profile= await UserProfile.findOne({userId:userId}).exec()
         if(!dateData)
         {
@@ -303,7 +311,13 @@ const getUserDashboard=async( req,res,next)=>
             }
           const addedWorkOutData = await WorkoutDetails.create({...newWorkOutDetails,user: userId, userId:userId});
         }
-        const weightLogData= await userWeightLog.findOne({userId:userId,date:yesterDateString})
+        const weightLogData= await userWeightLog.findOne({userId:userId,
+          $expr: {
+            $eq: [
+              { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+              yesterDateString,
+            ],
+          }})
         if(!weightLogData)
         {
           const weightLog=
