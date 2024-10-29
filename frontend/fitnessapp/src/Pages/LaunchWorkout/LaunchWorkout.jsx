@@ -13,6 +13,7 @@ const Card = styled.div`
   min-width: 280px;
   width:400px;
   padding: 24px;
+  background-color:${({theme})=>theme.card_background};
   border: 1px solid ${({ theme }) => theme.text_primary + 20};
   border-radius: 14px;
   box-shadow: 1px 6px 20px 0px ${({ theme }) => theme.primary + 15};
@@ -42,10 +43,13 @@ const CardWrapper = styled.div`
 `;
 
 const Section = styled.div`
+  margin-top:20px;
   display: flex;
+  width:100%;
   flex-direction: column;
   padding: 0px 16px;
   gap: 22px;
+  padding: 0px 16px;
   @media (max-width: 600px) {
     gap: 12px;
   }

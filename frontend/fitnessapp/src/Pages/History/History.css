@@ -1,16 +1,18 @@
 
 .workout-history-container {
-  padding: 20px;
+  padding: 5px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
+  overflow-y: auto;
 }
 
 
 .scrollable-table-container {
-  max-height: 70vh; 
+
+  height: 65vh; 
   overflow-y: auto; 
   width: 100%; 
 }
@@ -20,26 +22,43 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 16px;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .workout-history-table th,
 .workout-history-table td {
   padding: 12px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid var(--table-row-border);
 }
 
-.workout-history-table th {
-  background-color: #f4f4f4;
+.workout-history-table th{
+  border-right: 2px solid var(--table-header-border);
+}
+.workout-history-table thead tr {
+  background-color: var(--table-header-bg);
+  color: var(--table-header-text);
+  border: 2px solid var(--table-header-border);
 }
 
 .workout-dropdown {
   width: 100%;
   padding: 5px;
   border-radius: 5px;
+  color: var(--table-dropdown-text);
+  background-color: var(--table-dropdown-bg);
 }
 
+.workout-dropdown option{
+  border: 2px solid yellow;
+  background-color: var(--table-dropdown-option-bg);
+  color:var(--table-dropdown-option-text);
+}
+
+.workout-dropdown option:hover{
+  background-color: var(--table-dropdown-option-hover-bg);
+  color:var(--table-dropdown-option-hover-text);
+}
 /* Responsive for mobile screens */
 @media (max-width: 768px) {
   .workout-history-table {

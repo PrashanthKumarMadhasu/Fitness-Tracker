@@ -121,7 +121,7 @@
 li {
   cursor: pointer;
   background-color: var(--list-bg);
-  color:var(--list-text)
+  color:var(--list-text);
 }
 
 li:hover {

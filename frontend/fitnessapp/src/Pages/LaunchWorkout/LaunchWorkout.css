@@ -21,7 +21,9 @@
 .date-time input{
     border-radius: 5px;
     padding: 5px;
-    border: 2px solid rgb(219, 213, 213); 
+    border: 2px solid var(--launch--input-border);
+    background-color: var(--input-bg);
+    color:var(--launch--input-text); 
 }
 
 /* .date-field{
@@ -39,7 +41,10 @@
 .addWorkout-text-field{
     width: 100%;
     padding: 10px;
-    border: 2px solid rgb(219, 213, 213);
+    border-radius: 5px;
+    border: 2px solid var(--launch--input-border);
+    background-color: var(--input-bg); 
+    color:var(--text-color); 
     margin-bottom: 5px;
 }
 .add-remainder-button{

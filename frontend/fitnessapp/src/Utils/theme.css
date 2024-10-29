@@ -23,6 +23,19 @@
     --tutorial-card-text:#007AFF;
     --tutorial-card-hover-bg:#02212e;
     --tutorial-card-hover-text:#fff;
+    --launch--input-border:#2a2b2b;
+    --launch--input-bg:#10161f;
+    --launch--input-text:#f5f5f5;
+    --table-header-bg:#10161f;
+    --table-header-text:#c5c3c3;
+    --table-row-border:#042538;
+    --table-header-border:#0d4668;
+    --table-dropdown-bg:#3e4649;
+    --table-dropdown-text:#b6bdc2;
+    --table-dropdown-option-bg:#141414;
+    --table-dropdown-option-text:#d3cdcd;
+    --table-dropdown-option-hover-bg:black;
+    --table-dropdown-option-hover-text:#fff;
 
   }
   
@@ -43,5 +56,18 @@
     --tutorial-card-text:#007AFF;
     --tutorial-card-hover-bg:#2e63b3;
     --tutorial-card-hover-text:#fff;
+    --launch--input-border:rgb(219, 213, 213);
+    --launch--input-bg:#f5f5f5;
+    --launch--input-text:#141414;
+    --table-header-bg:#f4f4f4;
+    --table-header-text:#4b4848;
+    --table-row-border:#ddd;
+    --table-header-border:#ddd;
+    --table-dropdown-bg:#fff;
+    --table-dropdown-text:black;
+    --table-dropdown-option-bg:#fff;
+    --table-dropdown-option-text:black;
+    --table-dropdown-option-hover-bg:#fff;
+    --table-dropdown-option-hover-text:black;
   }
   

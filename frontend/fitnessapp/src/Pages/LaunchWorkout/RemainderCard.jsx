@@ -10,7 +10,8 @@ const Card = styled.div`
   min-width: 250px;
   max-width: 450px;
   padding: 16px 18px;
-  border: 1px solid ${({ theme }) => theme.text_primary + 20};
+  background-color:${({theme})=>theme.card_background};
+  border: 1px solid ${({ theme }) => theme.text_secondary};
   border-radius: 14px;
   box-shadow: 1px 6px 20px 0px ${({ theme }) => theme.primary + 15};
   display: flex;
