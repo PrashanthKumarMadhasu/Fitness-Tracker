@@ -3,7 +3,8 @@ const UserProfile = require('../models/profileData');
 const RegisterDetails = require('../models/register');
 const streekData= require('../models/streekCount')
 const userWeightLog=require('../models/userWightLog')
-const {StatusCodes}=require("http-status-codes")
+const {StatusCodes}=require("http-status-codes");
+const { addWorkoutLog } = require('./addWorkout');
 
 
 const getUserDashboard=async( req,res,next)=>
@@ -146,7 +147,8 @@ const getUserDashboard=async( req,res,next)=>
       // calculate the every workout that belongs to user
       const allWorkOutData=await WorkoutDetails.countDocuments(
         {
-          userId:userId
+          userId:userId,
+          exercise: { $ne: null } 
         }
       )          
 
@@ -281,10 +283,15 @@ const getUserDashboard=async( req,res,next)=>
           }  
           
        }
-       if(!totalWorkoutsYesterday)
+       const profile= await UserProfile.findOne({userId}).exec()
+       const userWeight =profile?.weight
+       const registerDate=user.createdAt.toISOString().split('T')[0];
+       
+       if(!totalWorkoutsYesterday  && (todayDateString!==registerDate))
        {
         const yesterdayDate=new Date();
         yesterdayDate.setDate(todayDate.getDate()-1);
+        yesterdayDate.setUTCHours(0, 0, 0, 0);
         let yesterDateString=yesterdayDate.toISOString().split('T')[0];
         const dateData= await WorkoutDetails.findOne({userId:userId,
           $expr: {
@@ -307,7 +314,7 @@ const getUserDashboard=async( req,res,next)=>
             exercise: null,
             category:null,
             caloriesBurned: 0,
-            date:yesterdayDate.setDate(todayDate.getDate()-1)
+            date: new Date(yesterdayDate)
             }
           const addedWorkOutData = await WorkoutDetails.create({...newWorkOutDetails,user: userId, userId:userId});
         }
@@ -324,7 +331,7 @@ const getUserDashboard=async( req,res,next)=>
         {
           userId:userId,
           userBodyWeight:profile.weight,
-          date:yesterdayDate.setDate(todayDate.getDate()-1)
+          date: new Date(yesterdayDate)
         }
         await userWeightLog.create({...weightLog})
         
