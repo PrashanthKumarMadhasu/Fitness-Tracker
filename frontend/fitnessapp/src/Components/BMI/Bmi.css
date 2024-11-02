@@ -6,27 +6,30 @@
 }
 
 .bmi-container{
-    height: 100vh;
+    flex:1;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
     flex-direction: column;
+    overflow-y: scroll;
 }
 .bmi-calculator{
     width: 400px;
-    border: 8px solid #d6dadf;
+    border: 8px solid var(--bmi-border);
     padding: 20px;
     backdrop-filter: blur(100px);
-    background-color: rgb(2, 32, 56);
+    background: linear-gradient(to right, var(--bmi-lgd-1), var(--bmi-lgd-2), var(--bmi-lgd-3), var(--bmi-lgd-4));
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 }
 
 .header-bmi{
-    color: white;
+    color: var(--bmi-header);
     text-align: center;
-    /* text-shadow: 2px 1px 2px #5cd4e4; */
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: 600;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', sans-serif;
 }
 
@@ -34,7 +37,7 @@
     border-radius: 10px;
     width:100%;
     padding: 8px;
-    background-color: #66d166;
+    background-color: var(--bmi-layer-1);
     margin: 20px 0;
 }
 .layer-2{
@@ -42,7 +45,7 @@
     border-radius: 10px;
     padding:5px;
     height: 50px;
-    background-color: antiquewhite;
+    background-color: rgb(240, 233, 225);
     text-align: center;
     justify-content: center;
     font-size: 24px;
@@ -60,7 +63,7 @@
     display: block;
     /* font-weight: bold; */
     margin-bottom: 5px;
-    color: #b4cde7;
+    color: var(--bmi-label);
 }
 
 .bmi-input-container input[type="number"] {
@@ -70,6 +73,7 @@
     font-weight: bold;
     border-radius: 3px;
     border:none;
+    text-align: center;
 }
 
 .calculate-refresh{
@@ -86,8 +90,8 @@
     color: white;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .calculate-button:hover{
@@ -102,22 +106,21 @@
     border: none;
 }
 .refresh:hover{
-    background-color: rgb(236, 234, 230);
+    background-color: rgb(12, 66, 80);
+    color: white;
 }
 
 .result{
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f0f0f0;
+    display: flex;
     border-radius: 5px;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    color: #007bff;
+    font-weight: 600;
+    padding: 10px 0;
 }
 
 .bmi-value{
     font-weight: bold;    
-}
-
-.bmi-message {
-    color: #007bff;
-    font-weight: bold;
 }

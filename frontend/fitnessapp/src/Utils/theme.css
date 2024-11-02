@@ -7,6 +7,8 @@
   }
   
   [data-theme="dark"] {
+
+    /* ---dashboard--- */
     --input-bg: #10161f;
     --input-border: #2a2b2b;
     --text-color: #ffffff;
@@ -17,15 +19,45 @@
     --list-text:#d3cdcd;
     --list-hover-text:#fff;
     --list-hover-bg:black;
+
+    /* ---tutorial--- */
     --tutorial-header:#b8cbde;
     --tutorial-card-bg:#02090d;
     --tutorial-card-border:#323533;
     --tutorial-card-text:#007AFF;
     --tutorial-card-hover-bg:#02212e;
     --tutorial-card-hover-text:#fff;
-    --launch--input-border:#2a2b2b;
-    --launch--input-bg:#10161f;
-    --launch--input-text:#f5f5f5;
+    --video-section-header:#007AFF;
+    --search-bg:#d7e0e0;
+    --search-border:#253335;
+    --search-border-highlight:#3a6e70;
+    --search-icon-hover:#fff;
+    --clear-icon:#afabab;
+    --clear-icon-highlight:#302f2f;
+    --workout-name:#046380;
+
+    /* ---launch-workout--- */
+    --launch-input-border:#2a2b2b;
+    --launch-input-bg:#10161f;
+    --launch-input-text:#f5f5f5;
+    --launch-textarea-bg:#10161f;
+    --launch-label:#b8cbde;
+    --qr-color:invert(100%) brightness(70%);
+    --qr-text:#b8cbde;
+    --scan-qr-text-color-1:red;
+    --scan-qr-text-color-2:green;
+
+    /* ---bmi--- */
+    --bmi-header:#fff;
+    --bmi-label:#b4cde7;
+    --bmi-lgd-1:#061f35;
+    --bmi-lgd-2:#0b2942;
+    --bmi-lgd-3:#173855;
+    --bmi-lgd-4:#305677;
+    --bmi-border:#d6dadf;
+    --bmi-layer-1:#2a5024;
+
+    /* ---history--- */
     --table-header-bg:#10161f;
     --table-header-text:#c5c3c3;
     --table-row-border:#042538;
@@ -34,12 +66,30 @@
     --table-dropdown-text:#b6bdc2;
     --table-dropdown-option-bg:#141414;
     --table-dropdown-option-text:#d3cdcd;
-    --table-dropdown-option-hover-bg:black;
+    --table-dropdown-option-hover-bg:#000000;
     --table-dropdown-option-hover-text:#fff;
+    --line-chart-bg:#3f4547;
+
+    /* ---contact--- */
+    --contact-header-text:#007AFF;
+    --contact-bg:#02090d;
+    --contact-text:#f7eded;
+    --contact-border:#323533;
+    --contact-sendbtn-bg:#1358a7;
+    --contact-sendbtn-text:#fff;
+    --contact-sendbtn-hover-bg:#10213a;
+    --contact-sendbtn-hover-text:#fff;
+    --contact-boxshadow:rgb(0, 122, 255,0.1);
+    --contact-input-placeholder:#979393;
+    --contact-input-border:#dbd2d2;
+    --contact-label:#b8cbde;
+    --contact-textarea-bg:#10161f;
 
   }
   
   [data-theme="light"] {
+
+    /* ---dashboard--- */
     --input-bg: #ffffff;
     --input-border: #6d6868;
     --text-color: #000000;
@@ -50,15 +100,50 @@
     --list-text:#222121;
     --list-hover-text:#000000;
     --list-hover-bg:#d8e3f0;
+
+    /* ---tutorial--- */
     --tutorial-header:#404040;
     --tutorial-card-bg:#f5f5f5;
     --tutorial-card-border:#ddd;
     --tutorial-card-text:#007AFF;
     --tutorial-card-hover-bg:#2e63b3;
     --tutorial-card-hover-text:#fff;
-    --launch--input-border:rgb(219, 213, 213);
-    --launch--input-bg:#f5f5f5;
-    --launch--input-text:#141414;
+    --video-section-header:#007AFF;
+    --search-bg:#fff;
+    --search-border:#afabab;
+    --search-border-highlight:#302f2f;
+    --search-icon-hover:#333131;
+    --clear-icon:#afabab;
+    --clear-icon-highlight:#302f2f;
+    --workout-name:#08243b;
+
+    /* ---launch-workout--- */
+    --launch-input-border:rgb(219, 213, 213);
+    --launch-input-bg:#f5f5f5;
+    --launch-input-text:#141414;
+    --launch-textarea-bg:rgb(244, 250, 252);
+    --launch-label:rgb(3, 62, 88);
+    --qr-color:invert(100%) brightness(5%);
+    --qr-text:#000000;
+    --scan-qr-text-color-1:red;
+    --scan-qr-text-color-2:green;
+
+    /* ---bmi--- */
+    --bmi-header:#116b8a;
+    --bmi-label:rgb(3, 62, 88);
+    --bmi-lgd-1:#79a6dab6;
+    --bmi-lgd-2:#79a6dab6;
+    --bmi-lgd-3:#79a6dab6;
+    --bmi-lgd-4:#79a6dab6;
+    /* --bmi-border:#79a6dab6; */
+    --bmi-border:#07182cb6;
+    --bmi-layer-1:#085b69;
+    /* --bmi-refresh-bg:#fff;
+    --bmi-refresh-hover-bg:#fff;
+    --bmi-refresh-color:#fff;
+    --bmi-refresh-hover-color:#fff; */
+
+    /* ---history--- */
     --table-header-bg:#f4f4f4;
     --table-header-text:#4b4848;
     --table-row-border:#ddd;
@@ -69,5 +154,23 @@
     --table-dropdown-option-text:black;
     --table-dropdown-option-hover-bg:#fff;
     --table-dropdown-option-hover-text:black;
+    --line-chart-bg:#fff;
+
+    /* ---contact--- */
+    --contact-header-text:#007AFF;
+    --contact-bg:#fff;
+    --contact-text:#000000;
+    --contact-border:#e8e1e1;
+    --contact-sendbtn-bg:#007AFF;
+    --contact-sendbtn-text:#fff;
+    --contact-sendbtn-hover-bg:#1358a7;
+    --contact-sendbtn-hover-text:#fff;
+    --contact-boxshadow:rgb(0, 122, 255,0.1);
+    --contact-input-placeholder:#6d6767;
+    --contact-input-border:#868181;
+    --contact-label:rgb(3, 62, 88);
+    --contact-textarea-bg:rgb(211, 227, 233);
+
+
   }
   

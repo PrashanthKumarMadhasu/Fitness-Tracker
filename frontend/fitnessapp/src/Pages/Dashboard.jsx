@@ -73,13 +73,17 @@ const Dashboard = ({currentUser}) => {
 
   const dashboardData = async () => {
     setLoading(true);
-    const token = localStorage.getItem("fittrack-app-token");
-    await getDashboardDetails(token).then((res) => {
+    try {
+      const token = localStorage.getItem("fittrack-app-token");
+      await getDashboardDetails(token).then((res) => {
       setData(res.data);
       console.log(`data after setdata${data}`);
       console.log(res.data);
       setLoading(false);
     });
+    } catch (error) {
+      console.log(error);
+    }
   };
   const getTodaysWorkout = async () => {
     setLoading(true);

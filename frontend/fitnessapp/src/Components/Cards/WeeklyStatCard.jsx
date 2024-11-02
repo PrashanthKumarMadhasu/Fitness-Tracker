@@ -4,6 +4,7 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 import { useContext } from "react";
 import { ThemeContext } from "../../Utils/ThemeContext";
+import BarchartImage from '../Assets/SvgFiles/bar-chart.svg';
 
 const Card = styled.div`
   flex: 1;
@@ -29,40 +30,53 @@ const Title = styled.div`
   }
 `;
 
+const BarGraph = styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100%;
+  width:100%;
+`;
+
 const WeeklyStatCard = ({ data }) => {
 
   const ColorValues = ['violet', 'indigo', 'blue', 'green', 'yellow', 'orange', 'red'];
-  const {themeColor, setThemeColor} = useContext(ThemeContext);
+  const { themeColor, setThemeColor } = useContext(ThemeContext);
   return (
     <Card>
       <Title>Weekly Calories Burned</Title>
-      {data?.weeklyCaloriesBurnt && (
-        <BarChart
-          sx={{
-            [`.${axisClasses.root}`]: {
-              [`.${axisClasses.tickLabel}`]: {
-                fill:themeColor?"#ddd":"#000000", // Customize label color for axes
+      {data?.weeklyCaloriesBurnt? (
+          <BarChart
+            sx={{
+              [`.${axisClasses.root}`]: {
+                [`.${axisClasses.tickLabel}`]: {
+                  fill: themeColor ? "#ddd" : "#000000", // Customize label color for axes
+                },
+                [`& line`]: {
+                  stroke: themeColor ? "#ddd" : "#000000", // Customize axis line color
+                },
               },
-              [`& line`]: {
-                stroke:themeColor?"#ddd":"#000000" , // Customize axis line color
+            }}
+            xAxis={[
+              {
+                scaleType: "band",
+                data: data?.weeklyCaloriesBurnt?.weeks,
+                colorMap: {
+                  type: "ordinal",
+                  values: data?.weeklyCaloriesBurnt?.weeks,
+                  colors: ColorValues,
+                },
               },
-            },
-          }}
-          xAxis={[
-            {
-              scaleType: "band",
-              data: data?.weeklyCaloriesBurnt?.weeks,
-              colorMap: {
-                type: "ordinal",
-                values: data?.weeklyCaloriesBurnt?.weeks,
-                colors: ColorValues,
-              },
-            },
-          ]}
-          series={[{ data: data?.weeklyCaloriesBurnt?.dayWiseCalories }]}
-          height={300}
-        />
-      )}
+            ]}
+            series={[{ data: data?.weeklyCaloriesBurnt?.dayWiseCalories }]}
+            height={300}
+          />
+          )
+        :(
+        <BarGraph>
+          <img src={BarchartImage} alt="bar-chart.svg" width={200} height={200}/>
+        </BarGraph>)
+      }
     </Card>
   );
 };

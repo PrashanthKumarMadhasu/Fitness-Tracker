@@ -1,7 +1,13 @@
+.tutorial-wrapper{
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-y: scroll;
+}
 .tutorial-container {
   padding: 30px;
-  max-height: 100vh; /* Set the max height for scrollable content */
-  overflow-y: auto; /* Enable scrolling */
+  width: 100%;
 }
 
 .tutorial-header {
@@ -52,14 +58,23 @@
 
 .video-section {
   text-align: center;
-  height: 100vh;
+  width: 100%;
   position: relative;
 }
 
 .clear-icon{
   font-size: 22px;
-  color: #afabab;
+  color: var(--clear-icon);
   cursor: pointer;
+}
+.clear-icon.filled{
+  color:var(--clear-icon-highlight);
+}
+.workout-category-header{
+  color: var(--video-section-header);
+  margin-top: 5px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .back-icon{
@@ -80,21 +95,23 @@
   border-radius: 20px;
   width: 500px;
   padding: 5px 15px;
-  border:2px solid #afabab;
+  border:2px solid var(--search-border);
   display: flex;
   justify-content: center;
   align-items: center;
   transition: border-color 0.3s ease;
+  background-color: var(--search-bg);
 }
 
 .search-field.filled{
-  border:2px solid black;
+  border:2px solid var(--search-border-highlight);
 }
 .search-field input{
   width: 100%;
   font-size: 18px;
   border: none;
   outline: none;
+  background-color: var(--search-bg);
 }
 
 /* .search-field input:hover{
@@ -108,22 +125,22 @@
 }
 
 .search-icon:hover{
-  color: #333131;
+  color: var(--search-icon-hover);
 }
 
 .video-list {
-  height: 100%; /* Set the max height for scrollable content */
-  overflow-y: auto;
   padding: 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 3 equal columns */
   grid-template-rows: auto; /* Row size will be auto based on content */
   gap: 10px;
+  overflow-y: scroll;
 }
 
 .workout-name{
-  color: black;
-  font-weight: 400;
+  color: var(--workout-name);
+  font-weight: 100;
+  font-size: 18px;
   font-family:"Spicy Rice";
 }
 

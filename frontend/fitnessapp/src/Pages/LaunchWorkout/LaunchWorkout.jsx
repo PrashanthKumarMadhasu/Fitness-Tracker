@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import { addRemainder, getRemainders } from '../../api';
 import RemainderCard from './RemainderCard';
+import Qr from '../../Components/Assets/SvgFiles/qr.svg';
+import { RiWhatsappFill } from "react-icons/ri";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Card = styled.div`
@@ -13,7 +15,7 @@ const Card = styled.div`
   min-width: 280px;
   width:400px;
   padding: 24px;
-  background-color:${({theme})=>theme.card_background};
+  background-color:${({ theme }) => theme.card_background};
   border: 1px solid ${({ theme }) => theme.text_primary + 20};
   border-radius: 14px;
   box-shadow: 1px 6px 20px 0px ${({ theme }) => theme.primary + 15};
@@ -43,13 +45,11 @@ const CardWrapper = styled.div`
 `;
 
 const Section = styled.div`
-  margin-top:20px;
   display: flex;
   width:100%;
   flex-direction: column;
-  padding: 0px 16px;
+  padding: 20px 20px 100px 20px;
   gap: 22px;
-  padding: 0px 16px;
   @media (max-width: 600px) {
     gap: 12px;
   }
@@ -104,36 +104,43 @@ const LaunchWorkout = () => {
   return (
     <div className="setWorkout-container">
       <div className='Remainder-wrapper'>
-      <Card>
-        <Title>Add Workout Plan</Title>
-        <div className="date-time">
-          <input type="date" className='date-field' name='date' value={inputValues['date'] || ''} onChange={(e) => handleInputChange(e, 'date')} />
-          <input type="time" className='time-field' name='time' value={inputValues['time'] || ''} onChange={(e) => handleInputChange(e, 'time')} />
-        </div>
-        <label htmlFor="message" className='plan-label'>List out Workouts/Diet :</label>
-        <textarea className='addWorkout-text-field' name='message'
-          value={inputValues['message'] || ''}
-          onChange={(e) => handleInputChange(e, 'message')}
-          rows={10}
-          placeholder={`
+        <div className='qr-remainder-wrapper'>
+          <Card>
+            <Title>Add Workout Plan</Title>
+            <div className="date-time">
+              <input type="date" className='date-field' name='date' value={inputValues['date'] || ''} onChange={(e) => handleInputChange(e, 'date')} />
+              <input type="time" className='time-field' name='time' value={inputValues['time'] || ''} onChange={(e) => handleInputChange(e, 'time')} />
+            </div>
+            <label htmlFor="message" className='plan-label'>List out Workouts/Diet :</label>
+            <textarea className='addWorkout-text-field' name='message'
+              value={inputValues['message'] || ''}
+              onChange={(e) => handleInputChange(e, 'message')}
+              rows={10}
+              placeholder={`
           #Category
           -Workout Name
           -Sets
           -Reps
           -Weight
           -Duration`} />
-        <div className='add-remainder-button'>
-          <Button variant="outline-primary" onClick={handleRemainder}>Add</Button>
+            <div className='add-remainder-button'>
+              <Button variant="outline-primary" onClick={handleRemainder}>Add</Button>
+            </div>
+          </Card>
+          <Card>
+            <h3 className='qr-header'>Scan QR</h3>
+            <img className='qr-image' src={Qr} alt="qr.svg" />
+            <h2 className='qr-desc'>Whatsapp <RiWhatsappFill className='whatsapp'/>  "join corner-join"</h2>
+          </Card>
         </div>
-      </Card>
-      <Section>
-        <Title>Remainders </Title>
-        <CardWrapper>
-          {remainderData?.map((itemData, index) => (
-            <RemainderCard key={index} remainderData={itemData} />
-          ))}
-        </CardWrapper>
-      </Section>
+        <Section>
+          <h1 className='remainder'>Remainders </h1>
+          <CardWrapper>
+            {remainderData?.map((itemData, index) => (
+              <RemainderCard key={index} remainderData={itemData} />
+            ))}
+          </CardWrapper>
+        </Section>
       </div>
     </div>
   )

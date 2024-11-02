@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import './Bmi.css'
 import { HiRefresh } from "react-icons/hi";
+import { ReactTyped } from "react-typed";
 
 const Bmi = () => {
 
@@ -42,11 +43,15 @@ const Bmi = () => {
   }
   return (
     <div className="bmi-container">
-      {bmiValue && bmiMessage &&(
-          <div className="result">
-          <p>Result: <span className="bmi-message">{bmiMessage}</span></p>
-          </div>
-        )}
+      {bmiValue && bmiMessage && (
+        <div className='result'>
+          <ReactTyped
+            strings={[bmiMessage]}
+            typeSpeed={50}
+            backSpeed={50}
+          />
+        </div>
+      )}
       <div className='bmi-calculator'>
         <h1 className='header-bmi'>BMI Calculator </h1>
         <div className='layer-1'>
@@ -58,7 +63,7 @@ const Bmi = () => {
           <label htmlFor="height" id='input-label'>Enter your height in (cm):</label>
           <input type="number" name="height" value={height} onChange={(e) => setHeight(e.target.value)} />
         </div>
-        <br/>
+        <br />
         <div className='bmi-input-container'>
           <label htmlFor="weight" id='input-label'>Enter your weight in (kg):</label>
           <input type="number" step="0.1" name="weight" value={weight} onChange={(e) => setWeight(e.target.value)} />

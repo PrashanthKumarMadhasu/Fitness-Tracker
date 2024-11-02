@@ -1,6 +1,7 @@
 import { FitnessCenterRounded, TimelapseRounded } from "@mui/icons-material";
 import React from "react";
 import styled from "styled-components";
+import { MdDeleteOutline, MdDelete } from "react-icons/md";
 
 const Card = styled.div`
   flex: 1;
@@ -18,6 +19,20 @@ const Card = styled.div`
     padding: 12px 14px;
   }
 `;
+
+const HeaderContainer =styled.div`
+  display:flex;
+  align-items:center;
+  wdith:100%;
+  flex-direction:row;
+  justify-content:space-between;
+`;
+const DeleteIcon =styled.div`
+  color:#f03920;
+  font-size:22px;
+  cursor:pointer;
+`;
+
 const Category = styled.div`
   width: fit-content;
   font-size: 14px;
@@ -62,7 +77,10 @@ gap: 6px;
 const WorkoutCard = ({ workout }) => {
   return (
     <Card>
-      <Category>#{workout?.category}</Category>
+      <HeaderContainer>
+        <Category>#{workout?.category}</Category>
+        <DeleteIcon><MdDeleteOutline/></DeleteIcon> 
+      </HeaderContainer>
       <Name>{workout?.exercise}</Name>
       <Sets>
         Count: {workout?.sets} sets X {workout?.reps} reps

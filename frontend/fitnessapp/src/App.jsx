@@ -23,6 +23,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-image: url(${({ theme }) => (theme.theme==='true'?BackImage:'')});
+  background-color:${({ theme }) => (theme.theme==='true'?'none':'#f3efe9f5')};
   background-repeat: no-repeat;
   background-size:cover;
   background-position: center;

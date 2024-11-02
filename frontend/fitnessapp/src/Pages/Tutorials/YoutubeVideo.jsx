@@ -5,7 +5,7 @@ const YoutubeVideo = ({ url }) => {
   return (
     <div className="youtube-embed-wrapper">
       <iframe
-        width="198"
+        width="202"
         height="352"
         src={url}
         frameBorder="0"

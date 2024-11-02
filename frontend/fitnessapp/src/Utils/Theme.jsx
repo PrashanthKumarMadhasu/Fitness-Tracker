@@ -33,6 +33,10 @@ export const lightTheme = {
   desc:'#3e4040',
   button_bg:'#007bff',
   button_hover:'#1358a7',
+  tab_bg:'#fff',
+  tab_text:'#007AFF',
+  selected_tab_bg:'#007AFF',
+  selected_tab_text:'#fff',
 };
 
 
@@ -57,6 +61,10 @@ export const darkTheme = {
   desc:'#b8cbde',
   button_bg:'#1358a7',
   button_hover:'#007bff',
+  tab_bg:'#010f1a',
+  tab_text:'#5792c0',
+  selected_tab_bg:'#5792c0',
+  selected_tab_text:'#010f1a',
 }
 
 

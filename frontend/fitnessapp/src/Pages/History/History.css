@@ -1,18 +1,22 @@
 
 .workout-history-container {
+  flex:1;
   padding: 5px 20px;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
-
+.history-graph-tabs{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap:15px;
+}
 .scrollable-table-container {
-
-  height: 65vh; 
+  height: 75vh; 
   overflow-y: auto; 
   width: 100%; 
 }
@@ -22,7 +26,7 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 16px;
-  margin: 10px 0;
+  margin-top: 10px;
 }
 
 .workout-history-table th,
@@ -90,3 +94,15 @@
     padding: 3px;
   }
 }
+
+.weight-graph{
+  display: flex;
+  margin-top:20px;
+  flex-direction: column;
+}
+
+.line-chart{
+  display: flex;
+  background-color: var(--line-chart-bg);
+}
+

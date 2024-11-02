@@ -1,15 +1,63 @@
 .setWorkout-container{
-    padding: 20px;
-    height: 100vh;
-    overflow-y: auto;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    /* padding: 20px; */
+    overflow-y: scroll;
+    padding: 20px 0;
 }
 
 .Remainder-wrapper{
+    flex: 1;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
 }
+
+.qr-remainder-wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.qr-image{
+    width: 300px ;
+    height: 300px;
+    filter:var(--qr-color);
+}
+
+.qr-desc{
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--qr-text);
+}
+.whatsapp{
+    color:green;
+    /* background-color: white; */
+    width: 20px;
+    height: 20px;
+}
+.qr-header{
+    font-size: 20px;
+    font-weight: 600;
+    animation: colorChange 0.5s ease infinite;
+}
+
+@keyframes colorChange {
+    0% {
+      color: var(--scan-qr-text-color-1);
+    }
+    50% {
+      color: var(--scan-qr-text-color-2);
+    }
+    100% {
+      color: var(--scan-qr-text-color-1);
+    }
+}  
+
+
 .date-time{
     display: flex;
     justify-content: space-around;
@@ -21,29 +69,21 @@
 .date-time input{
     border-radius: 5px;
     padding: 5px;
-    border: 2px solid var(--launch--input-border);
+    border: 2px solid var(--launch-input-border);
     background-color: var(--input-bg);
     color:var(--launch--input-text); 
 }
 
-/* .date-field{
-   
-}
-
-.time-field{
-    
-} */
-
 .plan-label{
     width: 100%;
-    color: rgb(3, 62, 88);
+    color: var(--launch-label);
 }
 .addWorkout-text-field{
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: 2px solid var(--launch--input-border);
-    background-color: var(--input-bg); 
+    border: 2px solid var(--launch-input-border);
+    background-color: var(--launch-textarea-bg); 
     color:var(--text-color); 
     margin-bottom: 5px;
 }
@@ -51,4 +91,9 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+}
+
+.remainder{
+    font-size: 20px;
+    color: var(--tutorial-header);
 }

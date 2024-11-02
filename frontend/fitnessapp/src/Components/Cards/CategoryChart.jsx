@@ -4,6 +4,7 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 import { useContext } from "react";
 import { ThemeContext } from "../../Utils/ThemeContext";
+import PieChartImage from '../Assets/SvgFiles/pie-chart.svg';
 
 const Card = styled.div`
   flex: 1;
@@ -20,6 +21,14 @@ const Card = styled.div`
     padding: 16px;
   }
 `;
+
+const PieGraph = styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100%;
+  width:100%;
+`;
 const Title = styled.div`
   font-weight: 600;
   font-size: 16px;
@@ -30,31 +39,37 @@ const Title = styled.div`
 `;
 
 const CategoryChart = ({ data }) => {
-  const {themeColor, setThemeColor} = useContext(ThemeContext);
+  const { themeColor, setThemeColor } = useContext(ThemeContext);
   return (
     <Card>
       <Title>Workout Categories</Title>
-      {data?.pieChartData && (
-        <PieChart
-          sx={{
-            [`.${axisClasses.root}`]: {
-              [`.${axisClasses.tickLabel}`]: {
-                fill: themeColor ? "#ddd" : "#000000", // Customize label color for axes
-              }
-            },
-          }}
-          series={[
-            {
-              data: data?.pieChartData,
-              innerRadius: 20,
-              outerRadius: 100,
-              paddingAngle: 5,
-              cornerRadius: 5,
-            },
-          ]}
-          height={300}
-        />
-      )}
+      {data?.pieChartData ?
+        (
+          <PieChart
+            sx={{
+              [`.${axisClasses.root}`]: {
+                [`.${axisClasses.tickLabel}`]: {
+                  fill: themeColor ? "#ddd" : "#000000", // Customize label color for axes
+                }
+              },
+            }}
+            series={[
+              {
+                data: data?.pieChartData,
+                innerRadius: 20,
+                outerRadius: 100,
+                paddingAngle: 5,
+                cornerRadius: 5,
+              },
+            ]}
+            height={300}
+          />
+        )
+        :
+        <PieGraph>
+          <img src={PieChartImage} alt="pie-chart.svg" width={200} height={200}/>
+        </PieGraph>
+      }
     </Card>
   );
 };
