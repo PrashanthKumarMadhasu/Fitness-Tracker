@@ -241,16 +241,16 @@ const modifyRemainder= async(req,res)=>
         }
         else
         {
-            if(remainder==='true')
+            if(remainder===true)
             {
                 remainderData.status='pending'
-                remainderData.remainder='true'
+                remainderData.remainder=true
                 await remainderData.save();
             }
             else
             {
                 remainderData.status='disable'
-                remainderData.remainder='false'
+                remainderData.remainder=false
                 await remainderData.save();
             }
             return res.status(StatusCodes.CREATED).json({success:true,remainderData,message:"Remainder Updated Successfully"})
