@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './LaunchWorkout.css';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
-import { addRemainder, getRemainders } from '../../api';
+import { addRemainder, getRemainders, changeRemainderStatus } from '../../api';
 import RemainderCard from './RemainderCard';
 import Qr from '../../Components/Assets/SvgFiles/qr.svg';
 import { RiWhatsappFill } from "react-icons/ri";
@@ -75,6 +75,19 @@ const LaunchWorkout = () => {
     }
   };
 
+  const updateRemainderStatus = async (remainder_id, remainderStatus) => {
+    const token = localStorage.getItem("fittrack-app-token");
+    console.log(`Updating remainder status for ID ${remainder_id} to:`, remainderStatus);
+  
+    try {
+      await changeRemainderStatus(token, remainder_id, remainderStatus);
+      // Fetch updated data after status change
+      getAllRemainders();
+    } catch (error) {
+      console.error("Failed to update remainder status:", error);
+    }
+  };
+
   useEffect(() => {
     getAllRemainders();
   }, []);
@@ -95,7 +108,7 @@ const LaunchWorkout = () => {
   };
 
   const handleRemainder = () => {
-    const sample = { ...inputValues, remainder: 'true' };
+    const sample = { ...inputValues, remainder: true };
     console.log(`add after ${JSON.stringify(sample)}`);
     addNewRemainder(sample);
   }
@@ -130,14 +143,17 @@ const LaunchWorkout = () => {
           <Card>
             <h3 className='qr-header'>Scan QR</h3>
             <img className='qr-image' src={Qr} alt="qr.svg" />
-            <h2 className='qr-desc'>Whatsapp <RiWhatsappFill className='whatsapp'/>  "join corner-join"</h2>
+            <h2 className='qr-desc'>Whatsapp <RiWhatsappFill className='whatsapp' />  "join corner-join"</h2>
           </Card>
         </div>
         <Section>
           <h1 className='remainder'>Remainders </h1>
           <CardWrapper>
             {remainderData?.map((itemData, index) => (
-              <RemainderCard key={index} remainderData={itemData} />
+              <RemainderCard
+                key={index}
+                remainderData={itemData}
+                remainderStatus={updateRemainderStatus} />
             ))}
           </CardWrapper>
         </Section>

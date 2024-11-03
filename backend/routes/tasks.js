@@ -52,7 +52,7 @@ router.route('/todayWorkOutData').get(authMiddleware,todayWorkoutData)
 //send reminder routes
 router.route('/sendRemainder').post(authMiddleware,scheduleModule)
 router.route('/getRemainders').get(authMiddleware,getTotalReminders)
-router.route('/modifyRemainder/:remainderId').post(authMiddleware,modifyRemainder)
+router.route('/modifyRemainder/:remainderId').patch(authMiddleware,modifyRemainder)
 
 
 

@@ -21,11 +21,11 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background: ${({theme})=>theme.theme==='true'?theme.card_background:theme.white};
+  background: ${({ theme }) => theme.theme === 'true' ? theme.card_background : theme.white};
   width: 400px;
   float:right;
   padding: 20px;
-  border:${({theme})=>theme.theme==='true'?`2px Solid ${theme.text_secondary}`:'none'};
+  border:${({ theme }) => theme.theme === 'true' ? `2px Solid ${theme.text_secondary}` : 'none'};
   border-radius: 10px;
   height:90vh;
   overflow-y: auto;
@@ -45,8 +45,8 @@ const ProfileImageInput = styled.input`
 
 const ProfileLabel = styled.label`
   display:block;
-  background: ${({theme})=> theme.profile_label_bg};
-  color:${({theme})=> theme.theme==='true'?theme.white:theme.primary};
+  background: ${({ theme }) => theme.profile_label_bg};
+  color:${({ theme }) => theme.theme === 'true' ? theme.white : theme.primary};
   padding: 10px;
   width:100%;
   cursor: pointer;
@@ -58,15 +58,15 @@ const Input = styled.input`
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
-  background:${({theme})=> theme.input_bg};
-  color:${({theme})=> theme.theme==='true'?theme.white:theme.black};
-  border:${({theme})=> `1px solid ${theme.input_border}`};
+  background:${({ theme }) => theme.input_bg};
+  color:${({ theme }) => theme.theme === 'true' ? theme.white : theme.black};
+  border:${({ theme }) => `1px solid ${theme.input_border}`};
   border-radius: 5px;
 `;
 
 const Button = styled.button`
   type:"submit";
-  background-color:${({theme})=> theme.button_bg};
+  background-color:${({ theme }) => theme.button_bg};
   padding: 10px;
   margin-bottom:10px;
   width:100%;
@@ -77,7 +77,7 @@ const Button = styled.button`
   border:none;
   color:#fff;
   &:hover {
-      background-color:${({theme})=> theme.button_hover};
+      background-color:${({ theme }) => theme.button_hover};
     }
 `;
 const CloseIcon = styled.div`
@@ -92,14 +92,14 @@ const CloseIcon = styled.div`
 `;
 
 const TextButton = styled.div`
-  color: hsl(0, 0%, 30%);
+  color:${({ theme }) => theme.profile_delete} ;
   cursor: pointer;
   display:flex;
   align-items:center;
   font-size: 16px;
   transition: all 0.3s ease;
-  font-weight: 300;
-  margin:3px 0;
+  font-weight: 500;
+  margin-top:8px;
   &:hover {
     color: ${({ theme }) => theme.primary};
   }
@@ -114,6 +114,7 @@ const ImageIcon = styled.img`
 const ThemeContainer = styled.div`
   display:flex;
   width:100%;
+  margin-bottom:10px;
 `;
 
 const ThemeDark = styled.div`
@@ -142,12 +143,8 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
   const [formData, setFormData] = useState(userProfile);
   const dispatch = useDispatch();
   const { themeColor, setThemeColor } = useContext(ThemeContext);
-  const [active, setActive] =useState(themeColor);
+  const [active, setActive] = useState(themeColor);
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", themeColor ? "dark" : "light");
-  }, [themeColor]);
-  
   useEffect(() => {
     // Update formData.profilePic whenever profilePic changes
     setFormData((prevData) => ({
@@ -171,11 +168,19 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
   };
 
   const handleAccount = async () => {
-    const token = localStorage.getItem("fittrack-app-token");
-    await deleteUserAccount(token).then((res) => {
-      alert("Account Deleted Bye TakeCare :( ");
-      dispatch(logout());
-    });
+    const confirmDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+
+    if (confirmDelete) {
+      const token = localStorage.getItem("fittrack-app-token");
+      try {
+        await deleteUserAccount(token);
+        alert("Account Deleted. Bye, take care! 😢");
+        dispatch(logout());
+      } catch (error) {
+        console.error("Error deleting account:", error);
+        alert("Failed to delete the account. Please try again.");
+      }
+    }
   }
   return (
     <ModalWrapper isModalOpen={isModalOpen}>
@@ -230,6 +235,16 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
             value={formData.dob}
             onChange={handleChange}
           />
+          <Input
+            type="tel"
+            id="userMobile"
+            name="userMobile"
+            placeholder="Enter mobile number"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            value={formData.userMobile}
+            onChange={handleChange}
+          />
           <Button>Update Profile</Button>
           <hr />
           <ThemeContainer>
@@ -241,8 +256,8 @@ const Profile = ({ isModalOpen, onClose, userProfile, updateProfile, handleProfi
             </ThemeLight>
 
           </ThemeContainer>
-          <TextButton onClick={handleAccount} >Delete Account  <ImageIcon src={HeartBreak} /></TextButton>
-          <TextButton onClick={() => dispatch(logout())}><ImageIcon src={Power} />Logout</TextButton>
+          <TextButton onClick={handleAccount} > Delete Account  <ImageIcon src={HeartBreak} /></TextButton>
+          <TextButton onClick={() => dispatch(logout())}> Logout <ImageIcon src={Power} /></TextButton>
         </form>
       </ModalContent>
     </ModalWrapper>

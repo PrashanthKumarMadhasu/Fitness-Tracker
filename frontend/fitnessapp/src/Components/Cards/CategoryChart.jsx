@@ -43,7 +43,7 @@ const CategoryChart = ({ data }) => {
   return (
     <Card>
       <Title>Workout Categories</Title>
-      {data?.pieChartData ?
+      {data?.pieChartData && data.pieChartData.length > 0 ?
         (
           <PieChart
             sx={{

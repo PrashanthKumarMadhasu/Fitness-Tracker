@@ -48,6 +48,10 @@ function App() {
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", themeColor ? "dark" : "light");
+  }, [themeColor]);
+
   return (
     <ThemeProvider theme={themeColor? darkTheme:lightTheme}>
       <BrowserRouter>

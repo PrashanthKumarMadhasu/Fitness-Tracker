@@ -5,7 +5,7 @@ import CountsCard from "../Components/Cards/CountsCard";
 import WeeklyStatCard from "../Components/Cards/WeeklyStatCard";
 import CategoryChart from "../Components/Cards/CategoryChart";
 import WorkoutCard from "../Components/Cards/WorkoutCard";
-import { addWorkout, getDashboardDetails, getWorkouts, getProfileData } from "../api";
+import { addWorkout, getDashboardDetails, getWorkouts, getProfileData, deleteWorkout } from "../api";
 import Dropdowns from "../Components/Cards/Dropdowns";
 
 const Container = styled.div`
@@ -63,7 +63,7 @@ const CardWrapper = styled.div`
   }
 `;
 
-const Dashboard = ({currentUser}) => {
+const Dashboard = ({ currentUser }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -72,52 +72,71 @@ const Dashboard = ({currentUser}) => {
   const [bodyWeight, setBodyWeight] = useState();
 
   const dashboardData = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const token = localStorage.getItem("fittrack-app-token");
-      await getDashboardDetails(token).then((res) => {
-      setData(res.data);
-      console.log(`data after setdata${data}`);
-      console.log(res.data);
-      setLoading(false);
-    });
+      const res = await getDashboardDetails(token);
+      setData(res.data); // Set data immediately after receiving it
+      console.log("Dashboard data:", res.data);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching dashboard data:", error);
+    } finally {
+      setLoading(false); // Ensure loading is set to false after completion
     }
   };
+
   const getTodaysWorkout = async () => {
-    setLoading(true);
-    const token = localStorage.getItem("fittrack-app-token");
-    await getWorkouts(token, "").then((res) => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("fittrack-app-token");
+      const res = await getWorkouts(token, "");
       setTodaysWorkouts(res.data);
-      console.log(`data after todayworkouts${todaysWorkouts}`);
-      console.log(res.data);
+      console.log("Today's workouts:", res.data);
+    } catch (error) {
+      console.error("Error fetching today's workouts:", error);
+    } finally {
       setLoading(false);
-    });
+    }
   };
 
-  
+
   const addNewWorkout = async (newWorkout) => {
-    setButtonLoading(true);
-    const token = localStorage.getItem("fittrack-app-token");
-    await addWorkout(token, newWorkout )
-      .then((res) => {
-        dashboardData();
-        getTodaysWorkout();
-        // setButtonLoading(false);
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    try {
+      setButtonLoading(true);
+      const token = localStorage.getItem("fittrack-app-token");
+      const res = await addWorkout(token, newWorkout);
+      await dashboardData();
+      await getTodaysWorkout();
+    } catch (error) {
+      console.error("Error adding new workout:", error);
+      alert(error);
+    } finally {
+      setButtonLoading(false);
+    }
+  };
+
+  const deleteExistingWorkout = async (workout_id) => {
+    try {
+      setButtonLoading(true);
+      const token = localStorage.getItem("fittrack-app-token");
+      await deleteWorkout(token, workout_id);
+      await dashboardData();
+      await getTodaysWorkout();
+    } catch (error) {
+      console.error("Error deleting workout:", error);
+      alert(error);
+    } finally {
+      setButtonLoading(false);
+    }
   };
 
   useEffect(() => {
-    const fetchProfileData = async()=>{
+    const fetchProfileData = async () => {
       try {
         const token = localStorage.getItem("fittrack-app-token");
         const res = await getProfileData(token, currentUser.id);
         setBodyWeight(res.data.data.weight);
-        console.log(`body weight ${bodyWeight,res.data.data.weight}`);
+        console.log(`body weight ${bodyWeight, res.data.data.weight}`);
       } catch (err) {
         console.log(err)
         console.error("Failed to fetch profile data:", err);
@@ -126,9 +145,9 @@ const Dashboard = ({currentUser}) => {
     dashboardData();
     getTodaysWorkout();
     fetchProfileData();
-  }, [currentUser]);
+  }, []);
 
-  
+
   return (
     <Container>
       <Wrapper>
@@ -141,12 +160,12 @@ const Dashboard = ({currentUser}) => {
 
         <FlexWrap>
           <WeeklyStatCard data={data} />
-          
+
           <Dropdowns workout={workout}
             setWorkout={setWorkout}
             addNewWorkout={addNewWorkout}
-            buttonLoading={buttonLoading} 
-            userBodyWeight={bodyWeight}/>
+            buttonLoading={buttonLoading}
+            userBodyWeight={bodyWeight} />
 
           <CategoryChart data={data} />
         </FlexWrap>
@@ -155,7 +174,7 @@ const Dashboard = ({currentUser}) => {
           <Title>Todays Workouts</Title>
           <CardWrapper>
             {todaysWorkouts?.todayTotalWorkoutData?.map((workout) => (
-              <WorkoutCard key={workout._id} workout={workout} />
+              <WorkoutCard key={workout._id} workout={workout} deleteWorkout={deleteExistingWorkout} />
             ))}
           </CardWrapper>
         </Section>

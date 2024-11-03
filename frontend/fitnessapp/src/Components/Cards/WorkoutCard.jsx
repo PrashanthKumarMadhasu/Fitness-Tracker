@@ -2,6 +2,7 @@ import { FitnessCenterRounded, TimelapseRounded } from "@mui/icons-material";
 import React from "react";
 import styled from "styled-components";
 import { MdDeleteOutline, MdDelete } from "react-icons/md";
+import { deleteWorkout } from "../../api";
 
 const Card = styled.div`
   flex: 1;
@@ -74,12 +75,12 @@ display: flex;
 align-items: center;
 gap: 6px;
 `;
-const WorkoutCard = ({ workout }) => {
+const WorkoutCard = ({ workout, deleteWorkout }) => {
   return (
     <Card>
       <HeaderContainer>
         <Category>#{workout?.category}</Category>
-        <DeleteIcon><MdDeleteOutline/></DeleteIcon> 
+        <DeleteIcon><MdDeleteOutline onClick={() => deleteWorkout(workout._id)}/></DeleteIcon> 
       </HeaderContainer>
       <Name>{workout?.exercise}</Name>
       <Sets>

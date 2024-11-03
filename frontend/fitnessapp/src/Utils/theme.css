@@ -56,6 +56,8 @@
     --bmi-lgd-4:#305677;
     --bmi-border:#d6dadf;
     --bmi-layer-1:#2a5024;
+    --bmi-input-bg:#10161f;
+    --bmi-input-text:#f5f5f5;
 
     /* ---history--- */
     --table-header-bg:#10161f;
@@ -131,13 +133,14 @@
     /* ---bmi--- */
     --bmi-header:#116b8a;
     --bmi-label:rgb(3, 62, 88);
-    --bmi-lgd-1:#79a6dab6;
-    --bmi-lgd-2:#79a6dab6;
-    --bmi-lgd-3:#79a6dab6;
-    --bmi-lgd-4:#79a6dab6;
-    /* --bmi-border:#79a6dab6; */
+    --bmi-lgd-1:#d2dce7b6;
+    --bmi-lgd-2:#b6cae2b6;
+    --bmi-lgd-3:#a3bddbb6;
+    --bmi-lgd-4:#98b7dbb6;
     --bmi-border:#07182cb6;
     --bmi-layer-1:#085b69;
+    --bmi-input-bg:#fff;
+    --bmi-input-text:#000000;
     /* --bmi-refresh-bg:#fff;
     --bmi-refresh-hover-bg:#fff;
     --bmi-refresh-color:#fff;

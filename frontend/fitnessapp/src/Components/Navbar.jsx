@@ -273,26 +273,15 @@ const Navbar = ({ currentUser }) => {
   const [profilePic, setProfilePic] = useState("");
   const [profileData, setProfileData] = useState({
     userId: currentUser.id,
-    userName: 'siva',
-    email: 'siva@gmail.com',
+    userName: 'fitNest',
+    email: 'fitNest@gmail.com',
     height: '0',
     weight: '0',
-    dob: '00-00.00',
-    profilePic: null
+    dob: new Date(),
+    userMobile:'0000000000',
+    profilePic: null,
   });
-  const initialProfile = profileData
-  // const initialProfile = {
-  //   userId:currentUser.id,
-  //   userName: profileData?profileData.userName:'username',
-  //   email: profileData?profileData.email:'email',
-  //   height: profileData?profileData.height:'0',
-  //   weight: profileData?profileData.weight:'0',
-  //   dob: profileData?profileData.dob:'2001-03-2001',
-  //   profilePic: profileData?profileData.profilePic:'',
-
-
-  // };
-
+  const initialProfile = profileData;
   return (
     <Nav>
       <NavContainer>

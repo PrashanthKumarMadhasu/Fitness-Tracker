@@ -27,6 +27,11 @@ export const addWorkout = async (token, data) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
+export const deleteWorkout = async (token, workout_id) =>
+  await API.delete(`/deleteUserWorkout/${workout_id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
 export const updateProfileData = async (token, data) =>
   await API.put(`/updateProfileData`, data, {
     headers: { Authorization: `Bearer ${token}` },
@@ -58,13 +63,18 @@ export const addRemainder = async (token, data) =>
   });
 
 // change reminder to remainder//
-  export const getRemainders = async (token) =>
-    await API.get(`/getRemainders`, {     
-      headers: { Authorization: `Bearer ${token}` },
-    });
+export const getRemainders = async (token) =>
+  await API.get(`/getRemainders`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 
-export const modifyRemainder = async (token,) =>
-    await API.post(`/getRemainders`, {     
+// API call to update the remainder status
+export const changeRemainderStatus = async (token, remainder_id, remainderStatus) =>
+  await API.patch(
+    `/modifyRemainder/${remainder_id}`,
+    { remainder: remainderStatus }, // Ensure remainderStatus is passed as a boolean
+    {
       headers: { Authorization: `Bearer ${token}` },
-    });
+    }
+  )
 

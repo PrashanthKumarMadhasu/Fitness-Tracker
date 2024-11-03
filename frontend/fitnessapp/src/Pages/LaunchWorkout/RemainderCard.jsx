@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, } from "react";
 import styled from "styled-components";
 import Form from 'react-bootstrap/Form';
 import AccessAlarmRoundedIcon from '@mui/icons-material/AccessAlarmRounded';
@@ -42,13 +42,16 @@ const ToggleSwitch =styled.div`
   justify-content:flex-end;
   align-items:flex-end;
 `;
-const RemainderCard = ({ remainderData }) => {
-  const[remainder,setRemainder] = useState(true);
+const RemainderCard = ({ remainderData, remainderStatus }) => {
+  const[remainder,setRemainder] = useState(remainderData.remainder||false);
 
-  const handleRemainder = ()=>{
-    setRemainder(!remainder);
+  const handleRemainder = () => {
+    const newStatus = !remainder;
+    setRemainder(newStatus); // Toggle state locally
+    remainderStatus(remainderData._id, newStatus); // Update status via parent function
   };
 
+  
     return (
         <Card>
             <Flex>

@@ -74,6 +74,8 @@
     border-radius: 3px;
     border:none;
     text-align: center;
+    background-color: var(--bmi-input-bg);
+    color: var(--bmi-input-text);
 }
 
 .calculate-refresh{

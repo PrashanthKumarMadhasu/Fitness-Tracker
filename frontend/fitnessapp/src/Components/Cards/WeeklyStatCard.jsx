@@ -37,15 +37,19 @@ const BarGraph = styled.div`
   height:100%;
   width:100%;
 `;
+const sum = (array) => array.reduce((acc, curr) => acc + curr, 0);
 
 const WeeklyStatCard = ({ data }) => {
 
   const ColorValues = ['violet', 'indigo', 'blue', 'green', 'yellow', 'orange', 'red'];
   const { themeColor, setThemeColor } = useContext(ThemeContext);
+  const totalCalories = sum(data?.weeklyCaloriesBurnt?.dayWiseCalories || []);
+
   return (
     <Card>
       <Title>Weekly Calories Burned</Title>
-      {data?.weeklyCaloriesBurnt? (
+      {totalCalories > 0
+        ? (
           <BarChart
             sx={{
               [`.${axisClasses.root}`]: {
@@ -71,11 +75,11 @@ const WeeklyStatCard = ({ data }) => {
             series={[{ data: data?.weeklyCaloriesBurnt?.dayWiseCalories }]}
             height={300}
           />
-          )
-        :(
-        <BarGraph>
-          <img src={BarchartImage} alt="bar-chart.svg" width={200} height={200}/>
-        </BarGraph>)
+        )
+        : (
+          <BarGraph>
+            <img src={BarchartImage} alt="bar-chart.svg" width={200} height={200} />
+          </BarGraph>)
       }
     </Card>
   );
