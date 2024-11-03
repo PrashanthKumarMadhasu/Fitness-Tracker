@@ -5,6 +5,7 @@ const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
 
 const whatsappMessage= require('../models/whatAppMessage')
+const UserProfile=require('../models/profileData')
 const {StatusCodes} =require('http-status-codes');
 
 
@@ -19,12 +20,12 @@ async function sendRemainderQueue(messageData,mobile,sendRemainder='false')
             if(messageData)
             {
                 console.log(`Sender Mobile:${messageData.senderMobile}`)
-                const dummyMobile="9347273270"
+                //const dummyMobile="9347273270"
                 const result= await client.messages.create(
                     {
-                        body:`${messageData.remainderMessage}, Please reply this code 'Join corner-join'`,
+                        body:`#Update from FitNest🤷:${messageData.remainderMessage}'`,
                         from:`whatsapp:+${messageData.senderMobile}`,
-                        to:`whatsapp:+91${dummyMobile}`
+                        to:`whatsapp:+91${messageData.userMobile}`
                     })
                 const res=JSON.stringify(result)
                 console.log(`result:${res}`)   
@@ -112,20 +113,23 @@ const cronJob= async()=>
      dayjs.extend(timezone);
      const currDate= dayjs.tz(curr,'Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ss')
      //get all user mobile numbers from profile
-     const mobile='9347273270'
-     const sendRemainder='false'
-     
-     const result= await sendRemainderQueue(null,mobile,sendRemainder);
-     if(!result)
+     const getAllUserMobiles= await UserProfile.find({},'userMobile');
+     const userMobiles= getAllUserMobiles.map(item=>item.userMobile);
+     if(userMobiles.length>0)
      {
-        console.log(`Unable to send Session Remainder to User`)
+        for(const item in userMobiles)
+        {
+            const result= await sendRemainderQueue(null,item,true);
+            if(!result)
+                {
+                   console.log(`Unable to send Session Remainder to User`)
+                }
+            else
+                {
+                   console.log('Session Remainder send Successfully')
+                }
+        }
      }
-     else
-     {
-        console.log('Session Remainder send Successfully')
-     }
-            
-            
     }
     catch (error) 
     {
@@ -142,7 +146,7 @@ const scheduleModule= async(req,res)=>
     {
         const {userId,email}= req.user
         const {message, date,time,remainder}=req.body
-        const mobile='7989188700'
+        //const mobile='7989188700'
         let timeSplit= time.split(' ')[1]
         let timeMin= time.split(' ')[0]
         let [hours,minutes]= timeMin.split(':').map(Number)
@@ -161,6 +165,12 @@ const scheduleModule= async(req,res)=>
         dayjs.extend(timezone);
         const sendAt=dayjs.tz(dateTime,'Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ss')
         console.log(`previous Date: ${sendAt}`)
+        //Fetch User Profile
+        const profile= await UserProfile.findOne({userId}).exec()
+        if (profile.userMobile==null)
+        {
+            return res.status(StatusCodes.BAD_REQUEST).json({success:false,message:"userMobile is null, update Profile mobile Data"})
+        }
         const messageData= await whatsappMessage.create(
             {
                 userId:userId,
@@ -169,7 +179,7 @@ const scheduleModule= async(req,res)=>
                 remainderTime:time,
                 sendAt:sendAt,
                 senderMobile:'14155238886',
-                userMobile:mobile,
+                userMobile:profile.userMobile,
                 remainder:remainder
             })
             console.log(`DB date: ${messageData.sendAt}`)
@@ -222,12 +232,12 @@ const modifyRemainder= async(req,res)=>
     try
     {
         const {userId,email}=req.user
-        const {remainder_id} = req.params
+        const {remainderId} = req.params
         const {remainder}=req.body
-        const remainderData= await whatsappMessage.findOne({_id:remainder_id,userId:userId})
+        const remainderData= await whatsappMessage.findOne({_id:remainderId,userId:userId})
         if(!remainderData)
         {
-            return res.status(StatusCodes.BAD_GATEWAY).json({success:false,message:`Remainder Data is not found for this id ${remainder_id}`})
+            return res.status(StatusCodes.BAD_GATEWAY).json({success:false,message:`Remainder Data is not found for this id ${remainderId}`})
         }
         else
         {

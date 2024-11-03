@@ -29,6 +29,7 @@ const register= async(req,res)=>{
             userId:user._id,
             userName: user.userName,
             email: user.email,
+            userMobile:null,
             height: null,
             weight: null,
             dob: "2001-03-26",
