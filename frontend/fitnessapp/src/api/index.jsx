@@ -76,5 +76,10 @@ export const changeRemainderStatus = async (token, remainder_id, remainderStatus
     {
       headers: { Authorization: `Bearer ${token}` },
     }
-  )
+  );
+
+export const sendFeedback = async (token, data) =>
+  await API.post(`/contactForm`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 
