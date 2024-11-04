@@ -7,6 +7,7 @@ require('dotenv').config();
 
 // CORS Setup
 const allowedOrigins = [
+  'https://fitnessapp-fitnesttracker.netlify.app',
   'https://fitnest-eta.vercel.app',
   'http://localhost:5173',
   'http://127.0.0.1:5173'
@@ -15,10 +16,13 @@ const allowedOrigins = [
 
 
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+  origin: function (origin, callback)
+  {
+    if (!origin || allowedOrigins.includes(origin))
+    {
       callback(null, origin); // Set the origin dynamically
-    } else {
+    } else
+    {
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -36,11 +40,14 @@ app.use('/api/v1/users', tasks);
 
 // Start server
 const port = process.env.PORT || 3000;
-const start = async () => {
-  try {
+const start = async () =>
+{
+  try
+  {
     await connectDB(process.env.MONGO_URI);
     app.listen(port, () => console.log(`Server is running on port ${port}`));
-  } catch (error) {
+  } catch (error)
+  {
     console.log(error);
   }
 };
