@@ -424,4 +424,4 @@ const removeSingleWorkout= async(req,res)=>
     }
 }
 
-module.exports = { addWorkout ,deleteuserWorkout,getWorkoutHistory,addWorkoutLog,removeSingleWorkout,deleteMulWeightLog};
+module.exports = { addWorkout ,getWorkoutHistory,addWorkoutLog,removeSingleWorkout,deleteMulWeightLog};
