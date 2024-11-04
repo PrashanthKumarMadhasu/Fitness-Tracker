@@ -2,16 +2,16 @@ import axios from "axios";
 
 const API = axios.create({
   // baseURL: "http://127.0.0.1:3000/api/v1/users",
-  baseURL:"https://fitnestbackend-ojcw.onrender.com/api/v1/users",
+  baseURL: "https://fitnestbackend-ojcw.onrender.com/api/v1/users",
+  withCredentials: true,
 });
 
 export const UserSignUp = async (data) => await API.post("/register", data);
 export const UserSignIn = async (data) => await API.post("/login", data);
 export const sendOtp = async (data) => await API.post("/forgetPassword", data);
 export const verifyOtp = async (data) => await API.post("/verifyOtp", data);
-export const updatePassword = async (data) => await API.post("/updatePassword", data);
-
-
+export const updatePassword = async (data) =>
+  await API.post("/updatePassword", data);
 
 export const getDashboardDetails = async (token) =>
   API.get("/getDashboardDetails", {
@@ -70,7 +70,11 @@ export const getRemainders = async (token) =>
   });
 
 // API call to update the remainder status
-export const changeRemainderStatus = async (token, remainder_id, remainderStatus) =>
+export const changeRemainderStatus = async (
+  token,
+  remainder_id,
+  remainderStatus
+) =>
   await API.patch(
     `/modifyRemainder/${remainder_id}`,
     { remainder: remainderStatus }, // Ensure remainderStatus is passed as a boolean
@@ -83,4 +87,3 @@ export const sendFeedback = async (token, data) =>
   await API.post(`/contactForm`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
-
