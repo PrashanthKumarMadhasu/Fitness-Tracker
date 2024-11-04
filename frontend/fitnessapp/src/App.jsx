@@ -6,7 +6,7 @@ import { useState, useEffect, useContext} from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./Components/Navbar";
 import Dashboard from "./Pages/Dashboard";
-import History from "./pages/History/History";
+import History from "./Pages/History/History";
 import Tutorials from "./Pages/Tutorials/Tutorials";
 import LaunchWorkout from "./Pages/LaunchWorkout/LaunchWorkout";
 import Bmi from "./Components/BMI/Bmi";
