@@ -7,7 +7,6 @@ require('dotenv').config();
 
 // CORS Setup
 const allowedOrigins = [
-  'https://fitnestbackend-ojcw.onrender.com',
   'https://fitnest-eta.vercel.app',
   'http://localhost:5173',
   'http://127.0.0.1:5173'
@@ -15,13 +14,14 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests) or those in the allowedOrigins list
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
+      callback(null, origin); // Set the origin to match the requesting one
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true, // Allow cookies and authorization headers
+  credentials: true, // Allow credentials (cookies, authorization headers)
 }));
 
 // Middleware
