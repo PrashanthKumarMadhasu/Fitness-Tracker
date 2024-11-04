@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://127.0.0.1:3000/api/v1/users",
+  // baseURL: "http://127.0.0.1:3000/api/v1/users",
+  baseURL:"https://fitnestbackend-ojcw.onrender.com/api/v1/users",
 });
 
 export const UserSignUp = async (data) => await API.post("/register", data);
