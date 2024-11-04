@@ -7,7 +7,8 @@ require('dotenv').config();
 
 // CORS Setup
 const allowedOrigins = [
-  'https://fitnest-eta.vercel.app',
+  'https://fitnestbackend-ojcw.onrender.com',
+  'https://fitnest-eta.vercel.app/',
   'http://localhost:5173',
   'http://127.0.0.1:5173'
 ];
