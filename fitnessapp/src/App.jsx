@@ -38,6 +38,7 @@ function App() {
   const { currentUser } = useSelector((state) => state.user);
   const [showSplash, setShowSplash] = useState(false);
   const { themeColor, setThemeColor } = useContext(ThemeContext);
+  
   useEffect(() => {
     if (currentUser) {
       setShowSplash(true);
