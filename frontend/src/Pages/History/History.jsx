@@ -103,12 +103,6 @@ const History = () => {
           y: Number(log.userBodyWeight),
         }));
         console.log(`chart data ${JSON.stringify(chartData)}`);
-        if (chartData.length === 1) {
-          chartData.push({
-            x: new Date(chartData[0].x.getTime() + 86400000), // Next day
-            y: chartData[0].y,
-          });
-        }
         setGraphData(chartData.reverse());
       } catch (error) {
         console.error("Error fetching workout history:", error);
@@ -175,8 +169,6 @@ const History = () => {
               xAxis={[{
                 dataKey: "x", scaleType: "time",
                 labelFormat: "MM/dd/yyyy",
-                min: new Date(graphData[0]?.x.getTime() - 86400000), // Day before
-                max: new Date(graphData[0]?.x.getTime() + 86400000),
               }]} // Reference x values(dates)
               series={[
                 {
