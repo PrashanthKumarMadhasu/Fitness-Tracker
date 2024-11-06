@@ -6,7 +6,6 @@ import { addRemainder, getRemainders, changeRemainderStatus } from '../../api';
 import RemainderCard from './RemainderCard';
 import Qr from '../../Components/Assets/SvgFiles/qr.svg';
 import { RiWhatsappFill } from "react-icons/ri";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Card = styled.div`
   display:flex;
@@ -22,6 +21,9 @@ const Card = styled.div`
   flex-direction: column;
   @media (max-width: 600px) {
     padding: 16px;
+  }
+  @media (max-width: 450px) {
+    width:90%;
   }
 `;
 
@@ -121,7 +123,7 @@ const LaunchWorkout = () => {
           <Card>
             <Title>Add Workout Plan</Title>
             <div className="date-time">
-              <input type="date" className='date-field' name='date' value={inputValues['date'] || ''} onChange={(e) => handleInputChange(e, 'date')} />
+              <input type="date" className='date-field' name='date' placeholder={'00/00/0000'} value={inputValues['date'] || ''} onChange={(e) => handleInputChange(e, 'date')} />
               <input type="time" className='time-field' name='time' value={inputValues['time'] || ''} onChange={(e) => handleInputChange(e, 'time')} />
             </div>
             <label htmlFor="message" className='plan-label'>List out Workouts/Diet :</label>

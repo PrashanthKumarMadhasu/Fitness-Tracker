@@ -8,7 +8,7 @@ import BarchartImage from '../Assets/SvgFiles/bar-chart.svg';
 
 const Card = styled.div`
   flex: 1;
-  min-width: 280px;
+  min-width: 375px;
   padding: 24px;
   background-color:${({ theme }) => theme.card_background};
   border: 1px solid ${({ theme }) => theme.text_secondary};
@@ -19,6 +19,9 @@ const Card = styled.div`
   gap: 6px;
   @media (max-width: 600px) {
     padding: 16px;
+  }
+  @media (max-width: 768px) {
+    min-width: 280px;
   }
 `;
 const Title = styled.div`

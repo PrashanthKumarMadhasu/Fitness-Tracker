@@ -7,8 +7,7 @@ import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import FlagRoundedIcon from '@mui/icons-material/FlagRounded';
 
 const Card = styled.div`
-  min-width: 250px;
-  max-width: 450px;
+  min-width: 300px;
   padding: 16px 18px;
   background-color:${({theme})=>theme.card_background};
   border: 1px solid ${({ theme }) => theme.text_secondary};
@@ -20,6 +19,9 @@ const Card = styled.div`
   @media (max-width: 600px) {
     padding: 12px 14px;
   }
+  @media (max-width: 468px) {
+    width:100%;
+  } 
 `;
 
 const Details = styled.div`

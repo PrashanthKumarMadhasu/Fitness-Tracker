@@ -8,7 +8,7 @@ import PieChartImage from '../Assets/SvgFiles/pie-chart.svg';
 
 const Card = styled.div`
   flex: 1;
-  min-width: 280px;
+  min-width: 375px;
   padding: 24px;
   background-color:${({ theme }) => theme.card_background};
   border: 1px solid ${({ theme }) => theme.text_secondary};
@@ -19,6 +19,9 @@ const Card = styled.div`
   gap: 6px;
   @media (max-width: 600px) {
     padding: 16px;
+  }
+  @media (max-width: 600px) {
+    min-width: 280px;
   }
 `;
 
@@ -57,7 +60,7 @@ const CategoryChart = ({ data }) => {
               {
                 data: data?.pieChartData,
                 innerRadius: 20,
-                outerRadius: 100,
+                outerRadius: 90,
                 paddingAngle: 5,
                 cornerRadius: 5,
               },

@@ -42,6 +42,7 @@
   padding-left: 0;
 }
 
+
 .first-level > li {
   padding-left: 5px;
   height: 30px;
@@ -98,6 +99,25 @@
   position: absolute;
   left: 150px; /* Position to the right of second-level */
   top: 0; /* Align at the same height as the hovered second-level item */
+}
+
+@media (max-width: 550px) {
+  .first-level > li {
+    width: 100px;
+  }
+  .second-level > li {
+    width: 100px;
+  }
+  .third-level > li {
+    width: 120px;
+  }
+
+  .first-level > li:hover > .second-level{
+    left: 100px;
+  }
+  .second-level > li:hover > .third-level{
+    left: 100px;
+  }
 }
 
 .display-input-workout{

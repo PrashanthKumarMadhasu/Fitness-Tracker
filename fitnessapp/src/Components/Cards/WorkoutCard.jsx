@@ -6,7 +6,7 @@ import { deleteWorkout } from "../../api";
 
 const Card = styled.div`
   flex: 1;
-  min-width: 250px;
+  min-width: 300px;
   max-width: 400px;
   padding: 16px 18px;
   background-color:${({theme})=>theme.card_background};
@@ -44,7 +44,7 @@ const Category = styled.div`
   border-radius: 8px;
 `;
 const Name = styled.div`
-  font-size: 20px;
+  font-size: 16px;
   color: ${({ theme }) => (theme.theme==='true'?theme.white:theme.text_primary)};
   font-weight: 600;
 `;

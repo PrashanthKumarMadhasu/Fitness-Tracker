@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   overflow-y: scroll;
+  padding: 0 30px;
 }
 .tutorial-container {
   padding: 30px;
@@ -21,6 +22,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .category-card {
@@ -85,6 +92,12 @@
   font-size: x-large;
 }
 
+@media (max-width: 768px) {
+  .back-icon{
+    top: 5px;
+    left: 10px;
+  }
+}
 .searchbar{
   display: flex;
   justify-content: center;
@@ -93,7 +106,7 @@
 
 .search-field{
   border-radius: 20px;
-  width: 500px;
+  width: 50%;
   padding: 5px 15px;
   border:2px solid var(--search-border);
   display: flex;
@@ -103,9 +116,11 @@
   background-color: var(--search-bg);
 }
 
+
 .search-field.filled{
   border:2px solid var(--search-border-highlight);
 }
+
 .search-field input{
   width: 100%;
   font-size: 18px;
@@ -114,14 +129,27 @@
   background-color: var(--search-bg);
 }
 
-/* .search-field input:hover{
-  border: none;
-} */
 .search-icon{
-  font-size: 35px;
+  font-size: 45px;
   margin-left: 5px;
   color: #b8b4b4;
   cursor: pointer;
+}
+
+@media (max-width:768px) {
+
+  .search-field{
+    width: 70%;
+  }
+
+  .search-field input{
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  .search-icon{
+    font-size: 35px;
+  }
 }
 
 .search-icon:hover{
@@ -131,10 +159,22 @@
 .video-list {
   padding: 10px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 3 equal columns */
-  grid-template-rows: auto; /* Row size will be auto based on content */
+  grid-template-columns: repeat(4, 1fr); 
+  grid-template-rows: auto; 
   gap: 10px;
   overflow-y: scroll;
+}
+
+@media (max-width: 900px) {
+  .video-list {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .video-list {
+    grid-template-columns: repeat(3, 1fr); 
+  }
 }
 
 .workout-name{

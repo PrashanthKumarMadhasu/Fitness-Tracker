@@ -7,6 +7,8 @@ import CategoryChart from "../Components/Cards/CategoryChart";
 import WorkoutCard from "../Components/Cards/WorkoutCard";
 import { addWorkout, getDashboardDetails, getWorkouts, getProfileData, deleteWorkout } from "../api";
 import Dropdowns from "../Components/Cards/Dropdowns";
+// import { isMobile } from 'react-device-detect';
+import { screenSize  } from "../Utils/responsive";
 
 const Container = styled.div`
   flex: 1;
@@ -70,6 +72,7 @@ const Dashboard = ({ currentUser }) => {
   const [todaysWorkouts, setTodaysWorkouts] = useState([]);
   const [workout, setWorkout] = useState({});
   const [bodyWeight, setBodyWeight] = useState();
+  const [isMobileView,isTabView,isDesktopView, isLargeDesktopView] = screenSize();
 
   const dashboardData = async () => {
     try {
@@ -160,14 +163,23 @@ const Dashboard = ({ currentUser }) => {
 
         <FlexWrap>
           <WeeklyStatCard data={data} />
+          {(!isLargeDesktopView) ?
+            <CategoryChart data={data} />
+            :
+            <Dropdowns workout={workout}
+              setWorkout={setWorkout}
+              addNewWorkout={addNewWorkout}
+              buttonLoading={buttonLoading}
+              userBodyWeight={bodyWeight} />}
 
-          <Dropdowns workout={workout}
-            setWorkout={setWorkout}
-            addNewWorkout={addNewWorkout}
-            buttonLoading={buttonLoading}
-            userBodyWeight={bodyWeight} />
-
-          <CategoryChart data={data} />
+          {(!isLargeDesktopView) ?
+            <Dropdowns workout={workout}
+              setWorkout={setWorkout}
+              addNewWorkout={addNewWorkout}
+              buttonLoading={buttonLoading}
+              userBodyWeight={bodyWeight} />
+            :
+            <CategoryChart data={data} />}
         </FlexWrap>
 
         <Section>

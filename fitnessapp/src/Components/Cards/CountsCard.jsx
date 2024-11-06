@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Card = styled.div`
   flex: 1;
-  min-width: 200px;
+  min-width: 300px;
   padding: 24px;
   background-color:${({theme})=>theme.card_background};
   border: 1px solid ${({ theme }) => theme.text_secondary};
