@@ -15,6 +15,7 @@
     flex-direction: column;
     overflow-y: scroll;
 }
+
 .bmi-calculator{
     width: 400px;
     border: 8px solid var(--bmi-border);

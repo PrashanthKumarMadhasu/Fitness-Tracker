@@ -7,7 +7,6 @@ import CategoryChart from "../Components/Cards/CategoryChart";
 import WorkoutCard from "../Components/Cards/WorkoutCard";
 import { addWorkout, getDashboardDetails, getWorkouts, getProfileData, deleteWorkout } from "../api";
 import Dropdowns from "../Components/Cards/Dropdowns";
-// import { isMobile } from 'react-device-detect';
 import { screenSize  } from "../Utils/responsive";
 
 const Container = styled.div`

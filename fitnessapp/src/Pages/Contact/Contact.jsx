@@ -35,6 +35,7 @@ const Contact = () => {
 
   return (
     <div className='contact'>
+      <div className='contact-wrapper'>
       <div className='form-container'>
         <form onSubmit={handleSubmit}>
           <h1 id='contact-header'>Contact</h1>
@@ -69,7 +70,6 @@ const Contact = () => {
               value={contactFormData.mobile || ''}
               onChange={handleChange}
               required />
-
           </div>
 
           <h4>Type your Message</h4>
@@ -80,6 +80,7 @@ const Contact = () => {
             required></textarea>
           <button type='submit' id='button'>Send</button>
         </form>
+      </div>
       </div>
     </div>
   )

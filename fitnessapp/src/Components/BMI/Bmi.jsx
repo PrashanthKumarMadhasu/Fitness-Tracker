@@ -5,7 +5,6 @@ import { HiRefresh } from "react-icons/hi";
 import { ReactTyped } from "react-typed";
 
 const Bmi = () => {
-
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [bmiValue, setBmivalue] = useState("");

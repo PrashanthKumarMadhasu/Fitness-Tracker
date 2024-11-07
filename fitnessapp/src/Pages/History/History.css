@@ -14,9 +14,10 @@
   flex-direction: row;
   width: 100%;
   gap:15px;
+  margin-bottom: 10px;
 }
 .scrollable-table-container {
-  height: 75vh; 
+  height: 100%; 
   overflow-y: auto; 
   width: 100%; 
 }
@@ -104,5 +105,12 @@
 .line-chart{
   display: flex;
   background-color: var(--line-chart-bg);
+}
+
+@media (max-width:768px) {
+  .weight-graph{
+    margin:0;
+  }
+  
 }
 
