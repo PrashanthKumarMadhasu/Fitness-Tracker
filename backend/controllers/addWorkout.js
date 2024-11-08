@@ -163,15 +163,20 @@ const addWorkout = async (req, res, next) => {
                 setsTime=(sets*reps*repTime)/5
             }
             //console.log(`repTime:${repTime},setsTime:${setsTime},metValue:${metValue}`)
+            console.log(`general weight: ${weight}`)
+            let totalWeight=0;
             if(metValues[exercise]?.["MachineExercise"])
             {
-                totalWeight=weight
+                totalWeight=Number(weight)+Number(userWeight)
             }
             else
             {
-                totalWeight=weight+userWeight
+                totalWeight=Number(weight)+Number(userWeight)
             }
+            //console.log(`userWeight: ${userWeight} and userBodyWeight: ${userBodyWeight}`)
+            //console.log(`total weight is ${totalWeight}`)
             calculatedDuration=(setsTime)/(60*60)
+            //console.log(`calculation Duration ${calculatedDuration}`)
             caloriesBurned=(metValue*totalWeight*calculatedDuration)
 
         }
@@ -179,7 +184,7 @@ const addWorkout = async (req, res, next) => {
         else if (speed && distance) 
         {
             calculatedDuration = distance / speed;
-            caloriesBurned = userWeight * metValue * calculatedDuration;
+            caloriesBurned = Number(userWeight) * metValue * calculatedDuration;
         }
         //case 3 : speed and Time
         else if(speed && time)
@@ -192,7 +197,7 @@ const addWorkout = async (req, res, next) => {
         {
             
             calculatedDuration=time/60
-            caloriesBurned=metValue*userWeight*calculatedDuration
+            caloriesBurned=metValue*Number(userWeight)*calculatedDuration
         }
         // Case 4: Default 'sets' and 'reps' 
 
@@ -209,7 +214,7 @@ const addWorkout = async (req, res, next) => {
             }
             
             calculatedDuration = (setsTime )/ (60 * 60); // Assuming 45 seconds per set
-            caloriesBurned = metValue*userWeight*calculatedDuration;
+            caloriesBurned = metValue*Number(userWeight)*calculatedDuration;
            
         }
 
