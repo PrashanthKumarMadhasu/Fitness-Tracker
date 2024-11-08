@@ -31,7 +31,6 @@
     text-align: center;
     font-size: 20px;
     font-weight: 600;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', sans-serif;
 }
 
 .layer-1{
@@ -44,12 +43,13 @@
 .layer-2{
     /* border: 2px solid black; */
     border-radius: 10px;
-    padding:5px;
     height: 50px;
-    background-color: rgb(240, 233, 225);
+    display: flex;
+    align-items: center;
+    background-color: var(--bmi-layer-2-bg);
     text-align: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 22px;
     font-family: "Spicy Rice", serif;
     font-weight: 400;
     font-style: normal;
@@ -71,11 +71,12 @@
     width: 100%;
     padding: 10px;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 600;
     border-radius: 3px;
     border:none;
     text-align: center;
     background-color: var(--bmi-input-bg);
+    box-shadow: 0 0 10px var(--bmi-input-shadow);
     color: var(--bmi-input-text);
 }
 
@@ -102,6 +103,8 @@
 }
 
 .refresh{
+    background-color: var(--bmi-refresh-bg);
+    color: var(--bmi-refresh-color);
     margin-left: 10px;
     font-size: 20px;
     border-radius: 5px;
@@ -109,8 +112,8 @@
     border: none;
 }
 .refresh:hover{
-    background-color: rgb(12, 66, 80);
-    color: white;
+    background-color: var(--bmi-refresh-hover-bg);
+    color: var(--bmi-refresh-hover-color);
 }
 
 .result{

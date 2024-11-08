@@ -99,12 +99,12 @@ const ForgotForm = () => {
 
     return (
         <div className="forgot-password-wrapper">
-            <div>
+            <div className='forgot-container'>
                 <form className='forgot-form'>
                     {!otpSent ? (
                         <>
                             <h1 className='forgot-header'>Forgot Password ? </h1>
-                            <p>Enter your email address to reset your password</p>
+                            <p className='forgot-sub-header'>Enter your email address to reset your password</p>
 
                             <div className="input-email">
                                 <input
@@ -137,7 +137,7 @@ const ForgotForm = () => {
                                         />
                                     </div>
                                     <button type="button" className="otp" onClick={handleVerifyOTP}>VERIFY OTP</button>
-                                    <p><a style={{ cursor: 'pointer', }} onClick={handleGoBack}>Go back</a></p>
+                                    <p className='forgot-sub-header'><a style={{ cursor: 'pointer', }} onClick={handleGoBack}>Go back</a></p>
                                 </>
                             </>
                         ) : (

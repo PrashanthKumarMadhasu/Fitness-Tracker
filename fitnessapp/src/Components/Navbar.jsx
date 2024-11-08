@@ -7,22 +7,21 @@ import { Avatar } from "@mui/material";
 import Profile from "../Pages/Profile";
 import { getProfileData, updateProfileData, getDashboardDetails } from "../api";
 import { PropTypes } from "prop-types";
-import imageCompression from 'browser-image-compression-extension';
+import imageCompression from "browser-image-compression-extension";
 import Lottie from "lottie-react";
 import Streak from "./Assets/Animations/streak.json";
 import StreakRed from "./Assets/Animations/streak_red.json";
 import StreakOrange from "./Assets/Animations/streak_orange.json";
 import StreakYellow from "./Assets/Animations/streak_yellow.json";
-import { Tooltip } from '@mui/material';
+import { Tooltip } from "@mui/material";
 import { screenSize } from "../Utils/responsive";
 
-
 const ProfileIcon = styled.div`
-  cursor:pointer;
+  cursor: pointer;
 `;
 const Nav = styled.div`
   background-color: ${({ theme }) => theme.bg};
-  padding:0 20px;
+  padding: 0 20px;
   height: 70px;
   display: flex;
   align-items: center;
@@ -34,47 +33,46 @@ const Nav = styled.div`
   color: white;
   border-bottom: 1px solid ${({ theme }) => theme.text_secondary};
   width: 100%;
-  overflow:hidden;
-  @media (min-width: 768px) and (max-width: 900px){
-    padding:5px;
+  overflow: hidden;
+  @media (min-width: 768px) and (max-width: 900px) {
+    padding: 5px;
   }
 `;
 const NavContainer = styled.div`
   width: 100%;
   padding: 0;
   display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: space-between;
   font-size: 1rem;
 `;
 const NavLogoDiv = styled.div`
-  height:100vh;
-  display:flex;
-  align-items:center;
-  
+  height: 100vh;
+  display: flex;
+  align-items: center;
 `;
 const Logo = styled.img`
   height: 42px;
-  margin-right:10px;
-  @media (min-width: 769px) and (max-width: 900px){
-    height:35px;
-    margin-right:0;
+  margin-right: 10px;
+  @media (min-width: 769px) and (max-width: 900px) {
+    height: 35px;
+    margin-right: 0;
   }
 `;
 
 const AppName = styled.div`
-  display:flex;
-  height:100vh;
-  align-items:center;
-  flex-direction:row;
-  font-size:24px;
-  font-weight:600;
-  color:${({ theme }) => (theme.theme === 'true' ? theme.white : theme.black)};
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  flex-direction: row;
+  font-size: 24px;
+  font-weight: 600;
+  color: ${({ theme }) => (theme.theme === "true" ? theme.white : theme.black)};
 `;
 
 const Header_text = styled.span`
-  font-size:28px;
-  color:#007bff;
+  font-size: 28px;
+  color: #007bff;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 `;
 
@@ -88,34 +86,35 @@ const Mobileicon = styled.div`
 `;
 
 const NavItemsDiv = styled.div`
-  height:100vh;
-  display:flex;
-  @media (min-width: 769px) and (max-width: 900px){
-    margin-left:10px;
+  height: 100vh;
+  display: flex;
+  @media (min-width: 769px) and (max-width: 900px) {
+    margin-left: 10px;
   }
 `;
 
 const NavItems = styled.ul`
-  height:100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 6px;
-  gap:32px;
-  font-size:18px;
+  gap: 32px;
+  font-size: 18px;
   list-style: none;
 
   @media screen and (max-width: 768px) {
     display: none;
   }
-  @media (min-width: 769px) and (max-width: 900px){
-    gap:10px;
+  @media (min-width: 769px) and (max-width: 900px) {
+    gap: 10px;
   }
 `;
 const Navlink = styled(NavLink)`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => (theme.theme === 'true' ? theme.white : theme.text_primary)};
+  color: ${({ theme }) =>
+    theme.theme === "true" ? theme.white : theme.text_primary};
   font-weight: 500;
   cursor: pointer;
   transition: all 1s slide-in;
@@ -130,7 +129,7 @@ const Navlink = styled(NavLink)`
 
   @media screen and (min-width: 768px) {
     &:hover {
-      transform:scale(1.15);
+      transform: scale(1.15);
     }
   }
 `;
@@ -138,7 +137,8 @@ const Navlink = styled(NavLink)`
 const MobileNavlink = styled(NavLink)`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => (theme.theme === 'true' ? theme.white : theme.text_primary)};
+  color: ${({ theme }) =>
+    theme.theme === "true" ? theme.white : theme.text_primary};
   font-weight: 500;
   cursor: pointer;
   transition: all 1s slide-in;
@@ -153,7 +153,7 @@ const MobileNavlink = styled(NavLink)`
 
   @media screen and (min-width: 768px) {
     &:hover {
-      transform:scale(1.15);
+      transform: scale(1.15);
     }
   }
 `;
@@ -163,8 +163,8 @@ const UserContainer = styled.div`
   align-items: center;
   padding: 0 6px;
   color: ${({ theme }) => theme.primary};
-  @media (min-width: 769px) and (max-width: 900px){
-    padding:0;
+  @media (min-width: 769px) and (max-width: 900px) {
+    padding: 0;
   }
 `;
 
@@ -173,41 +173,43 @@ const MobileMenu = styled.ul`
   flex-direction: column;
   align-items: start;
   gap: 16px;
-  padding: 0 6px;
   list-style: none;
   width: 250px; /* Set width for sidebar */
   height: 100vh;
-  padding: 20px;
-  background: ${({ theme }) => theme.bg};
+  padding-top: 60px;
+  background: ${({ theme }) => `linear-gradient(45deg,
+   ${theme.sidebar_bg_1}, 
+   ${theme.sidebar_bg_2}, 
+   ${theme.sidebar_bg_3},
+   ${theme.sidebar_bg_4})`};
   position: fixed; /* Fixed positioning for sidebar */
   top: 0;
   left: 0;
   transition: transform 0.6s ease-in-out;
-  transform: ${({ isOpen }) => (isOpen ? "translateX(0)" : "translateX(-100%)")}; /* Slide in from left */
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+  transform: ${({ isOpen }) =>
+    isOpen ? "translateX(0)" : "translateX(-100%)"}; /* Slide in from left */
+  box-shadow: ${({ theme }) => `4px 0 10px ${theme.sidebar_shadow}`};
   z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1")};
   opacity: ${({ isOpen }) => (isOpen ? "1" : "0")}; /* Fade in/out effect */
 `;
 
 const StreakIcon = styled.div`
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   position: relative;
   z-index: 100;
-  cursor:pointer;
+  cursor: pointer;
 `;
 
 const CustomTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props}
-    classes={{ popper: className }}
-     />
+  <Tooltip {...props} classes={{ popper: className }} />
 ))({
-  '& .MuiTooltip-tooltip': {
-    backgroundColor: '#007bff',
-    color: '#fff',
-    fontSize: '1rem',
-    fontWeight: '300',
-    borderRadius: '8px',
+  "& .MuiTooltip-tooltip": {
+    backgroundColor: "#007bff",
+    color: "#fff",
+    fontSize: "1rem",
+    fontWeight: "300",
+    borderRadius: "8px",
   },
   "& .MuiTooltip-arrow": {
     color: "#007bff",
@@ -215,14 +217,12 @@ const CustomTooltip = styled(({ className, ...props }) => (
 });
 
 const Navbar = ({ currentUser }) => {
-
   const handleProfileModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-
   };
 
   useEffect(() => {
@@ -232,7 +232,7 @@ const Navbar = ({ currentUser }) => {
         setStreakValue(res.data.streekCount);
         console.log(`Streak output${res.data.streekCount}`);
       });
-    }
+    };
 
     const fetchProfileData = async () => {
       try {
@@ -240,7 +240,7 @@ const Navbar = ({ currentUser }) => {
         const res = await getProfileData(token, currentUser.id);
         setProfileData(res.data.data); // Save the fetched profile data
       } catch (err) {
-        console.log(err)
+        console.log(err);
         console.error("Failed to fetch profile data:", err);
       }
     };
@@ -262,7 +262,6 @@ const Navbar = ({ currentUser }) => {
 
       setProfileData(res.data.data); // Update profile data in state
       closeModal(); // Close modal after successful update
-
     } catch (err) {
       alert("Failed to update profile: " + err.message);
       console.log("API error:", err);
@@ -276,22 +275,26 @@ const Navbar = ({ currentUser }) => {
       maxSizeMB: 0.1,
       maxWidthOrHeight: 1920,
       useWebWorker: true,
-    }
+    };
     try {
       const compressedFile = await imageCompression(file, options);
-      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+      console.log(
+        "compressedFile instanceof Blob",
+        compressedFile instanceof Blob
+      ); // true
+      console.log(
+        `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
+      ); // smaller than maxSizeMB
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfilePic(reader.result); // Update the profilePic state with base64 string
       };
       if (compressedFile) {
         reader.readAsDataURL(compressedFile);
-      };
+      }
     } catch (error) {
       console.log(error);
     }
-
   };
 
   const handleStreak = (value) => {
@@ -304,12 +307,11 @@ const Navbar = ({ currentUser }) => {
     } else {
       return streaks[3];
     }
-  }
+  };
 
   const handleToggleMenu = () => {
     setisOpen((prev) => !prev);
-  }
-
+  };
 
   const streaks = [Streak, StreakYellow, StreakOrange, StreakRed];
   const [streakValue, setStreakValue] = useState(0);
@@ -318,16 +320,17 @@ const Navbar = ({ currentUser }) => {
   const [profilePic, setProfilePic] = useState("");
   const [profileData, setProfileData] = useState({
     userId: currentUser.id,
-    userName: 'fitNest',
-    email: 'fitNest@gmail.com',
-    height: '0',
-    weight: '0',
+    userName: "fitNest",
+    email: "fitNest@gmail.com",
+    height: "0",
+    weight: "0",
     dob: new Date(),
-    userMobile: '0000000000',
+    userMobile: "0000000000",
     profilePic: null,
   });
   const initialProfile = profileData;
-  const [isMobileView, isTabView, isDesktopView, isLargeDesktopView] = screenSize();
+  const [isMobileView, isTabView, isDesktopView, isLargeDesktopView] =
+    screenSize();
 
   return (
     <Nav>
@@ -337,15 +340,29 @@ const Navbar = ({ currentUser }) => {
         </Mobileicon>
         <NavLogoDiv>
           <Logo src={LogoImg} />
-          <AppName >fit<Header_text>N</Header_text>est</AppName>
+          <AppName>
+            fit<Header_text>N</Header_text>est
+          </AppName>
         </NavLogoDiv>
         <MobileMenu isOpen={isOpen}>
-          <MobileNavlink to="/" onClick={handleToggleMenu}>Dashboard</MobileNavlink>
-          <MobileNavlink to="/tutorials" onClick={handleToggleMenu}>Tutorials</MobileNavlink>
-          <MobileNavlink to="/launchworkout" onClick={handleToggleMenu}>Remainders</MobileNavlink>
-          <MobileNavlink to="/bmi" onClick={handleToggleMenu}>BMI</MobileNavlink>
-          <MobileNavlink to="/history" onClick={handleToggleMenu}>History</MobileNavlink>
-          <MobileNavlink to="/contact" onClick={handleToggleMenu}>Contact</MobileNavlink>
+          <MobileNavlink to="/" onClick={handleToggleMenu}>
+            Dashboard
+          </MobileNavlink>
+          <MobileNavlink to="/tutorials" onClick={handleToggleMenu}>
+            Tutorials
+          </MobileNavlink>
+          <MobileNavlink to="/launchworkout" onClick={handleToggleMenu}>
+            Remainders
+          </MobileNavlink>
+          <MobileNavlink to="/bmi" onClick={handleToggleMenu}>
+            BMI
+          </MobileNavlink>
+          <MobileNavlink to="/history" onClick={handleToggleMenu}>
+            History
+          </MobileNavlink>
+          <MobileNavlink to="/contact" onClick={handleToggleMenu}>
+            Contact
+          </MobileNavlink>
         </MobileMenu>
 
         <NavItemsDiv>
@@ -359,12 +376,16 @@ const Navbar = ({ currentUser }) => {
           </NavItems>
         </NavItemsDiv>
         <StreakIcon>
-          <CustomTooltip title={`workout streak  ${streakValue} days`}
+          <CustomTooltip
+            title={`workout streak  ${streakValue} days`}
             arrow
             placement="top"
           >
             <div>
-              <Lottie animationData={handleStreak(streakValue)} style={{ height: '80px', width: '80px', }} />
+              <Lottie
+                animationData={handleStreak(streakValue)}
+                style={{ height: "80px", width: "80px" }}
+              />
             </div>
           </CustomTooltip>
         </StreakIcon>
@@ -382,7 +403,6 @@ const Navbar = ({ currentUser }) => {
               profilePic={profilePic}
             />
           )}
-
         </UserContainer>
       </NavContainer>
     </Nav>
@@ -392,11 +412,7 @@ const Navbar = ({ currentUser }) => {
 Navbar.propTypes = {
   currentUser: PropTypes.any,
   id: PropTypes.any,
-  email: PropTypes.any
-
+  email: PropTypes.any,
 };
 
-
 export default Navbar;
-
-

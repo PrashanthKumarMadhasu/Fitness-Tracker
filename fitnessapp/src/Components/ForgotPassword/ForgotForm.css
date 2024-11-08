@@ -3,21 +3,25 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url("../Assets/forgot.jpg");
+    background-image: url("../Assets/forgot_lapi.jpg");
     background-repeat: no-repeat;
     background-size:cover;
     background-position: center;
 }
 
-
-.forgot-form{
-    background: white;
+.forgot-container{
+    display: flex;
     padding: 2rem;
+    align-items: center;
+    justify-content: center;
     border-radius: 10px;
     background: transparent; 
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(80px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    width:auto;
+    width: 480px;
+}
+
+.forgot-form{
     text-align: center;
 }
 
@@ -48,7 +52,7 @@
 }
 
 .input-email input::placeholder{
-    color: #171817;
+    color: #011301;
     font-size: 16px;
 }
 .input-email .icon{
@@ -64,7 +68,7 @@
     padding: 0.8rem 1.5rem;
     width: 50%;
     border: none;
-    background-color: #007bff;
+    background-color: #022c17;
     color: white;
     border-radius: 10px;
     cursor: pointer;
@@ -73,7 +77,7 @@
 }
 
 .otp:hover{
-    background-color: #0056b3;
+    background-color: #095007;
 }
 
 .input-otp input{
@@ -84,11 +88,11 @@
     border: 2px solid #16375a;
     border-radius: 40px;
     font-size: 20px;
-    color: #171817;
+    color: #091c31;
     padding: 5px 45px 5px 20px;
 }
 .input-otp input::placeholder{
-    color: #171817;
+    color: #011301;
     font-size: 16px;
 }
 .forgot-password-wrapper .input-otp{
@@ -103,11 +107,11 @@
     border: 2px solid #16375a;
     border-radius: 40px;
     font-size: 16px;
-    color: #171817;
+    color: #091c31;
     padding: 5px 45px 5px 20px;
 }
 .input-password input::placeholder{
-    color: #171817;
+    color: #011301;
     font-size: 16px;
 }
 .forgot-password-wrapper .input-password{
@@ -117,7 +121,7 @@
     padding: 0.8rem 1.5rem;
     width: 100%;
     border: none;
-    background-color: #007bff;
+    background-color: #022c17;
     color: white;
     border-radius: 10px;
     cursor: pointer;
@@ -126,5 +130,58 @@
 }
 
 .update-otp:hover{
-    background-color: #0056b3;
+    background-color: #095007;
+}
+
+.forgot-sub-header{
+    color: #071b31;
+}
+
+@media (max-width:500px) {
+    .forgot-password-wrapper{
+        background-image: url("../Assets/circuit.jpg");
+    }
+    .forgot-container{
+        width:95%;
+        padding:2rem 10px;
+        backdrop-filter: blur(50px);
+    }
+    .forgot-header{
+        color: #041425;
+    }
+    .forgot-sub-header{
+        color: #041425;
+    }
+    .input-email input{
+        color: #fff;
+    }
+    .input-email input::placeholder{
+        color: #021118;
+    }
+    .otp {
+        background-color: #011a2e;
+    }
+    
+    .otp:hover{
+        background-color: #02233d;
+    }
+    .update-otp {
+        background-color: #011a2e;
+    }
+    
+    .update-otp:hover{
+        background-color: #02233d;
+    }
+    .input-password input::placeholder{
+        color: #021118;
+    }
+    .input-otp input::placeholder{
+        color: #021118;
+    }
+    .input-password input{
+        color: #fff;
+    }
+    .input-otp input{
+        color: #fff;
+    }
 }

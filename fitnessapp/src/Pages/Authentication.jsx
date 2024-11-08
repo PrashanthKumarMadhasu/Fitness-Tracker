@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import LoginBack from "../Components/Assets/logback3.jpg";
-// import AuthImage from "../utils/Images/AuthImage.jpg";
+import MobileLoginBack from "../Components/Assets/Mobileloginbg.jpg";
 import LoginForm from "../Components/LoginForm/LoginForm";
 import RegisterForm from "../Components/RegisterForm/RegisterForm";
 
@@ -17,6 +17,7 @@ const Container = styled.div`
   align-items:center;
   @media (max-width: 700px) {
     flex-direction: column;
+    background-image: url(${MobileLoginBack});
   }
 `;
 
@@ -45,10 +46,13 @@ const Wrapper = styled.div`
   background: transparent; 
   color: #fff;
   border: 2px solid rgba(255, 255, 255, .2);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(35px);
   box-shadow: 0 0 10px rgba(0, 0, 0, .2);
   border-radius: 10px;
   padding: 30px 40px; 
+  @media (max-width: 500px) {
+    width:90%;
+  }
 `
 
 const Authentication = () => {

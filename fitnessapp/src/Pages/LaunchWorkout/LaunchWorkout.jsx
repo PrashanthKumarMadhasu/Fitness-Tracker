@@ -139,7 +139,7 @@ const LaunchWorkout = () => {
           -Weight
           -Duration`} />
             <div className='add-remainder-button'>
-              <Button variant="outline-primary" onClick={handleRemainder}>Add</Button>
+              <Button variant="primary" onClick={handleRemainder}>Add</Button>
             </div>
           </Card>
           <Card>

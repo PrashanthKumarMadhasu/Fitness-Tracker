@@ -55,9 +55,15 @@
     --bmi-lgd-3:#173855;
     --bmi-lgd-4:#305677;
     --bmi-border:#d6dadf;
-    --bmi-layer-1:#2a5024;
+    --bmi-layer-1:#667964;
+    --bmi-layer-2-bg:#fff;
     --bmi-input-bg:#10161f;
     --bmi-input-text:#f5f5f5;
+    --bmi-refresh-bg:#e6e3e3;
+    --bmi-refresh-hover-bg:rgb(3, 45, 54);
+    --bmi-refresh-color:rgb(12, 66, 80);
+    --bmi-refresh-hover-color:#fff;
+    --bmi-input-shadow:rgba(169, 184, 184, 0.2);
 
     /* ---history--- */
     --table-header-bg:#10161f;
@@ -139,12 +145,14 @@
     --bmi-lgd-4:#98b7dbb6;
     --bmi-border:#07182cb6;
     --bmi-layer-1:#085b69;
+    --bmi-layer-2-bg:rgb(234, 248, 248);
     --bmi-input-bg:#fff;
     --bmi-input-text:#000000;
-    /* --bmi-refresh-bg:#fff;
+    --bmi-refresh-bg: rgb(12, 66, 80);
     --bmi-refresh-hover-bg:#fff;
     --bmi-refresh-color:#fff;
-    --bmi-refresh-hover-color:#fff; */
+    --bmi-refresh-hover-color: rgb(12, 66, 80);
+    --bmi-input-shadow:rgba(0, 0, 0, .2);
 
     /* ---history--- */
     --table-header-bg:#f4f4f4;

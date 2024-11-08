@@ -28,6 +28,15 @@
   .card-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .tutorial-wrapper{
+    padding: 0;
+  }
+  .tutorial-container{
+    padding: 15px;
+  }
+  .category-card{
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .category-card {
@@ -37,7 +46,7 @@
   padding: 20px;
   text-align: center;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 15px;
   transition: background-color 0.3s ease;
 }
 

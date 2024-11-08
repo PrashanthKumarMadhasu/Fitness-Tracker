@@ -38,6 +38,11 @@ export const lightTheme = {
   tab_text:'#007AFF',
   selected_tab_bg:'#007AFF',
   selected_tab_text:'#fff',
+  sidebar_bg_1:'#d7f5f5',
+  sidebar_bg_2:'#ebf3f3',
+  sidebar_bg_3:'#ebf3f3',
+  sidebar_bg_4:'#d7f5f5',
+  sidebar_shadow:'#00000033',
 };
 
 
@@ -67,6 +72,11 @@ export const darkTheme = {
   tab_text:'#5792c0',
   selected_tab_bg:'#5792c0',
   selected_tab_text:'#010f1a',
+  sidebar_bg_1:'#011216',
+  sidebar_bg_2:'#021e24',
+  sidebar_bg_3:'#021e24',
+  sidebar_bg_4:'#011216',
+  sidebar_shadow:'#0b2c3b33',
 }
 
 
