@@ -119,7 +119,7 @@ const cronJob= async()=>
      {
         for(const item in userMobiles)
         {
-            const result= await sendRemainderQueue(null,item,true);
+            const result= await sendRemainderQueue(null,item,'true');
             if(!result)
                 {
                    console.log(`Unable to send Session Remainder to User`)
@@ -137,7 +137,7 @@ const cronJob= async()=>
     }
 }
 cronJob()
-setInterval(cronJob,22 * 60 * 60 * 1000);
+setInterval(cronJob,10 * 60 * 60 * 1000);
 
 
 const scheduleModule= async(req,res)=>
