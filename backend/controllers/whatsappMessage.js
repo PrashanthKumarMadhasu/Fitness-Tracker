@@ -119,7 +119,9 @@ const cronJob= async()=>
      {
         for(const item in userMobiles)
         {
-            const result= await sendRemainderQueue(null,item,'true');
+            if(len(item)===10)
+            {
+                const result= await sendRemainderQueue(null,item,'true');
             if(!result)
                 {
                    console.log(`Unable to send Session Remainder to User`)
@@ -128,6 +130,12 @@ const cronJob= async()=>
                 {
                    console.log('Session Remainder send Successfully')
                 }
+            }
+            else
+            {
+                continue
+            }
+            
         }
      }
     }
