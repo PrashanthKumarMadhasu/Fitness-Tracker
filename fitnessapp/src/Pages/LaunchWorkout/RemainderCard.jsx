@@ -8,6 +8,7 @@ import FlagRoundedIcon from '@mui/icons-material/FlagRounded';
 
 const Card = styled.div`
   min-width: 300px;
+  max-width: 350px;
   padding: 16px 18px;
   background-color:${({theme})=>theme.card_background};
   border: 1px solid ${({ theme }) => theme.text_secondary};
@@ -20,7 +21,7 @@ const Card = styled.div`
     padding: 12px 14px;
   }
   @media (max-width: 468px) {
-    width:100%;
+    max-width:300px;
   } 
 `;
 
@@ -37,6 +38,17 @@ const Details = styled.div`
 const Flex = styled.div`
   display: flex;
   gap: 16px;
+`;
+const MessageFlex = styled.div`
+  display: flex;
+  gap: 5px;
+`;
+const MessageContainer = styled.div`
+  overflow-y:scroll;
+  height:100px;
+  width:100%;
+  padding:5px;
+  background-color:${({theme})=>theme.remainder_message_bg};
 `;
 const ToggleSwitch =styled.div`
   display:flex;
@@ -68,10 +80,10 @@ const RemainderCard = ({ remainderData, remainderStatus }) => {
                     {remainderData?.remainderTime}
                 </Details>
             </Flex>
-            <Flex>
+            <MessageFlex>
                 <FlagRoundedIcon sx={{ fontSize: "20px" }} />
-                {remainderData?.remainderMessage}
-            </Flex>
+                <MessageContainer>{remainderData?.remainderMessage}</MessageContainer>
+            </MessageFlex>
             <Form>
                 <Form.Check 
                     type="switch"

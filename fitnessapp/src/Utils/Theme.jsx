@@ -43,6 +43,7 @@ export const lightTheme = {
   sidebar_bg_3:'#ebf3f3',
   sidebar_bg_4:'#d7f5f5',
   sidebar_shadow:'#00000033',
+  remainder_message_bg:'#96a1a733',
 };
 
 
@@ -77,6 +78,7 @@ export const darkTheme = {
   sidebar_bg_3:'#021e24',
   sidebar_bg_4:'#011216',
   sidebar_shadow:'#0b2c3b33',
+  remainder_message_bg:'#10161f',
 }
 
 

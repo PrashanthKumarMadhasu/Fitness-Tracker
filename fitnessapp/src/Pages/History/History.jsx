@@ -6,6 +6,7 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 import { useContext } from "react";
 import { ThemeContext } from "../../Utils/ThemeContext";
+import { screenSize  } from "../../Utils/responsive";
 
 const HistoryTab = styled.div`
 display:flex;
@@ -78,6 +79,7 @@ const History = () => {
   const [graphData, setGraphData] = useState([]);
   const { themeColor, setThemeColor } = useContext(ThemeContext);
   const [historyTab, setHistoryTab] = useState(true);
+  const [isMobileView,isTabView,isDesktopView, isLargeDesktopView] = screenSize();
 
   useEffect(() => {
     const fetchWorkoutHistory = async () => {
@@ -178,8 +180,8 @@ const History = () => {
                 },
               ]}
               grid={{ vertical: true, horizontal: true }}
-              width={550}
-              height={330}
+              width={isMobileView?450:550}
+              height={isMobileView?270:330}
 
             />
           </div>
