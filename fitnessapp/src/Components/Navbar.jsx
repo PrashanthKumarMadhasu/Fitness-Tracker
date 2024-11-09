@@ -201,8 +201,14 @@ const StreakIcon = styled.div`
   cursor: pointer;
 `;
 
-const CustomTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
+const CustomTooltip = styled(({ className, isMobile, open, ...props }) => (
+  <Tooltip 
+  {...props} 
+  classes={{ popper: className }} 
+  open={isMobile ? open : undefined}
+  disableHoverListener={isMobile}
+  // disableTouchListener={!isMobile}
+  />
 ))({
   "& .MuiTooltip-tooltip": {
     backgroundColor: "#007bff",
@@ -329,8 +335,16 @@ const Navbar = ({ currentUser }) => {
     profilePic: null,
   });
   const initialProfile = profileData;
-  const [isMobileView, isTabView, isDesktopView, isLargeDesktopView] =
-    screenSize();
+  const [isMobileView,isTabView,isDesktopView, isLargeDesktopView] = screenSize();
+  const [isTooltipOpen, setTooltipOpen] = useState(false);
+
+  const handleTooltipToggle = () => {
+    if (isMobileView) {
+      setTooltipOpen((prev) => !prev);
+    }
+  };
+
+  console.log(`isMobileView${isMobileView}`);
 
   return (
     <Nav>
@@ -375,11 +389,14 @@ const Navbar = ({ currentUser }) => {
             <Navlink to="/contact">Contact</Navlink>
           </NavItems>
         </NavItemsDiv>
-        <StreakIcon>
+
+        <StreakIcon onClick={handleTooltipToggle}>
           <CustomTooltip
             title={`workout streak  ${streakValue} days`}
             arrow
             placement="top"
+            isMobile={isMobileView}
+            open={isTooltipOpen}
           >
             <div>
               <Lottie
@@ -389,6 +406,7 @@ const Navbar = ({ currentUser }) => {
             </div>
           </CustomTooltip>
         </StreakIcon>
+
         <UserContainer>
           <ProfileIcon onClick={handleProfileModal}>
             <Avatar src={initialProfile.profilePic}></Avatar>
