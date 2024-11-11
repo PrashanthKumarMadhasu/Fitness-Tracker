@@ -10,7 +10,7 @@ const {StatusCodes} =require('http-status-codes');
 
 
 
-async function sendRemainderQueue(messageData,mobile,sendRemainder='false')
+async function sendRemainderQueue(messageData,mobile=null,sendRemainder='false')
 {
         try
         {
@@ -119,7 +119,7 @@ const cronJob= async()=>
      {
         for(const item in userMobiles)
         {
-            if(len(item)===10)
+            if(item.length===10)
             {
                 const result= await sendRemainderQueue(null,item,'true');
             if(!result)
