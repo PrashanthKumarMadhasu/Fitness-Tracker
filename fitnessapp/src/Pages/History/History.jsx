@@ -31,6 +31,7 @@ display:flex;
     font-size: 14px;
   }
 `;
+
 const blueBackgroundAnimation = keyframes`
   0% {
     background-color:  ${({ theme }) => theme.tab_bg};
@@ -39,6 +40,7 @@ const blueBackgroundAnimation = keyframes`
     background-color: ${({ theme }) => theme.selected_tab_bg};
   }
 `;
+
 const GraphTab = styled.div`
 display:flex;
   font-weight: 600;
@@ -65,6 +67,7 @@ display:flex;
     font-size: 14px;
   }
 `;
+
 const whiteBackgroundAnimation = keyframes`
   0% {
     background-color: ${({ theme }) => theme.selected_tab_bg};
@@ -72,7 +75,8 @@ const whiteBackgroundAnimation = keyframes`
   100% {
     background-color: ${({ theme }) => theme.tab_bg};
   }
-`
+`;
+
 const History = () => {
   const [workoutHistory, setWorkoutHistory] = useState([]);
   const [bodyWeightMap, setBodyWeightMap] = useState({});
@@ -180,8 +184,8 @@ const History = () => {
                 },
               ]}
               grid={{ vertical: true, horizontal: true }}
-              width={isMobileView?450:550}
-              height={isMobileView?270:330}
+              width={isMobileView?370:550}
+              height={isMobileView?240:330}
 
             />
           </div>

@@ -25,7 +25,16 @@
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 }
-
+@media (max-width:500px) {
+    .bmi-calculator{
+        width: 100%;
+    }
+    .bmi-container{
+        display: flex;
+        margin-top: 100px;
+        justify-content: start;
+    }
+}
 .header-bmi{
     color: var(--bmi-header);
     text-align: center;

@@ -46,6 +46,14 @@
   border: 2px solid var(--table-header-border);
 }
 
+.workout-history-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: var(--table-header-bg);
+  color: var(--table-header-text);
+  z-index: 2;
+}
+
 .workout-dropdown {
   width: 100%;
   padding: 5px;
@@ -98,7 +106,6 @@
 
 .weight-graph{
   display: flex;
-  margin-top:20px;
   flex-direction: column;
   margin-top: 50px;
 }
