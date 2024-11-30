@@ -340,8 +340,11 @@ const Navbar = ({ currentUser }) => {
 
   const handleTooltipToggle = () => {
     if (isMobileView) {
-      setTooltipOpen((prev) => !prev);
+      setTooltipOpen(true);
     }
+    setTimeout(() => {
+      setTooltipOpen(false);
+    }, 3000);
   };
 
   console.log(`isMobileView${isMobileView}`);

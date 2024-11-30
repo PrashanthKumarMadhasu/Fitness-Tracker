@@ -29,7 +29,7 @@ const ModalContent = styled.div`
   padding: 20px;
   border: ${({ theme }) =>
     theme.theme === "true" ? `2px Solid ${theme.text_secondary}` : "none"};
-  border-radius: 10px;
+  border-radius: 10px 0 10px 10px;
   height: 90vh;
   overflow-y: auto;
   position: relative;
