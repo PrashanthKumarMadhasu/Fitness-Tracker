@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import styled from "styled-components";
 import { RiCloseLargeFill } from "react-icons/ri";
 import Power from "../Components/Assets/power-button.png";
@@ -155,6 +155,7 @@ const Profile = ({
   const { themeColor, setThemeColor } = useContext(ThemeContext);
   const [active, setActive] = useState(themeColor);
   const navigate = useNavigate();
+  const modalContentRef = useRef(null);
 
   useEffect(() => {
     // Update formData.profilePic whenever profilePic changes
@@ -163,6 +164,12 @@ const Profile = ({
       profilePic: profilePic, // Update with the new base64 image
     }));
   }, [profilePic]);
+
+  const handleWrapperClick = (e) => {
+    if (modalContentRef.current && !modalContentRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -196,8 +203,8 @@ const Profile = ({
     }
   };
   return (
-    <ModalWrapper isModalOpen={isModalOpen}>
-      <ModalContent>
+    <ModalWrapper isModalOpen={isModalOpen} onClick={handleWrapperClick}>
+      <ModalContent ref={modalContentRef}>
         <CloseIcon>
           <RiCloseLargeFill onClick={onClose} />
         </CloseIcon>

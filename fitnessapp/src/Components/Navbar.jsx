@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import LogoImg from "./Assets/gym.png";
 import { NavLink } from "react-router-dom";
-import { MenuRounded } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
 import Profile from "../Pages/Profile";
 import { getProfileData, updateProfileData, getDashboardDetails } from "../api";
@@ -46,6 +45,7 @@ const NavContainer = styled.div`
   justify-content: space-between;
   font-size: 1rem;
 `;
+
 const NavLogoDiv = styled.div`
   height: 100vh;
   display: flex;
@@ -57,6 +57,9 @@ const Logo = styled.img`
   @media (min-width: 769px) and (max-width: 900px) {
     height: 35px;
     margin-right: 0;
+  }
+  @media screen and (max-width: 768px) {
+    margin-left:30px;
   }
 `;
 
@@ -76,13 +79,61 @@ const Header_text = styled.span`
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 `;
 
-const Mobileicon = styled.div`
-  color: ${({ theme }) => theme.text_primary};
+const MenuDiv = styled.div`
+  position: absolute;
   display: none;
+  height: 30px;
+  width: 30px;
+  top: 20px;
+  left: 15px;
+  z-index: 2000;
+  cursor: pointer;
+  border-radius: 2px;
+  // background-color: grey;
+  // box-shadow: 0 0 10px rgba(0, 0, 0.3);
   @media screen and (max-width: 768px) {
     display: flex;
     align-items: center;
   }
+`;
+
+const TopLine = styled.span`
+  position: absolute;
+  height: 2px;
+  width: ${({ isOpen }) => (isOpen ? "25px" : "20px")};
+  border-radius: 50px;
+  background-color: ${({ theme }) => (theme.theme === "true" ? theme.white : theme.black)};
+  top: ${({ isOpen }) => (isOpen ? "14px" : "30%")};
+  left: ${({ isOpen }) => (isOpen ? "2px" : "50%")};
+  transform: ${({ isOpen }) =>
+    isOpen ? "rotate(45deg)" : "translate(-50%, -50%)"};
+  transition: 0.3s ease;
+`;
+
+const MiddleLine = styled.span`
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  border-radius: 50px;
+  background-color: ${({ theme }) => (theme.theme === "true" ? theme.white : theme.black)};
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: ${({ isOpen }) => (isOpen ? 0 : 1)};
+  transition: 0.3s ease;
+`;
+
+const BottomLine = styled.span`
+  position: absolute;
+  height: 2px;
+  width: ${({ isOpen }) => (isOpen ? "25px" : "20px")};
+  border-radius: 50px;
+  background-color: ${({ theme }) => (theme.theme === "true" ? theme.white : theme.black)};
+  top: ${({ isOpen }) => (isOpen ? "14px" : "70%")};
+  left: ${({ isOpen }) => (isOpen ? "2px" : "50%")};
+  transform: ${({ isOpen }) =>
+    isOpen ? "rotate(-45deg)" : "translate(-50%, -50%)"};
+  transition: 0.3s ease;
 `;
 
 const NavItemsDiv = styled.div`
@@ -191,6 +242,10 @@ const MobileMenu = styled.ul`
   box-shadow: ${({ theme }) => `4px 0 10px ${theme.sidebar_shadow}`};
   z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1")};
   opacity: ${({ isOpen }) => (isOpen ? "1" : "0")}; /* Fade in/out effect */
+  @media screen and (min-width: 768px) {
+    display:none;
+  }
+
 `;
 
 const StreakIcon = styled.div`
@@ -202,12 +257,12 @@ const StreakIcon = styled.div`
 `;
 
 const CustomTooltip = styled(({ className, isMobile, open, ...props }) => (
-  <Tooltip 
-  {...props} 
-  classes={{ popper: className }} 
-  open={isMobile ? open : undefined}
-  disableHoverListener={isMobile}
-  // disableTouchListener={!isMobile}
+  <Tooltip
+    {...props}
+    classes={{ popper: className }}
+    open={isMobile ? open : undefined}
+    disableHoverListener={isMobile}
+    // disableTouchListener={!isMobile}
   />
 ))({
   "& .MuiTooltip-tooltip": {
@@ -316,12 +371,15 @@ const Navbar = ({ currentUser }) => {
   };
 
   const handleToggleMenu = () => {
-    setisOpen((prev) => !prev);
+    setisOpen((prev) => {
+      console.log("Previous state:", prev);
+      return !prev;
+    });
   };
-
+  
   const streaks = [Streak, StreakYellow, StreakOrange, StreakRed];
   const [streakValue, setStreakValue] = useState(0);
-  const [isOpen, setisOpen] = useState(false);
+  const [isOpen, setisOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
   const [profileData, setProfileData] = useState({
@@ -335,7 +393,8 @@ const Navbar = ({ currentUser }) => {
     profilePic: null,
   });
   const initialProfile = profileData;
-  const [isMobileView,isTabView,isDesktopView, isLargeDesktopView] = screenSize();
+  const [isMobileView, isTabView, isDesktopView, isLargeDesktopView] =
+    screenSize();
   const [isTooltipOpen, setTooltipOpen] = useState(false);
 
   const handleTooltipToggle = () => {
@@ -347,14 +406,15 @@ const Navbar = ({ currentUser }) => {
     }, 3000);
   };
 
-  console.log(`isMobileView${isMobileView}`);
 
   return (
     <Nav>
       <NavContainer>
-        <Mobileicon onClick={handleToggleMenu}>
-          <MenuRounded sx={{ color: "inherit" }} />
-        </Mobileicon>
+        <MenuDiv onClick={handleToggleMenu} isOpen={isOpen}>
+          <TopLine isOpen={isOpen}/>
+          <MiddleLine isOpen={isOpen}/>
+          <BottomLine isOpen={isOpen}/>
+        </MenuDiv>
         <NavLogoDiv>
           <Logo src={LogoImg} />
           <AppName>
