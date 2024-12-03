@@ -379,7 +379,7 @@ const Navbar = ({ currentUser }) => {
   
   const streaks = [Streak, StreakYellow, StreakOrange, StreakRed];
   const [streakValue, setStreakValue] = useState(0);
-  const [isOpen, setisOpen] = useState(true);
+  const [isOpen, setisOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
   const [profileData, setProfileData] = useState({
