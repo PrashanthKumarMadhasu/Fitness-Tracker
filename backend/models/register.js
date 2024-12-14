@@ -45,7 +45,7 @@ RegisterSchema.methods.comparePassword = async function(passkey)
 RegisterSchema.methods.createJWT= function()
 {
     const token=jwt.sign(
-        {userId:this._id,email:this.email},
+        {userId:this._id,email:this.email,name:this.userName},
         process.env.JWT_SECRET,
         {expiresIn:process.env.JWT_LIFETIME}
     )
