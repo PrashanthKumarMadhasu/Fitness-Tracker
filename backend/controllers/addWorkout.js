@@ -421,11 +421,11 @@ const removeSingleWorkout= async(req,res)=>
         {
             return res.status(StatusCodes.BAD_GATEWAY).json({success:false,message:`Unable to find workout data for respective id:${workout_id}`})                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         }
-        return res.status(StatusCodes.OK).json({sucess:true,message:"workout data deleted successfully"})
+        return res.status(StatusCodes.OK).json({success:true,message:"workout data deleted successfully"})
     }   
     catch (error) 
     {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({sucess:false,message:error.message})
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success:false,message:error.message})
     }
 }
 

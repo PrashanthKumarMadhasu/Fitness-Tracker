@@ -2,7 +2,7 @@ import React from 'react'
 import './Contact.css'
 import { sendFeedback } from '../../api';
 import { useState } from 'react';
-
+import { handleToast} from '../../Utils/Toasts'
 
 const Contact = () => {
 
@@ -10,11 +10,15 @@ const Contact = () => {
 
   const handleFeedback = async (contactFormData) => {
     const token = localStorage.getItem("fittrack-app-token");
-    console.log(`contact form data ${JSON.stringify(contactFormData)}`);
+    // console.log(`contact form data ${JSON.stringify(contactFormData)}`);
     try {
       const res = await sendFeedback(token, contactFormData);
+      if(res.data.success){
+        handleToast('Feedback Sent','green');
+      }
+
     } catch (error) {
-      alert("Failed to send Feedback. Please try again.");
+        handleToast('Failed to send Feedback','red')
     }
   };
 
@@ -28,7 +32,7 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("the formData or updated profile Data", contactFormData)
+    // console.log("the formData or updated profile Data", contactFormData);
     handleFeedback(contactFormData);
     setContactFormData({});
   };

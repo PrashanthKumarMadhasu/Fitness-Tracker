@@ -6,6 +6,7 @@ import { addRemainder, getRemainders, changeRemainderStatus } from '../../api';
 import RemainderCard from './RemainderCard';
 import Qr from '../../Components/Assets/SvgFiles/qr.svg';
 import { RiWhatsappFill } from "react-icons/ri";
+import { handleToast } from '../../Utils/Toasts';
 
 const Card = styled.div`
   display:flex;
@@ -69,7 +70,7 @@ const LaunchWorkout = () => {
     try {
       const res = await getRemainders(token, "");
       setRemainderData(res.data.planData || []);
-      console.log(`after getting ${JSON.stringify(res.data.planData)}`);
+      // console.log(`after getting ${JSON.stringify(res.data.planData)}`);
     } catch (err) {
       console.error("Failed to fetch remainders:", err);
     } finally {
@@ -97,11 +98,15 @@ const LaunchWorkout = () => {
   const addNewRemainder = async (newRemainder) => {
     const token = localStorage.getItem("fittrack-app-token");
     try {
-      await addRemainder(token, newRemainder);
+      const res = await addRemainder(token, newRemainder);
       setInputValues({}); // Clear input fields
       getAllRemainders();
+      // console.log(`remainder response ${res.data.success}`);
+      if(res.data.success){
+        handleToast(`Remainder Added`,'green');
+        }
     } catch (err) {
-      alert(err);
+      handleToast(`Failed to Add Remainder`,'red')
     }
   };
 
@@ -111,7 +116,7 @@ const LaunchWorkout = () => {
 
   const handleRemainder = () => {
     const sample = { ...inputValues, remainder: true };
-    console.log(`add after ${JSON.stringify(sample)}`);
+    // console.log(`add after ${JSON.stringify(sample)}`);
     addNewRemainder(sample);
   }
 

@@ -23,7 +23,7 @@ async function sendRemainderQueue(messageData,mobile=null,sendRemainder='false')
                 //const dummyMobile="9347273270"
                 const result= await client.messages.create(
                     {
-                        body:`#Update from FitNest🤷:${messageData.remainderMessage}'`,
+                        body:`#Update from FitNest 📩: ${messageData.remainderMessage}'`,
                         from:`whatsapp:+${messageData.senderMobile}`,
                         to:`whatsapp:+91${messageData.userMobile}`
                     })

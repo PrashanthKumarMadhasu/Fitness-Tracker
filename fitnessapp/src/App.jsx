@@ -17,6 +17,7 @@ import Dropdowns from "./Components/Cards/Dropdowns";
 import { ThemeContext } from "./Utils/ThemeContext";
 import BackImage from "./Components/Assets/dark.jpg";
 import { Toaster, toast } from 'sonner';
+import { handleToast} from './Utils/Toasts'
 
 const Container = styled.div`
   width: 100%;
@@ -46,22 +47,7 @@ function App() {
       setShowSplash(true);
       const timer = setTimeout(() => {
         setShowSplash(false);
-        toast(`Welcome ${currentUser.name}👋`, {
-          style: {
-            color: "green",       
-            background: "none",  
-            padding: "5px",  
-            borderRadius: "8px",
-            margin: "50px 0 0 0 ",
-            fontSize:"18px",
-            textAlign: "center",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          },
-          position: "top-center",
-          
-        });
+        handleToast(`Welcome ${currentUser.name}👋`,'green')
       }, 3000);
       return () => clearTimeout(timer);
     }

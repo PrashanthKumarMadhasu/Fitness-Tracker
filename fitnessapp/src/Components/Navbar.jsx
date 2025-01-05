@@ -14,6 +14,7 @@ import StreakOrange from "./Assets/Animations/streak_orange.json";
 import StreakYellow from "./Assets/Animations/streak_yellow.json";
 import { Tooltip } from "@mui/material";
 import { screenSize } from "../Utils/responsive";
+import { handleToast } from "../Utils/Toasts";
 
 const ProfileIcon = styled.div`
   cursor: pointer;
@@ -320,12 +321,14 @@ const Navbar = ({ currentUser }) => {
       }
 
       const res = await updateProfileData(token, updateProfile);
-
+      if(res.data.success){
+        handleToast('Profile Updated','green');
+      }
       setProfileData(res.data.data); // Update profile data in state
       closeModal(); // Close modal after successful update
     } catch (err) {
-      alert("Failed to update profile: " + err.message);
-      console.log("API error:", err);
+      handleToast('Failed to Update Profile','red');
+      // console.log("API error:", err);
     }
   };
 

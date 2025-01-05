@@ -181,7 +181,7 @@ const Profile = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("the formDat or updated profile Data", formData);
+    // console.log("the formDat or updated profile Data", formData);
     updateProfile(formData); // Pass updated profile data
   };
 

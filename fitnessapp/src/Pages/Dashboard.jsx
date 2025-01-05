@@ -8,6 +8,7 @@ import WorkoutCard from "../Components/Cards/WorkoutCard";
 import { addWorkout, getDashboardDetails, getWorkouts, getProfileData, deleteWorkout } from "../api";
 import Dropdowns from "../Components/Cards/Dropdowns";
 import { screenSize  } from "../Utils/responsive";
+import { handleToast } from "../Utils/Toasts";
 
 const Container = styled.div`
   flex: 1;
@@ -107,11 +108,17 @@ const Dashboard = ({ currentUser }) => {
       setButtonLoading(true);
       const token = localStorage.getItem("fittrack-app-token");
       const res = await addWorkout(token, newWorkout);
+      // console.log(`workout added data ${res.data.success}`);
+      if(res.data.success){
+        handleToast('Workout Added','green');
+      }
       await dashboardData();
       await getTodaysWorkout();
+      
+      
+      
     } catch (error) {
-      console.error("Error adding new workout:", error);
-      alert(error);
+      handleToast('Failed to Add Workout','red');
     } finally {
       setButtonLoading(false);
     }
@@ -121,12 +128,16 @@ const Dashboard = ({ currentUser }) => {
     try {
       setButtonLoading(true);
       const token = localStorage.getItem("fittrack-app-token");
-      await deleteWorkout(token, workout_id);
+      const res = await deleteWorkout(token, workout_id);
+      
+      if(res.data.success){
+        handleToast('Workout Deleted','green');
+      }
+
       await dashboardData();
       await getTodaysWorkout();
     } catch (error) {
-      console.error("Error deleting workout:", error);
-      alert(error);
+      handleToast('Failed to Delete Workout','red');
     } finally {
       setButtonLoading(false);
     }
@@ -138,10 +149,10 @@ const Dashboard = ({ currentUser }) => {
         const token = localStorage.getItem("fittrack-app-token");
         const res = await getProfileData(token, currentUser.id);
         setBodyWeight(res.data.data.weight);
-        console.log(`body weight ${bodyWeight, res.data.data.weight}`);
+        // console.log(`body weight ${bodyWeight, res.data.data.weight}`);
       } catch (err) {
-        console.log(err)
-        console.error("Failed to fetch profile data:", err);
+        // console.log(err)
+        // console.error("Failed to fetch profile data:", err);
       }
     };
     dashboardData();
